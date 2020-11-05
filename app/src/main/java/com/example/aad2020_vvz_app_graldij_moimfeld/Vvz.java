@@ -14,6 +14,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Vvz extends AppCompatActivity {
 
+    //this class hinders the webview from jumping out of the app into a browser app
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +28,9 @@ public class Vvz extends AppCompatActivity {
         setContentView(R.layout.activity_vvz);
 
         //Webview for VVZ
-        WebView webView = (WebView) findViewById(R.id.webview);
-        webView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
-        
+        WebView myWebView = (WebView) findViewById(R.id.webview);
+        myWebView.setWebViewClient(new MyWebViewClient());
+        myWebView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
 
         //Bottom navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
