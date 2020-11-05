@@ -27,10 +27,18 @@ public class Vvz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
 
+
         //Webview for VVZ
         WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
+
+        //the following lines are needed to zoom out the Webview such that it is accessible
+        myWebView.getSettings().setUseWideViewPort(true);
+        myWebView.setInitialScale(1);
+
         myWebView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
+
+
 
         //Bottom navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
