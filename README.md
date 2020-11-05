@@ -5,3 +5,6 @@ http://kbroman.org/github_tutorial/pages/fork.html
 
 oder mit diesem tutorial
 https://gist.github.com/MarcDiethelm/7303312
+
+oder dieses
+https://medium.com/anne-kerrs-blog/using-git-and-github-for-team-collaboration-e761e7c00281
