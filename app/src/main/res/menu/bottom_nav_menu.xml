@@ -15,7 +15,7 @@
         android:id="@+id/action_MainActivity"
         android:enabled="true"
         android:icon="@drawable/ic_mainactivity"
-        android:title="MainActivity"
+        android:title="Lectures"
         app:showAsAction="ifRoom" />
 
 
@@ -23,7 +23,7 @@
         android:id="@+id/action_Vvz"
         android:enabled="true"
         android:icon="@drawable/ic_vvz"
-        android:title="Vvz"
+        android:title="VVZ"
         app:showAsAction="ifRoom" />
 
 </menu>
