@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Timetable">
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -21,12 +23,13 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"/>
 
+
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MainActivity"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="239dp" />
-
+        android:text="Timetable"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="298dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

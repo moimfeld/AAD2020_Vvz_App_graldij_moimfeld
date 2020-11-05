@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_Timetable"
+        android:enabled="true"
+        android:icon="@drawable/ic_timetable"
+        android:title="Timetable"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/action_MainActivity"
+        android:enabled="true"
+        android:icon="@drawable/ic_mainactivity"
+        android:title="MainActivity"
+        app:showAsAction="ifRoom" />
+
+
+    <item
+        android:id="@+id/action_Vvz"
+        android:enabled="true"
+        android:icon="@drawable/ic_vvz"
+        android:title="Vvz"
+        app:showAsAction="ifRoom" />
+
+</menu>
