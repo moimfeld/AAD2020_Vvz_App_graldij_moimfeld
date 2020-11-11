@@ -51,17 +51,17 @@ public class Timetable extends AppCompatActivity {
         });
 
         // Get a reference for the week view in the layout.
-        WeekView myWeekView = (WeekView) findViewById(R.id.weekView);
+//        WeekView myWeekView = (WeekView) findViewById(R.id.weekView);
 
         // Set an action when any event is clicked.
-        //myWeekView.setOnEventClickListener(mEventClickListener);
+//        myWeekView.setOnEventClickListener(mEventClickListener);
 
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
-        //myWeekView.setMonthChangeListener(mMonthChangeListener);
+//        myWeekView.setMonthChangeListener(mMonthChangeListener);
 
         // Set long press listener for events.
-        //myWeekView.setEventLongPressListener(mEventLongPressListener);
+//        myWeekView.setEventLongPressListener(mEventLongPressListener);
 
 
     }
