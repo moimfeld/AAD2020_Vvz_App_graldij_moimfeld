@@ -32,9 +32,14 @@ public class Vvz extends AppCompatActivity {
         WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
 
-        //the following lines are needed to zoom out the Webview such that it is accessible
+        //the following lines are needed to initially zoom out the Webview such that it is accessible
         myWebView.getSettings().setUseWideViewPort(true);
         myWebView.setInitialScale(1);
+
+        //enable zoom in webview
+        myWebView.getSettings().setBuiltInZoomControls(true);
+        myWebView.getSettings().setDisplayZoomControls(false);
+
 
         myWebView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
 
