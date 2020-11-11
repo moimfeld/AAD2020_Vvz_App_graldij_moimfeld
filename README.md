@@ -13,3 +13,8 @@ To do:
 -back in pages of vvz
 -save current link of vvz in order not to loose the current position/search result
 -block other webpages
+
+-set height and width of the column (now depend on text length) but with "relative" layout (e.g. 1/6 of the screen width)
+-create scrollable table in order to scroll during the day? See EduApp (also t.b.d. the number of hour-slots to be displayed).
+
+
