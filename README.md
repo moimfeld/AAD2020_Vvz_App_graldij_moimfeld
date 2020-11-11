@@ -8,3 +8,6 @@ https://gist.github.com/MarcDiethelm/7303312
 
 oder dieses
 https://medium.com/anne-kerrs-blog/using-git-and-github-for-team-collaboration-e761e7c00281
+
+
+Ich hoffe auch, dass wir zusammen arbeiten werden.
