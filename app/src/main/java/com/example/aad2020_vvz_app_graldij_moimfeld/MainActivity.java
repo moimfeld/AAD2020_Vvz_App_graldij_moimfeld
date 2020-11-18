@@ -52,4 +52,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    Lecture sample_lecture = new Lecture();
 }
