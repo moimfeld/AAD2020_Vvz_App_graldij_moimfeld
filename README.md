@@ -22,9 +22,9 @@ To do:
 
   -VVZ Button
 
-    -get current url
+  -get current url
 
-    -change url to something with "ALLE" attribut
+  -change url to something with "ALLE" attribut
 
   -parse everything
 
