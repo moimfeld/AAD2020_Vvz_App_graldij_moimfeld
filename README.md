@@ -18,9 +18,14 @@ To do:
 -create scrollable table in order to scroll during the day? See EduApp (also t.b.d. the number of hour-slots to be displayed).
 
 
--next steps for parsing:
+-next steps for parsing: 
+
   -VVZ Button
+
     -get current url
+
     -change url to something with "ALLE" attribut
+
   -parse everything
+
   -create storrage for lecture objects
