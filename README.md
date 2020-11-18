@@ -9,7 +9,7 @@ https://gist.github.com/MarcDiethelm/7303312
 oder dieses
 https://medium.com/anne-kerrs-blog/using-git-and-github-for-team-collaboration-e761e7c00281
 
-To do:
+#To do:
 -back in pages of vvz
 -save current link of vvz in order not to loose the current position/search result
 -block other webpages
