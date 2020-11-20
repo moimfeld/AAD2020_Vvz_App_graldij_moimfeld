@@ -31,7 +31,7 @@ public class Parse {
         try {
             Document doc = task.get();
             //get the name (this might also not be robust enough, since the lecture code could be longer than from index 0 to 13)
-            //The calls StringBuilder allows to manipulate strings more easily
+            //The class StringBuilder allows to manipulate strings more easily
             if (doc.getElementById("contentTop") != null) {
                 Element name_element = doc.getElementById("contentTop");
                 StringBuilder parsed_name = new StringBuilder(name_element.text());
