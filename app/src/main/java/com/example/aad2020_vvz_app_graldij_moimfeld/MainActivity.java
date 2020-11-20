@@ -11,24 +11,13 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
-//    Parse new_parse = new Parse();
-//    Document doc = new_parse.doInBackground("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lang=en&semkez=2020W&ansicht=ALLE&lerneinheitId=140984&");
-
-    public Lecture parse(Document doc){
-        Lecture result;
-        result= new Lecture("ciao_name", "ciao_day", "ciao_start", "ciao_end", "ciao_code", 14);
-
-        return result;
-    }
 
 
     @Override
@@ -36,17 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Test to see if the parse class does its job
+        Parse test_parse = new Parse();
+        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lang=en&semkez=2020W&ansicht=ALLE&lerneinheitId=140984&", this);
 
-         AsyncTask<String, Void, Document> task = new Parse().execute("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lang=en&semkez=2020W&ansicht=ALLE&lerneinheitId=140984&");
-        try {
-            Document doc = task.get();
-            Element content = doc.getElementById("contentTop");
-            Toast.makeText(MainActivity.this, content.text(), Toast.LENGTH_SHORT).show();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
 
 
