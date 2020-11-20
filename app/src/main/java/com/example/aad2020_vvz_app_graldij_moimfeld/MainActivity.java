@@ -31,19 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-//        Document doc = new_parse.doInBackground("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lang=en&semkez=2020W&ansicht=ALLE&lerneinheitId=140984&");
-
-
-//        Toast.makeText(MainActivity.this, parsed_lecture.name, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(MainActivity.this, parsed_lecture.start_time, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(MainActivity.this, parsed_lecture.end_time, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(MainActivity.this, String.valueOf(parsed_lecture.ECTS), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(MainActivity.this, parsed_lecture.day, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(MainActivity.this, parsed_lecture.lecture_code, Toast.LENGTH_SHORT).show();
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_MainActivity);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
