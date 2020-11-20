@@ -3,7 +3,8 @@ package com.example.aad2020_vvz_app_graldij_moimfeld;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
-
+//documentation: https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/org/apache/commons/lang3/RegExUtils.html
+import org.apache.commons.lang3.RegExUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -16,8 +17,7 @@ public class Parse {
 
     public Lecture parse (String url, Context context){
 
-        //create new AsyncTask to fetch the HTML document
-        AsyncTask<String, Void, Document> task = new NewThread().execute(url);
+
 
         //create all needed variables to create a lecture object
         String name = null;
@@ -26,6 +26,33 @@ public class Parse {
         String end_time = null;
         String lecture_code = null;
         int ECTS = -1;
+
+        //Here I create the Lecture object
+        Lecture result;
+        result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
+
+
+
+        //Url check/manipulation
+        //if there is a valid url it gets formated to the correct format
+        //if there is an invalid url, the parse function returns an toast message "invalid url" and returns an "empty" lecture
+        //to get the right regex pattern I used https://regex101.com/
+        if(url.contains("ansicht") && url.contains("lang=") && url.contains("http://www.vvz.ethz.ch/")){
+            url = RegExUtils.replaceAll(url, "lang=+(de|en)", "lang=en");
+            url = RegExUtils.replaceAll(url, "ansicht=(.*?)&", "ansicht=ALLE&");
+            //Toast.makeText(context, "url changed", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "invalid url", Toast.LENGTH_SHORT).show();
+            return result;
+        }
+
+
+
+
+        //create new AsyncTask to fetch the HTML document
+        AsyncTask<String, Void, Document> task = new NewThread().execute(url);
+
 
         //to avoid NullPointerExceptions I surrounded every parse with a if statement
         try {
@@ -92,18 +119,19 @@ public class Parse {
         }
 
 
-        //Here I create the Lecture object with the just parsed values
-        Lecture result;
+
+        //create a Lecture object with the just parsed content
+        result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
+
 
         //Toast messages to give a feedback if the lecture parsing was successful
-
         if (name != null && day != null && start_time != null && end_time != null && lecture_code != null && ECTS != -1) {
             Toast.makeText(context, "lecture saved", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "error while saving lecture", Toast.LENGTH_SHORT).show();
         }
 
-        result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
+
         return result;
     }
 }
