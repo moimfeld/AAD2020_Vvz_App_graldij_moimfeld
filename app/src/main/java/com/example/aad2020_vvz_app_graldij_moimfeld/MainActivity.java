@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Test to see if the parse class does its job
         Parse test_parse = new Parse();
-        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?lang=en&semkez=2020W&ansicht=ALLE&lerneinheitId=140984&", this);
+        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?semkez=2020W&ansicht=aasdf&lerneinheitId=140984&lang=de", this);
 
 
 
