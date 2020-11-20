@@ -19,7 +19,7 @@ public class Parse {
         //create new AsyncTask to fetch the HTML document
         AsyncTask<String, Void, Document> task = new NewThread().execute(url);
 
-        //create all needed Strings to create a lecture object
+        //create all needed variables to create a lecture object
         String name = null;
         String day = null;
         String start_time = null;
