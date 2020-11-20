@@ -2,19 +2,11 @@ package com.example.aad2020_vvz_app_graldij_moimfeld;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-
+import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Test to see if the parse class does its job
         Parse test_parse = new Parse();
-        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?semkez=2020W&ansicht=aasdf&lerneinheitId=140984&lang=de", this);
+        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?semkez=2020W&ansicht=KATALOGDATEN&lerneinheitId=140176&lang=de", this);
+        String test_string = "Name: " +test.name + ", Day:  " + test.day + ", Start Time: " + test.start_time + ", End Time: " + test.end_time + ", Lecture Code: " + test.lecture_code + ", Credits: " + test.ECTS;
+        TextView tv = (TextView)findViewById(R.id.textView3);
+        tv.setText(test_string);
 
 
 
