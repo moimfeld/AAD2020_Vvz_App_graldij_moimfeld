@@ -8,9 +8,14 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //lecture array to save the lectures temporarily, there needs to be another saving method involving firebase or some local storing method
+    public static ArrayList<Lecture> saved_lectures = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +23,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Test to see if the parse class does its job
-        Parse test_parse = new Parse();
-        Lecture test = test_parse.parse("http://www.vvz.ethz.ch/Vorlesungsverzeichnis/lerneinheit.view?semkez=2020W&ansicht=KATALOGDATEN&lerneinheitId=140176&lang=de", this);
-        String test_string = "Name: " +test.name + ", Day:  " + test.day + ", Start Time: " + test.start_time + ", End Time: " + test.end_time + ", Lecture Code: " + test.lecture_code + ", Credits: " + test.ECTS;
-        TextView tv = (TextView)findViewById(R.id.textView3);
-        tv.setText(test_string);
-
+        String test_string;
+        if(saved_lectures.size() != 0) {
+            test_string = "";
+            for(int i = 0; i < saved_lectures.size(); i++) {
+                Lecture test = saved_lectures.get(i);
+                test_string = test_string + "Name: " + test.name + ", Day:  " + test.day + ", Start Time: " + test.start_time + ", End Time: " + test.end_time + ", Lecture Code: " + test.lecture_code + ", Credits: " + test.ECTS + "\n";
+                TextView tv = findViewById(R.id.textView3);
+                tv.setText(test_string);
+            }
+        }
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
