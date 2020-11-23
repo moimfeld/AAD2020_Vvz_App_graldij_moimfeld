@@ -6,18 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class Vvz extends AppCompatActivity {
 
     //this class hinders the webview from jumping out of the app into a browser app
-    private class MyWebViewClient extends WebViewClient {
+    private static class MyWebViewClient extends WebViewClient {
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
         }
     }
@@ -28,8 +33,10 @@ public class Vvz extends AppCompatActivity {
         setContentView(R.layout.activity_vvz);
 
 
+
+
         //Webview for VVZ
-        WebView myWebView = (WebView) findViewById(R.id.webview);
+        final WebView myWebView = (WebView) findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
 
         //the following lines are needed to initially zoom out the Webview such that it is accessible
@@ -44,6 +51,39 @@ public class Vvz extends AppCompatActivity {
         myWebView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
 
 
+
+        //Button
+        final Button button = findViewById(R.id.saved_lecture);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //parse the currently displayed lecture in the webview
+                Parse parse = new Parse();
+                Lecture new_parse = parse.parse(Objects.requireNonNull(myWebView.getUrl()), getApplicationContext());
+                //check whether the Lecture fully parsed
+                if(new_parse.name != null && new_parse.day != null && new_parse.start_time != null && new_parse.end_time != null && new_parse.lecture_code != null && new_parse.ECTS != -1) {
+                    //check if the saved_lecture ArrayList is empty
+                    if (MainActivity.saved_lectures.size() > 0) {
+                        //check if the Lecture is already in the ArrayList
+                        for (int i = 0; i <= MainActivity.saved_lectures.size(); i++) {
+                            if (MainActivity.saved_lectures.get(i).isEqual(new_parse)) {
+                                Toast.makeText(Vvz.this, "lecture has already been saved", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                            if (i == MainActivity.saved_lectures.size() - 1) {
+                                MainActivity.saved_lectures.add(new_parse);
+                                Toast.makeText(Vvz.this, "lecture saved", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                        }
+                    //handling the empty saved_lecture ArrayList
+                    } else {
+                        MainActivity.saved_lectures.size();
+                        MainActivity.saved_lectures.add(new_parse);
+                        Toast.makeText(Vvz.this, "lecture saved", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
 
         //Bottom navigation bar
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -71,7 +111,6 @@ public class Vvz extends AppCompatActivity {
                 return true;
             }
         });
-
 
     }
 }
