@@ -36,7 +36,7 @@ public class Vvz extends AppCompatActivity {
 
 
         //Webview for VVZ
-        final WebView myWebView = (WebView) findViewById(R.id.webview);
+        final WebView myWebView = findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
 
         //the following lines are needed to initially zoom out the Webview such that it is accessible
@@ -86,7 +86,7 @@ public class Vvz extends AppCompatActivity {
         });
 
         //Bottom navigation bar
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_Vvz);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
