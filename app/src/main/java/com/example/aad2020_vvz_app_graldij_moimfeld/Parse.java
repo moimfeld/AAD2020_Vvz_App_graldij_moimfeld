@@ -29,8 +29,7 @@ public class Parse {
 
         //Here I create the Lecture object
         Lecture result;
-        result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
-
+        result= new Lecture(null, null, null, null, null, -1);
 
 
         //Url check/manipulation
