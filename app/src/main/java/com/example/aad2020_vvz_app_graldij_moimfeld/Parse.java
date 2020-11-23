@@ -37,7 +37,7 @@ public class Parse {
         //if there is a valid url it gets formated to the correct format
         //if there is an invalid url, the parse function returns an toast message "invalid url" and returns an "empty" lecture
         //to get the right regex pattern I used https://regex101.com/
-        if(url.contains("ansicht") && url.contains("lang=") && url.contains("http://www.vvz.ethz.ch/")){
+        if(url.contains("ansicht") && url.contains("lang=")){
             url = RegExUtils.replaceAll(url, "lang=+(de|en)", "lang=en");
             url = RegExUtils.replaceAll(url, "ansicht=(.*?)&", "ansicht=ALLE&");
             //Toast.makeText(context, "url changed", Toast.LENGTH_SHORT).show();
