@@ -1,5 +1,4 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld;
-import java.io.*;
 
 public class Lecture {
     public String name;
@@ -18,6 +17,9 @@ public class Lecture {
         this.ECTS = ECTS;
     }
 
+    public boolean isEqual(Lecture compareLecture){
+        return this.name.equals(compareLecture.name) && this.day.equals(compareLecture.day) && this.start_time.equals(compareLecture.start_time) && this.end_time.equals(compareLecture.end_time) && this.lecture_code.equals(compareLecture.lecture_code) && this.ECTS == compareLecture.ECTS;
+    }
 }
 
 
