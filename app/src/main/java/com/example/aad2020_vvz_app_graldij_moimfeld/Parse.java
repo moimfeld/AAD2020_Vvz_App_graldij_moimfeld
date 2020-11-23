@@ -124,13 +124,10 @@ public class Parse {
         result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
 
 
-        //Toast messages to give a feedback if the lecture parsing was successful
-        if (name != null && day != null && start_time != null && end_time != null && lecture_code != null && ECTS != -1) {
-            Toast.makeText(context, "lecture saved", Toast.LENGTH_SHORT).show();
-        } else {
+        //Toast messages to give a feedback if the lecture couldn't fully get parsed
+        if (name == null || day == null || start_time == null || end_time == null || lecture_code == null || ECTS == -1) {
             Toast.makeText(context, "error while saving lecture", Toast.LENGTH_SHORT).show();
         }
-
 
         return result;
     }
