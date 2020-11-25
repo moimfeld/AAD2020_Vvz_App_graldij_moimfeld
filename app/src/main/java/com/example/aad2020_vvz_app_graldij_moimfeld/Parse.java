@@ -71,8 +71,23 @@ public class Parse {
             Elements day_element_list = doc.getElementsByClass("td-small");
             if (!doc.getElementsByClass("td-small").isEmpty()) {
                 Element day_element = day_element_list.get(0);
-                day = day_element.text();
-                //Toast.makeText(context, day, Toast.LENGTH_SHORT).show();
+                //get href (last part of the link) from the element.
+                Element link_element = day_element.select("a").first();
+                String end_link = link_element.attr("href");
+                String link = "http://www.vvz.ethz.ch" + end_link;
+
+                AsyncTask<String, Void, Document> taskGetDay = new NewThread().execute(link);
+
+                Document docGetDay = taskGetDay.get();
+                if (!docGetDay.select("td:contains(Mon)").isEmpty()) {
+
+                    day_element = docGetDay.select("td:contains(Mon)").get(0);
+                    day = day_element.html();
+
+
+                }
+
+//                Toast.makeText(context, day, Toast.LENGTH_SHORT).show();
             }
 
             //get the start_time
