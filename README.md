@@ -23,13 +23,9 @@ https://medium.com/anne-kerrs-blog/using-git-and-github-for-team-collaboration-e
 
 -next steps for parsing:
 
-  -VVZ Button
-  
-  -get current url
-  
-  -change url to something with "ALLE" attribut
-  
   -parse everything
   
-  -create storrage for lecture objects
+  -create storage for lecture objects
+
+  -finish parsing day & time separating lectures and exercises. Save days& time in ArrayLists
   
