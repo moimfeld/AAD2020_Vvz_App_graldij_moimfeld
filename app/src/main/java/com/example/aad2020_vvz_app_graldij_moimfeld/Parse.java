@@ -20,17 +20,18 @@ public class Parse {
 
 
         //create all needed variables to create a lecture object
-        String name = null;
-        String day = null;
-        String start_time = null;
-        String end_time = null;
-        String lecture_code = null;
-        int ECTS = -1;
+        String name=null;
+        String day=null;
+        String start_time=null;
+        String end_time=null;
+        String lecture_code=null;
+        int ECTS=-1;
 
         //Here I create the Lecture object
+//        Lecture result;
+//        result= new Lecture(null, null, null, null, null, -1);
         Lecture result;
-        result= new Lecture(null, null, null, null, null, -1);
-
+        result= new Lecture();
 
         //Url check/manipulation
         //if there is a valid url it gets formated to the correct format
@@ -61,7 +62,7 @@ public class Parse {
             if (doc.getElementById("contentTop") != null) {
                 Element name_element = doc.getElementById("contentTop");
                 StringBuilder parsed_name = new StringBuilder(name_element.text());
-                parsed_name.delete(0, 13);
+                parsed_name.delete(0, 13);//delete code
                 name = parsed_name.toString();
                 //Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
             }
@@ -101,32 +102,34 @@ public class Parse {
                 //Toast.makeText(context, lecture_code, Toast.LENGTH_SHORT).show();
             }
 
-            //get the ECTS (this is probably not robust enough since there could be more td elements which contain the word "credits")
-            if (doc.select("td:contains(credits)") != null) {
-                Elements ECTS_element_list = doc.select("td:contains(credits)"); //.select("td:contains(credits)" looks for any td elements in the document that contains the string "credits"
-                Element ECTS_element = ECTS_element_list.get(1); //this is the line which could be not robust enough, since it could be that the wanted "amount of credits" element is not the second td:contains(credits) element in the HTML document
+            //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
+            if (doc.select("td") != null) {
+                Elements ECTS_element_list = doc.select("td:contains(ECTS credits)"); //.select("td:contains(credits)" looks for any td elements in the document that contains the string "credits"
+                Element ECTS_element_entry=ECTS_element_list.get(0); //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
+                //overwrite
+                ECTS_element_list = doc.select("td:contains(credits)"); //select all elements containing "credits
+                int index = ECTS_element_list.indexOf(ECTS_element_entry);//find index of the element with "ECTS credits"
+                Element ECTS_element = ECTS_element_list.get(index+1); //use as credit the immediately following "credit" entry
                 String ECTS_only_number;
-                if (ECTS_element.text().contains(" credits")) {
-                    ECTS_only_number = ECTS_element.text().replace(" credits", "");
-                    ECTS = Integer.parseInt(ECTS_only_number);
-                    //Toast.makeText(context, Integer.toString(ECTS), Toast.LENGTH_SHORT).show();
-                }
+                ECTS_only_number = ECTS_element.text().replace(" credits", "");
+                ECTS = Integer.parseInt(ECTS_only_number);
+//                Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
             }
-
+            //create a Lecture object with the just parsed content
+            result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
 
 
-        //create a Lecture object with the just parsed content
-        result= new Lecture(name, day, start_time, end_time, lecture_code, ECTS);
 
 
         //Toast messages to give a feedback if the lecture couldn't fully get parsed
-        if (name == null || day == null || start_time == null || end_time == null || lecture_code == null || ECTS == -1) {
+        if (result.isEmpty()) {
             Toast.makeText(context, "error while saving lecture", Toast.LENGTH_SHORT).show();
         }
+
 
         return result;
     }
