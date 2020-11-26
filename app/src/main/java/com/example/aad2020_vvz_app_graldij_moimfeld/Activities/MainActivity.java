@@ -1,4 +1,4 @@
-package com.example.aad2020_vvz_app_graldij_moimfeld;
+package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.example.aad2020_vvz_app_graldij_moimfeld.R;
+import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //lecture array to save the lectures temporarily, there needs to be another saving method involving firebase or some local storing method
-    public static ArrayList<Lecture> saved_lectures = new ArrayList<>();
+    public static ArrayList<Course> saved_courses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +27,20 @@ public class MainActivity extends AppCompatActivity {
 
         //Test to see if the parse class does its job
         String test_string;
-        if(saved_lectures.size() != 0) {
+        if(saved_courses.size() != 0) {
             test_string = "";
-            for(int i = 0; i < saved_lectures.size(); i++) {
-                Lecture test = saved_lectures.get(i);
-                test_string = test_string + "Name: " + test.name + ", Day:  " + test.day + ", Start Time: " + test.start_time + ", End Time: " + test.end_time + ", Lecture Code: " + test.lecture_code + ", Credits: " + test.ECTS + "\n";
+            for(int i = 0; i < saved_courses.size(); i++) {
+                Course test = saved_courses.get(i);
+                test_string = test_string
+                        + "Size of the lecture Arraylist: " + test.lectures.size()
+                        + ", Name: " + test.name
+                        + ", Day:  " + test.lectures.get(test.lectures.size()-1).day
+                        + ", Periodicity:  " + test.lectures.get(test.lectures.size()-1).periodicity
+                        + ", Dates: " + test.lectures.get(test.lectures.size()-1).dates.get(test.lectures.get(test.lectures.size()-1).dates.size()-1)
+                        + ", start_time:  " + test.lectures.get(test.lectures.size()-1).getStartTime()
+                        + ", end_time:  " + test.lectures.get(test.lectures.size()-1).getEndTime()
+                        + ", Lecture Code: " + test.course_code
+                        + ", Credits: " + test.ECTS + "\n";
                 TextView tv = findViewById(R.id.textView3);
                 tv.setText(test_string);
             }
