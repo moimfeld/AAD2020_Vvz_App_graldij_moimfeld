@@ -1,4 +1,4 @@
-package com.example.aad2020_vvz_app_graldij_moimfeld;
+package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.os.AsyncTask;
 
