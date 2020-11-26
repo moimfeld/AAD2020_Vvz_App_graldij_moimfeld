@@ -25,6 +25,6 @@ public class Appointment {
     }
 
     public int getEndTime(){
-        return this.time.get(time.size()-1);
+        return this.time.get(this.time.size()-1);
     }
 }

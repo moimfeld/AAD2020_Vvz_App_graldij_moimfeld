@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
+import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,21 +27,59 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Test to see if the parse class does its job
-        String test_string;
+        StringBuilder test_string = new StringBuilder();
         if(saved_courses.size() != 0) {
-            test_string = "";
             for(int i = 0; i < saved_courses.size(); i++) {
                 Course test = saved_courses.get(i);
-                test_string = test_string
-                        + "Size of the lecture Arraylist: " + test.lectures.size()
-                        + ", Name: " + test.name
-                        + ", Day:  " + test.lectures.get(test.lectures.size()-1).day
-                        + ", Periodicity:  " + test.lectures.get(test.lectures.size()-1).periodicity
-                        + ", Dates: " + test.lectures.get(test.lectures.size()-1).dates.get(test.lectures.get(test.lectures.size()-1).dates.size()-1)
-                        + ", start_time:  " + test.lectures.get(test.lectures.size()-1).getStartTime()
-                        + ", end_time:  " + test.lectures.get(test.lectures.size()-1).getEndTime()
-                        + ", Lecture Code: " + test.course_code
-                        + ", Credits: " + test.ECTS + "\n";
+                test_string.append("Course ").append(i + 1).append("\n");
+                test_string.append("Name: ").append(test.name).append("\n");
+                test_string.append("Lecture Code: ").append(test.course_code).append("\n");
+                test_string.append("Credits: ").append(test.ECTS).append("\n").append("\n");
+
+//                test_string.append(test.lectures.get(0).dates.size());
+                int j = 0;
+                    while(j < test.lectures.size()){
+                        Appointment current = test.lectures.get(j);
+                        test_string.append("Lecture Appointment: ").append(j+1).append(": \n");
+                        test_string.append("Day: ").append(current.day).append("\n");
+                        test_string.append("Start: ").append(current.getStartTime()).append("\n");
+                        test_string.append("End: ").append(current.getEndTime()).append("\n");
+                        test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
+                        j++;
+                    }
+                    j = 0;
+                    test_string.append("\n");
+                    while(j < test.lecturesAndExercises.size()){
+                        Appointment current = test.lecturesAndExercises.get(j);
+                        test_string.append("Lecture And Exercise Appointment: ").append(j+1).append(": \n");
+                        test_string.append("Day: ").append(current.day).append("\n");
+                        test_string.append("Start: ").append(current.getStartTime()).append("\n");
+                        test_string.append("End: ").append(current.getEndTime()).append("\n");
+                        test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
+                        j++;
+                }
+                    j = 0;
+                    test_string.append("\n");
+                    while(j < test.exercises.size()){
+                        Appointment current = test.exercises.get(j);
+                        test_string.append("Exercise Appointment: ").append(j+1).append(": \n");
+                        test_string.append("Day: ").append(current.day).append("\n");
+                        test_string.append("Start: ").append(current.getStartTime()).append("\n");
+                        test_string.append("End: ").append(current.getEndTime()).append("\n");
+                        test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
+                        j++;
+                }
+                    j = 0;
+                    test_string.append("\n");
+                    while(j < test.labs.size()){
+                        Appointment current = test.labs.get(j);
+                        test_string.append("Lab Appointment: ").append(j+1).append(": \n");
+                        test_string.append("Day: ").append(current.day).append("\n");
+                        test_string.append("Start: ").append(current.getStartTime()).append("\n");
+                        test_string.append("End: ").append(current.getEndTime()).append("\n");
+                        test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
+                        j++;
+                }
                 TextView tv = findViewById(R.id.textView3);
                 tv.setText(test_string);
             }

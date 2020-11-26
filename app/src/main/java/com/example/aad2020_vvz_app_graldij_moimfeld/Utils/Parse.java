@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Parse {
 
-    public Course parse (String url, Context context){
+    public ArrayList<Appointment> parseAppointments (String category, Document doc, String course_code){
 
         //this is a auxiliary variables
         int index;
@@ -24,37 +24,101 @@ public class Parse {
         Element link_element;
         String endOf_link;
         String link;
-        String hours;
-        String dates_raw;
-        int start_time_int;
-        int end_time_int;
 
+
+
+        //return ArrayList
+        ArrayList<Appointment> r = new ArrayList<>();
+
+
+        Elements td_element_list = doc.select("td");
+        StringBuilder category_code_builder = new StringBuilder(course_code);
+        category_code_builder = category_code_builder.delete(11, 12);
+        String category_code = "td:contains(" + category_code_builder.toString() + " " + category + ")";
+        if (!td_element_list.select(category_code).isEmpty()) {
+            Elements td_category_code_elements = td_element_list.select(category_code);
+            Element category_code_element = td_category_code_elements.get(0);
+            index = td_element_list.indexOf(category_code_element);
+            link_td_element = td_element_list.get(index + 3);
+            link_element = link_td_element.getElementsByClass("td-small").first();
+            link_element = link_element.select("a").first();
+            endOf_link = link_element.attr("href");
+            link = "http://www.vvz.ethz.ch" + endOf_link;
+            //get the html document of the just parsed link
+            AsyncTask<String, Void, Document> categoryTask = new NewThread().execute(link);
+            Document docCategory = null;
+            try {
+                docCategory = categoryTask.get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            //here we get all tr elements (since in the tr elements there are all the infos for the appointments
+            Elements appointment_elements = docCategory.select("tr");
+            //this for loop iterates over all elements of appointment_elements and forms a appointment object for each element
+            r = new ArrayList<>(appointment_elements.size()-1);
+            for(int i = 1; i < appointment_elements.size(); i++){
+                //create the variables for the Appointment object
+                //it is 1000% important to create new arrays for each iteration through the for loop, since we'll pass the array to the Appointment object, and we need to get new arrays for each object
+                ArrayList<Integer> time = new ArrayList<>();
+                ArrayList<String> dates = new ArrayList<>();
+                String day = null;
+                String periodicity = null;
+                //get ith appointment element
+                Element appointment_element = appointment_elements.get(i);
+                //get all td elements (in the td elements are the wanted information about time date etc.) of the ith appointment_element
+                Elements appointment_content = appointment_element.select("td");
+                //get the day of this appointment
+                day = appointment_content.get(0).text();
+                //get the hours of this appointment
+                String hours = appointment_content.get(1).text();
+                //transform the hours string into the wanted format
+                StringBuilder hours_edit = new StringBuilder(hours);
+                hours_edit.delete(2, hours.length());
+                int start_time_int = Integer.parseInt(hours_edit.toString());
+                hours_edit = new StringBuilder(hours);
+                hours_edit.delete(0, 3);
+                int end_time_int = Integer.parseInt(hours_edit.toString());
+                for(int j = start_time_int;j <= end_time_int; j++){
+                    time.add(j);
+                }
+                periodicity = appointment_content.get(2).text();
+                String dates_raw = appointment_content.get(3).text();
+                //here we only get the raw dates, the dates should get transformed into a arraylist where all dates are one entry
+
+                dates.add(dates_raw);
+                //with the parsed data we can finally create an appointment object and fill that into the lectures arraylist
+                Appointment category_appointment = new Appointment(day, time, periodicity, dates);
+                r.add(category_appointment);
+            }
+            return r;
+        }
+        return r;
+    }
+
+
+
+
+
+    public Course parse (String url, Context context){
+
+        //this is a auxiliary variables
+        int index;
+        Parse parse;
 
         //create all needed variables to create a lecture object
         String name=null;
-
-        //these are the new ArrayLists which need to be filled / parsed
-        ArrayList<Appointment> lectures = new ArrayList<>();
-        ArrayList<Appointment> exercises = new ArrayList<>();
-        ArrayList<Appointment> labs = new ArrayList<>();
-        //these are the arguments which need to be filled in order to parse an
-        String day = null;
-        String periodicity;
-        ArrayList<Integer> time = new ArrayList<>();
-        ArrayList<String> dates = new ArrayList<>();
-
-        //these three are old arguments which won't be used after the new structure is fully implemented
-        String start_time=null;
-        String end_time=null;
-
+        ArrayList<Appointment> lectures;
+        ArrayList<Appointment> lecturesAndExercises;
+        ArrayList<Appointment> exercises;
+        ArrayList<Appointment> labs;
         String course_code=null;
         int ECTS=-1;
 
-        //Here I create the Lecture object
-//        Lecture result;
-//        result= new Lecture(null, null, null, null, null, -1);
+        //create empty course object
         Course result;
         result= new Course();
+
+
 
         //Url check/manipulation
         //if there is a valid url it gets formated to the correct format
@@ -98,95 +162,19 @@ public class Parse {
                 //Toast.makeText(context, course_code, Toast.LENGTH_SHORT).show();
             }
 
-            //get the lecture Appointments
-            //get the Url for the next web page to parse from
-            Elements td_element_list = doc.select("td");
-            StringBuilder lecture_code_building = new StringBuilder(course_code);
-            lecture_code_building = lecture_code_building.delete(11, 12);
-            String lecture_code = "td:contains(" + lecture_code_building.toString() + " V)";
-            if (!td_element_list.select(lecture_code).isEmpty()) {
-                Elements td_lecture_code_elements = td_element_list.select(lecture_code);
-                Element lecture_code_element = td_lecture_code_elements.get(0);
-                index = td_element_list.indexOf(lecture_code_element);
-                link_td_element = td_element_list.get(index + 3);
-                link_element = link_td_element.getElementsByClass("td-small").first();
-                link_element = link_element.select("a").first();
-                endOf_link = link_element.attr("href");
-                link = "http://www.vvz.ethz.ch" + endOf_link;
-                //get the html document of the just parsed link
-                AsyncTask<String, Void, Document> lectureTask = new NewThread().execute(link);
-                Document docLecture = lectureTask.get();
-                //here we get all tr elements (since in the tr elements there are all the infos for the appointments
-                Elements appointment_elements = docLecture.select("tr");
-                Element appointment_element;
-                //this for loop iterates over all elements of appointment_elements and forms a appointment object for each element
-                for(int i = 1; i < appointment_elements.size(); i++){
-                    //parse all the info for each appointment object
-                    appointment_element = appointment_elements.get(i);
-                    Elements appointment_content = appointment_element.select("td");
-                    day = appointment_content.get(0).text();
-                    hours = appointment_content.get(1).text();
-                    StringBuilder hours_edit = new StringBuilder(hours);
-                    hours_edit.delete(2, hours.length());
-                    start_time_int = Integer.parseInt(hours_edit.toString());
-                    hours_edit = new StringBuilder(hours);
-                    hours_edit.delete(0, 3);
-                    end_time_int = Integer.parseInt(hours_edit.toString());
-                    for(int j = start_time_int;j <= end_time_int; j++){
-                        time.add(j);
-                    }
-                    periodicity = appointment_content.get(2).text();
-                    dates_raw = appointment_content.get(3).text();
-                    //here we only get the raw dates, the dates should get transformed into a arraylist where all dates are one entry
-                    dates.add(dates_raw);
-                    //with the parsed data we can finally create an appointment object and fill that into the lectures arraylist
-                    Appointment lecture = new Appointment(day, time, periodicity, dates);
-                    lectures.add(lecture);
-                }
-            }
+            //get the lecture appointments
+            parse = new Parse();
+            lectures = parse.parseAppointments("V", doc, course_code);
 
+            //get the exercise appointments
+            lecturesAndExercises = parseAppointments("G", doc, course_code);
 
+            //get the exercise appointments
+            exercises = parseAppointments("U", doc, course_code);
 
-            //this is old code which can be deleted, after the new code is implemented
-            //get the day
-            Elements day_element_list = doc.getElementsByClass("td-small");
-/*            if (!doc.getElementsByClass("td-small").isEmpty()) {
-                Element day_element = day_element_list.get(0);
-                //get href (last part of the link) from the element.
-                link_element = day_element.select("a").first();
-                endOf_link = link_element.attr("href");
-                link = "http://www.vvz.ethz.ch" + endOf_link;
+            //get the lab appointments
+            labs = parseAppointments("P", doc, course_code);
 
-                AsyncTask<String, Void, Document> taskGetDay = new NewThread().execute(link);
-
-                Document docGetDay = taskGetDay.get();
-                if (!docGetDay.select("td:contains(Mon)").isEmpty()) {
-                    day_element = docGetDay.select("td:contains(Mon)").get(0);
-                    day = day_element.text();
-                }
-
-//                Toast.makeText(context, day, Toast.LENGTH_SHORT).show();
-            }*/
-
-            //this is old code which can be deleted, after the new code is implemented
-            //get the start_time
-            if (day_element_list.size() >= 1) {
-                Element start_time_element = day_element_list.get(1);
-                StringBuilder parsed_start_time = new StringBuilder(start_time_element.text());
-                parsed_start_time.delete(2, parsed_start_time.length());
-                start_time = parsed_start_time.toString();
-                //Toast.makeText(context, start_time, Toast.LENGTH_SHORT).show();
-            }
-
-            //this is old code which can be deleted, after the new code is implemented
-            //get the end_time
-            if (day_element_list.size() >= 1) {
-                Element end_time_element = day_element_list.get(1);
-                StringBuilder parsed_end_time = new StringBuilder(end_time_element.text());
-                parsed_end_time.delete(0, 3);
-                end_time = parsed_end_time.toString();
-                //Toast.makeText(context, end_time, Toast.LENGTH_SHORT).show();
-            }
 
             //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
             if (doc.select("td") != null) {
@@ -199,23 +187,19 @@ public class Parse {
                 String ECTS_only_number;
                 ECTS_only_number = ECTS_element.text().replace(" credits", "");
                 ECTS = Integer.parseInt(ECTS_only_number);
-//                Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
             }
             //create a Lecture object with the just parsed content
-            result= new Course(name, lectures, exercises, labs, day, start_time, end_time, course_code, ECTS);
+            result= new Course(name, lectures, lecturesAndExercises, exercises, labs, course_code, ECTS);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-
-
-
 
 
         //Toast messages to give a feedback if the lecture couldn't fully get parsed
         if (result.isEmpty()) {
             Toast.makeText(context, "error while saving lecture", Toast.LENGTH_SHORT).show();
         }
-
 
         return result;
     }
