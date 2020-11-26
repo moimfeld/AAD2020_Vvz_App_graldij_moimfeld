@@ -1,4 +1,4 @@
-package com.example.aad2020_vvz_app_graldij_moimfeld;
+package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Timetable extends AppCompatActivity {
