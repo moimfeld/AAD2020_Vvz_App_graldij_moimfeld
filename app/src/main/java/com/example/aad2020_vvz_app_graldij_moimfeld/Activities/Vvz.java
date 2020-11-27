@@ -63,13 +63,7 @@ public class Vvz extends AppCompatActivity {
                 Parse parse = new Parse();
                 Course new_parse = parse.parse(Objects.requireNonNull(myWebView.getUrl()), getApplicationContext());
                 //check whether the Lecture fully parsed
-                if(new_parse.name != null
-                        && (!new_parse.lectures.isEmpty()
-                            || !new_parse.lecturesAndExercises.isEmpty()
-                            || !new_parse.exercises.isEmpty()
-                            || !new_parse.labs.isEmpty())
-                        && new_parse.course_code != null
-                        && new_parse.ECTS != -1) {
+                if(!new_parse.isEmpty()) {
                     //check if the saved_lecture ArrayList is empty
                     if (MainActivity.saved_courses.size() > 0) {
                         //check if the Lecture is already in the ArrayList
