@@ -8,12 +8,14 @@ public class Appointment {
     public ArrayList<Integer> time;
     public String periodicity;
     public ArrayList<String> dates;
+    public boolean selected;
 
     public Appointment(String day, ArrayList<Integer> time, String periodicity, ArrayList<String> dates){
         this.day = day;
         this.time = time;
         this.periodicity = periodicity;
         this.dates = dates;
+        this.selected = true;
     }
 
     public boolean isEmpty(){
@@ -27,4 +29,7 @@ public class Appointment {
     public int getEndTime(){
         return this.time.get(this.time.size()-1);
     }
+
+    public boolean isSelected(){ return this.selected;}
+
 }
