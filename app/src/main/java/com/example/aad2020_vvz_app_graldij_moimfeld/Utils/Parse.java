@@ -13,7 +13,6 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -95,17 +94,12 @@ public class Parse {
                 String[] placeArray = StringUtils.split(place_parse, "<br>");
                 //Sets have the property of not having duplicates, so I initialize a HashSet with my placeArray, to filter out any duplicates
                 Set<String> placeSet = new HashSet<>(Arrays.asList(placeArray));
-                String place = "";
-                //with the use of an iterate I make a new appointment for each place there is in the set
-                Iterator<String> it = placeSet.iterator();
-                while(it.hasNext()){
-                    place = it.next();
+                String place;
+                for (String s : placeSet) {
+                    place = s;
                     Appointment category_appointment = new Appointment(day, time, periodicity, dates, place);
                     r.add(category_appointment);
                 }
-                //with the parsed data we can finally create an appointment object and fill that into the lectures arraylist
-                //Appointment category_appointment = new Appointment(day, time, periodicity, dates, place);
-                //r.add(category_appointment);
             }
             return r;
         }
