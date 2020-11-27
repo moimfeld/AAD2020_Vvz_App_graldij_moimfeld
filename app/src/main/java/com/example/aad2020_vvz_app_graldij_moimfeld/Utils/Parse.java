@@ -5,11 +5,16 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 //documentation: https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/org/apache/commons/lang3/RegExUtils.html
 import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 
@@ -24,8 +29,6 @@ public class Parse {
         Element link_element;
         String endOf_link;
         String link;
-
-
 
         //return ArrayList
         ArrayList<Appointment> r = new ArrayList<>();
@@ -69,26 +72,40 @@ public class Parse {
                 Elements appointment_content = appointment_element.select("td");
                 //get the day of this appointment
                 day = appointment_content.get(0).text();
-                //get the hours of this appointment
-                String hours = appointment_content.get(1).text();
-                //transform the hours string into the wanted format
-                StringBuilder hours_edit = new StringBuilder(hours);
-                hours_edit.delete(2, hours.length());
-                int start_time_int = Integer.parseInt(hours_edit.toString());
-                hours_edit = new StringBuilder(hours);
-                hours_edit.delete(0, 3);
-                int end_time_int = Integer.parseInt(hours_edit.toString());
-                for(int j = start_time_int;j <= end_time_int; j++){
-                    time.add(j);
+                    //get the hours of this appointment
+                    String hours = appointment_content.get(1).text();
+                    //transform the hours string into the wanted format
+                    StringBuilder hours_edit = new StringBuilder(hours);
+                    hours_edit.delete(2, hours.length());
+                    int start_time_int = Integer.parseInt(hours_edit.toString());
+                    hours_edit = new StringBuilder(hours);
+                    hours_edit.delete(0, 3);
+                    int end_time_int = Integer.parseInt(hours_edit.toString());
+                    for(int j = start_time_int;j <= end_time_int; j++){
+                        time.add(j);
                 }
                 periodicity = appointment_content.get(2).text();
                 String dates_raw = appointment_content.get(3).text();
-                //here we only get the raw dates, the dates should get transformed into a arraylist where all dates are one entry
-
                 dates.add(dates_raw);
+
+                //since the places of the appointments aren't clearly separated via HTML code I just parse though the HTML section by myself
+                //first I get the HTML block and remove all "&nbsp;"
+                String place_parse = StringUtils.replace(appointment_content.get(4).html(), "&nbsp;", "");
+                //places are separated by "<br>", so I split the String into an array of strings with each place in it
+                String[] placeArray = StringUtils.split(place_parse, "<br>");
+                //Sets have the property of not having duplicates, so I initialize a HashSet with my placeArray, to filter out any duplicates
+                Set<String> placeSet = new HashSet<>(Arrays.asList(placeArray));
+                String place = "";
+                //with the use of an iterate I make a new appointment for each place there is in the set
+                Iterator<String> it = placeSet.iterator();
+                while(it.hasNext()){
+                    place = it.next();
+                    Appointment category_appointment = new Appointment(day, time, periodicity, dates, place);
+                    r.add(category_appointment);
+                }
                 //with the parsed data we can finally create an appointment object and fill that into the lectures arraylist
-                Appointment category_appointment = new Appointment(day, time, periodicity, dates);
-                r.add(category_appointment);
+                //Appointment category_appointment = new Appointment(day, time, periodicity, dates, place);
+                //r.add(category_appointment);
             }
             return r;
         }
