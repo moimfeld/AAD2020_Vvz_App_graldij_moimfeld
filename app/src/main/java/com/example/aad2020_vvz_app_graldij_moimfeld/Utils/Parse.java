@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 
-
+//there is still a bug, where the app crashes, when there is only an hour category and no date/time in a lecture
 public class Parse {
 
     public ArrayList<Appointment> parseAppointments (String category, Document doc, String course_code){
