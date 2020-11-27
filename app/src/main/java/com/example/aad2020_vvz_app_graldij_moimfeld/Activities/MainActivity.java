@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
                         test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
                         j++;
                     }
+                test_string.append("\n");
                     j = 0;
-                    test_string.append("\n");
                     while(j < test.lecturesAndExercises.size()){
                         Appointment current = test.lecturesAndExercises.get(j);
                         test_string.append("Lecture And Exercise Appointment: ").append(j+1).append(": \n");
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
                         test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
                         j++;
                 }
+                test_string.append("\n");
                     j = 0;
-                    test_string.append("\n");
                     while(j < test.exercises.size()){
                         Appointment current = test.exercises.get(j);
                         test_string.append("Exercise Appointment: ").append(j+1).append(": \n");
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                         test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
                         j++;
                 }
+                test_string.append("\n");
                     j = 0;
-                    test_string.append("\n");
                     while(j < test.labs.size()){
                         Appointment current = test.labs.get(j);
                         test_string.append("Lab Appointment: ").append(j+1).append(": \n");
@@ -80,13 +80,14 @@ public class MainActivity extends AppCompatActivity {
                         test_string.append("Dates: ").append(current.dates.get(0)).append("\n");
                         j++;
                 }
+                test_string.append("\n");
                 TextView tv = findViewById(R.id.textView3);
                 tv.setText(test_string);
             }
         }
 
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_MainActivity);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
