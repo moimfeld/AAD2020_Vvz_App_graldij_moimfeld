@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayoutCourse1"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="@android:color/transparent"
+    android:orientation="vertical"
+    android:paddingLeft="25dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="25dp"
+    android:paddingBottom="4dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            card_view:cardBackgroundColor="#FFFFFF"
+            card_view:cardCornerRadius="10dp"
+            card_view:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#00FFFFFF"
+                    android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/recycler_row_Course_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:gravity="center"
+                                    android:text="Course_name"
+                                    android:textAlignment="gravity"
+                                    android:textColor="#000000"
+                                    android:textSize="20sp" />
+
+                                <TextView
+                                    android:id="@+id/recycler_row_credits"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="30dp"
+                                    android:gravity="center"
+                                    android:text="credits"
+                                    android:textColor="#000000"
+                                    android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/button_appointments"
+                                    style="?android:attr/borderlessButtonStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="#00FFFFFF"
+                                    android:elevation="1dp"
+                                    android:text="select appointments"
+                                    android:textAllCaps="false"
+                                    android:textSize="10dp" />
+
+                                <Button
+                                    android:id="@+id/button_delete"
+                                    style="?android:attr/borderlessButtonStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="#00FFFFFF"
+                                    android:elevation="1dp"
+                                    android:text="delete"
+                                    android:textColor="#FF0000"
+                                    android:textSize="10dp" />
+
+                        </LinearLayout>
+                </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
