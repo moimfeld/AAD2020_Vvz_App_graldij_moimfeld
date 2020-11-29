@@ -57,4 +57,13 @@ public class Course {
                 || this.course_code == null
                 || this.ECTS == -1);
     }
+
+    public ArrayList<Appointment> getAllAppointments(){
+        ArrayList<Appointment> result = new ArrayList<>();
+        result.addAll(this.lectures);
+        result.addAll(this.lecturesAndExercises);
+        result.addAll(this.exercises);
+        result.addAll(this.labs);
+        return result;
+    }
 }
