@@ -22,15 +22,42 @@ public class Parse {
 
     public ArrayList<Appointment> parseAppointments (String category, Document doc, String course_code){
 
+
         //this is a auxiliary variables
         int index;
         Element link_td_element;
         Element link_element;
         String endOf_link;
         String link;
+        String category_fullString;
 
         //return ArrayList
         ArrayList<Appointment> r = new ArrayList<>();
+
+
+        //set the category_fullstring
+        switch(category){
+            case "V":
+                category_fullString = "Lecture";
+                break;
+
+            case "G":
+                category_fullString = "Lecture of Exercise";
+                break;
+
+            case "U":
+                category_fullString = "Exercise";
+                break;
+
+            case "P":
+                category_fullString = "Lab";
+                break;
+
+            default:
+                category_fullString = "no category defined";
+                break;
+        }
+
 
 
         Elements td_element_list = doc.select("td");
@@ -100,7 +127,7 @@ public class Parse {
                     String place;
                     for (String s : placeSet) {
                         place = s;
-                        Appointment category_appointment = new Appointment(day, time, periodicity, dates, place);
+                        Appointment category_appointment = new Appointment(category_fullString, day, time, periodicity, dates, place);
                         r.add(category_appointment);
                     }
                 }

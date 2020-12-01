@@ -34,9 +34,9 @@ public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<Appointmen
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerApdapter.AppointmentItemHolder holder, int position) {
         // We set the texts and the image of our MenuItemHolder object
-        holder.day.setText("Day: " +appointments.get(position).day);
-        holder.start.setText("Start of the Lecture: " + Integer.toString(appointments.get(position).getStartTime()));
-        holder.end.setText("End of the Lecture: " + Integer.toString(appointments.get(position).getEndTime()));
+        holder.category.setText(appointments.get(position).category);
+        holder.day.setText("Day: " + appointments.get(position).day);
+        holder.time.setText("Time: " + Integer.toString(appointments.get(position).getStartTime()) + " - " + Integer.toString(appointments.get(position).getEndTime()));
         holder.place.setText("Place: " + appointments.get(position).place);
     }
 
@@ -47,15 +47,15 @@ public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<Appointmen
 
 
     static class AppointmentItemHolder extends RecyclerView.ViewHolder {
-        TextView day, start, end, place;
+        TextView category, day, time, place;
         LinearLayout linearLayoutAppointment;
 
         public AppointmentItemHolder(@NonNull View itemView) {
             super(itemView);
             // links the attributes with the recycler_row items
+            category = itemView.findViewById(R.id.recycler_row_appointment_category);
             day = itemView.findViewById(R.id.recycler_row_appointment_day);
-            start = itemView.findViewById(R.id.recycler_row_appointment_start);
-            end = itemView.findViewById(R.id.recycler_row_appointment_end);
+            time = itemView.findViewById(R.id.recycler_row_appointment_time);
             place = itemView.findViewById(R.id.recycler_row_appointments_place);
             linearLayoutAppointment = itemView.findViewById(R.id.recycler_row_appointment_linearlayout);
 

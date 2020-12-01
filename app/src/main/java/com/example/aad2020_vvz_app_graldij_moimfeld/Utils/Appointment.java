@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Appointment {
 
+    public String category;
     public String day;
     public ArrayList<Integer> time;
     public String periodicity;
@@ -11,7 +12,8 @@ public class Appointment {
     public String place;
     public boolean selected;
 
-    public Appointment(String day, ArrayList<Integer> time, String periodicity, ArrayList<String> dates, String place){
+    public Appointment(String category, String day, ArrayList<Integer> time, String periodicity, ArrayList<String> dates, String place){
+        this.category = category;
         this.day = day;
         this.time = time;
         this.periodicity = periodicity;
