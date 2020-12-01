@@ -223,11 +223,10 @@ public class Parse {
                 Elements ECTS_element_list = doc.select("td:contains(ECTS credits)"); //.select("td:contains(credits)" looks for any td elements in the document that contains the string "credits"
                 Element ECTS_element_entry=ECTS_element_list.get(0); //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
                 //overwrite
-                ECTS_element_list = doc.select("td:contains(credits)"); //select all elements containing "credits
+                ECTS_element_list = doc.select("td:contains(credit)"); //select all elements containing "credits
                 index = ECTS_element_list.indexOf(ECTS_element_entry);//find index of the element with "ECTS credits"
                 Element ECTS_element = ECTS_element_list.get(index+1); //use as credit the immediately following "credit" entry
-                String ECTS_only_number;
-                ECTS_only_number = ECTS_element.text().replace(" credits", "");
+                String ECTS_only_number = RegExUtils.removeAll(ECTS_element.text(), "( credits| credit)");
                 ECTS = Integer.parseInt(ECTS_only_number);
                 //Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
             }
