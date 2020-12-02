@@ -56,6 +56,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         holder.delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 MainActivity.saved_courses.remove(position);
+                //this line is to update the recyclerview. without it the recyclerview crashes
                 notifyItemRemoved(position);
             }
         });
@@ -119,19 +120,6 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         AppointmentRecyclerApdapter appointmentRecyclerApdapter = new AppointmentRecyclerApdapter(courses.get(position).getAllAppointments());
 
         appointmentRecyclerView.setAdapter(appointmentRecyclerApdapter);
-
-
-        //example of how to use buttons in popupWindow!!!
-//        Button buttonEdit = popupView.findViewById(R.id.messageButton);
-//        buttonEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                //As an example, display the message
-//                Toast.makeText(view.getContext(), "Wow, popup action button", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
 
 
 
