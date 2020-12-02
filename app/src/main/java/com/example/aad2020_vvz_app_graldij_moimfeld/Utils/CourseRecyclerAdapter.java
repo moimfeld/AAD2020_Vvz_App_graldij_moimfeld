@@ -29,12 +29,14 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     private final Context context;
     //totalCredits is needed such that the amount of credits can be can be changed when a lecture gets deleted
     private final TextView totalCredits;
+    private final TextView actionBar;
 
     //Constructor
-    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits) {
+    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar) {
         this.courses = courses;
         this.context = context;
         this.totalCredits = totalCredits;
+        this.actionBar = actionBar;
     }
 
 
@@ -69,6 +71,14 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                     totalCreditsNumber += c.ECTS;
                 }
                 totalCredits.setText(Integer.toString(totalCreditsNumber));
+
+                //here i set the Action bar to the empty state, when the last lecture got deleted
+                if(MainActivity.saved_courses.size() != 0){
+                    actionBar.setText("Course Drawer");
+                }
+                else{
+                    actionBar.setText("Course Drawer is empty");
+                }
             }
         });
     }

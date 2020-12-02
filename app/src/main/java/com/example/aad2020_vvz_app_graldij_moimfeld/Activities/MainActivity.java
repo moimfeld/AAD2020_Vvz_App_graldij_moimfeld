@@ -32,7 +32,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        TextView actionBar = findViewById(R.id.action_bar_mainactivity);
+        if(saved_courses.size() != 0){
+            actionBar.setText("Course Drawer");
+        }
+        else{
+            actionBar.setText("Course Drawer is empty");
+        }
         TextView totalCredits = findViewById(R.id.main_activity_total_credits);
         int totalCreditsNumber = 0;
         for(Course c : saved_courses){
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewCourses);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits);
+        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits, actionBar);
         recyclerView.setAdapter(CourseRecyclerAdapter);
 
 
