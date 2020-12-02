@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutCourse1"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="110dp"
     android:background="@android:color/transparent"
     android:orientation="vertical"
     android:paddingLeft="25dp"
@@ -29,7 +29,8 @@
                     android:background="#00FFFFFF"
                     android:orientation="horizontal">
 
-                        <LinearLayout
+                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.3"
@@ -44,16 +45,20 @@
                                     android:text="Course_name"
                                     android:textAlignment="gravity"
                                     android:textColor="#000000"
-                                    android:textSize="20sp" />
+                                    android:textStyle="bold"
+                                    app:autoSizeMaxTextSize="18sp"
+                                    app:autoSizeMinTextSize="12sp"
+                                    app:autoSizeStepGranularity="2sp"
+                                    app:autoSizeTextType="uniform" />
 
                                 <TextView
                                     android:id="@+id/recycler_row_credits"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
+                                    android:layout_height="20dp"
                                     android:gravity="center"
                                     android:text="credits"
                                     android:textColor="#000000"
-                                    android:textSize="15sp" />
+                                    android:textSize="12sp" />
 
                         </LinearLayout>
 
@@ -70,10 +75,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:backgroundTint="#00FFFFFF"
-                                    android:elevation="1dp"
                                     android:text="select appointments"
                                     android:textAllCaps="false"
-                                    android:textSize="10dp" />
+                                    android:textSize="12sp" />
 
                                 <Button
                                     android:id="@+id/button_delete"
@@ -81,10 +85,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:backgroundTint="#00FFFFFF"
-                                    android:elevation="1dp"
+                                    android:elevation="0dp"
                                     android:text="delete"
                                     android:textColor="#FF0000"
-                                    android:textSize="10dp" />
+                                    android:textSize="12sp" />
 
                         </LinearLayout>
                 </LinearLayout>
