@@ -42,7 +42,7 @@ public class Parse {
                 break;
 
             case "G":
-                category_fullString = "Lecture of Exercise";
+                category_fullString = "Lecture or Exercise";
                 break;
 
             case "U":
@@ -69,66 +69,69 @@ public class Parse {
             Element category_code_element = td_category_code_elements.get(0);
             index = td_element_list.indexOf(category_code_element);
             link_td_element = td_element_list.get(index + 3);
-            link_element = link_td_element.getElementsByClass("td-small").first();
-            link_element = link_element.select("a").first();
-            endOf_link = link_element.attr("href");
-            link = "http://www.vvz.ethz.ch" + endOf_link;
-            //get the html document of the just parsed link
-            AsyncTask<String, Void, Document> categoryTask = new NewThread().execute(link);
-            Document docCategory = null;
-            try {
-                docCategory = categoryTask.get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            //here we get all tr elements (since in the tr elements there are all the infos for the appointments
-            Elements appointment_elements = docCategory.select("tr");
-            //this for loop iterates over all elements of appointment_elements and forms a appointment object for each element
-            r = new ArrayList<>(appointment_elements.size()-1);
-            for(int i = 1; i < appointment_elements.size(); i++){
-
-                //get ith appointment element
-                Element appointment_element = appointment_elements.get(i);
-                //get all td elements (in the td elements are the wanted information about time date etc.) of the ith appointment_element
-                Elements appointment_content = appointment_element.select("td");
-
-                if (!appointment_content.get(2).text().equals("Continuous")) {
-                    //create the variables for the Appointment object
-                    //it is 1000% important to create new arrays for each iteration through the for loop, since we'll pass the array to the Appointment object, and we need to get new arrays for each object
-                    ArrayList<Integer> time = new ArrayList<>();
-                    ArrayList<String> dates = new ArrayList<>();
-                    String day = null;
-                    String periodicity = null;
-                    //get the day of this appointment
-                    day = appointment_content.get(0).text();
-                    //get the hours of this appointment
-                    String hours = appointment_content.get(1).text();
-                    //transform the hours string into the wanted format
-                    StringBuilder hours_edit = new StringBuilder(hours);
-                    hours_edit.delete(2, hours.length());
-                    int start_time_int = Integer.parseInt(hours_edit.toString());
-                    hours_edit = new StringBuilder(hours);
-                    hours_edit.delete(0, 3);
-                    int end_time_int = Integer.parseInt(hours_edit.toString());
-                    for(int j = start_time_int;j <= end_time_int; j++){
-                        time.add(j);
+            //this if statement filters out all courses which don't have any day/time entries on their page. This is done to prevent crashes
+            if(link_td_element.getElementsByClass("td-small").size() != 0) {
+                link_element = link_td_element.getElementsByClass("td-small").first();
+                link_element = link_element.select("a").first();
+                endOf_link = link_element.attr("href");
+                link = "http://www.vvz.ethz.ch" + endOf_link;
+                //get the html document of the just parsed link
+                AsyncTask<String, Void, Document> categoryTask = new NewThread().execute(link);
+                Document docCategory = null;
+                try {
+                    docCategory = categoryTask.get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
                 }
-                    periodicity = appointment_content.get(2).text();
-                    String dates_raw = appointment_content.get(3).text();
-                    dates.add(dates_raw);
+                //here we get all tr elements (since in the tr elements there are all the infos for the appointments
+                Elements appointment_elements = docCategory.select("tr");
+                //this for loop iterates over all elements of appointment_elements and forms a appointment object for each element
+                r = new ArrayList<>(appointment_elements.size() - 1);
+                for (int i = 1; i < appointment_elements.size(); i++) {
 
-                    //since the places of the appointments aren't clearly separated via HTML code I just parse though the HTML section by myself
-                    //first I get the HTML block and remove all "&nbsp;"
-                    String place_parse = StringUtils.replace(appointment_content.get(4).html(), "&nbsp;", "");
-                    //places are separated by "<br>", so I split the String into an array of strings with each place in it
-                    String[] placeArray = StringUtils.split(place_parse, "<br>");
-                    //Sets have the property of not having duplicates, so I initialize a HashSet with my placeArray, to filter out any duplicates
-                    Set<String> placeSet = new HashSet<>(Arrays.asList(placeArray));
-                    String place;
-                    for (String s : placeSet) {
-                        place = s;
-                        Appointment category_appointment = new Appointment(category_fullString, day, time, periodicity, dates, place);
-                        r.add(category_appointment);
+                    //get ith appointment element
+                    Element appointment_element = appointment_elements.get(i);
+                    //get all td elements (in the td elements are the wanted information about time date etc.) of the ith appointment_element
+                    Elements appointment_content = appointment_element.select("td");
+
+                    if (!appointment_content.get(2).text().equals("Continuous")) {
+                        //create the variables for the Appointment object
+                        //it is 1000% important to create new arrays for each iteration through the for loop, since we'll pass the array to the Appointment object, and we need to get new arrays for each object
+                        ArrayList<Integer> time = new ArrayList<>();
+                        ArrayList<String> dates = new ArrayList<>();
+                        String day;
+                        String periodicity;
+                        //get the day of this appointment
+                        day = appointment_content.get(0).text();
+                        //get the hours of this appointment
+                        String hours = appointment_content.get(1).text();
+                        //transform the hours string into the wanted format
+                        StringBuilder hours_edit = new StringBuilder(hours);
+                        hours_edit.delete(2, hours.length());
+                        int start_time_int = Integer.parseInt(hours_edit.toString());
+                        hours_edit = new StringBuilder(hours);
+                        hours_edit.delete(0, 3);
+                        int end_time_int = Integer.parseInt(hours_edit.toString());
+                        for (int j = start_time_int; j <= end_time_int; j++) {
+                            time.add(j);
+                        }
+                        periodicity = appointment_content.get(2).text();
+                        String dates_raw = appointment_content.get(3).text();
+                        dates.add(dates_raw);
+
+                        //since the places of the appointments aren't clearly separated via HTML code I just parse though the HTML section by myself
+                        //first I get the HTML block and remove all "&nbsp;"
+                        String place_parse = StringUtils.replace(appointment_content.get(4).html(), "&nbsp;", "");
+                        //places are separated by "<br>", so I split the String into an array of strings with each place in it
+                        String[] placeArray = StringUtils.split(place_parse, "<br>");
+                        //Sets have the property of not having duplicates, so I initialize a HashSet with my placeArray, to filter out any duplicates
+                        Set<String> placeSet = new HashSet<>(Arrays.asList(placeArray));
+                        String place;
+                        for (String s : placeSet) {
+                            place = s;
+                            Appointment category_appointment = new Appointment(category_fullString, day, time, periodicity, dates, place);
+                            r.add(category_appointment);
+                        }
                     }
                 }
             }
