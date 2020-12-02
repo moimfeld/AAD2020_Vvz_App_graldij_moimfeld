@@ -43,4 +43,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.jsoup/jsoup
     //Jsoup:
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    implementation 'com.github.alamkanak:android-week-view:1.2.6'
 }

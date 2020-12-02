@@ -7,6 +7,184 @@
     tools:context=".Activities.Timetable">
 
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#ffffff"
+        android:id="@+id/days"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:weightSum="5.7">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="0.7"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Time"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Monday"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Tuesday"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Wednesday"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Thursday"
+                android:textColor="#000000" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#dcdcdc"
+                android:ellipsize="end"
+                android:padding="2dip"
+                android:singleLine="false"
+                android:text="Friday"
+                android:textColor="#000000" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/days"
+        tools:layout_editor_absoluteX="1dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:weightSum="5.7">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.7"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="8.00-9.00"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Mon_8"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="Monday8"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Tue_8"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="Tuesday8"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Wed_8"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="Wednesday8"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Thu_8"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:backgroundTint="#B63131"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="Thursday8"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Fri_8"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="Friday8"
+                    android:textColor="#000000" />
+
+
+            </TableRow>
+
+
+        </TableLayout>
+    </ScrollView>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="409dp"
@@ -17,152 +195,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu" >
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Timetable"-->
-<!--        tools:layout_editor_absoluteX="163dp"-->
-<!--        tools:layout_editor_absoluteY="298dp" />-->
-
-    <TableLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        >
-
-        <TableRow
-            android:id="@+id/eight"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/Monday_8"
-                android:text="Row 2 column 1"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#dcdcdc"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Tuesday_8"
-                android:text="Row 2 column 2"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#d3d3d3"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Wednesday_8"
-                android:text="Row 2 sdfsdfsdfsdfsdfsdfsdfsdfsdfsdsdfsdsdfsdfsdfsdcolumn 3"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#cac9c9"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/nine"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/Monday_9"
-                android:text="Row 2 column 1"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#dcdcdc"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Tuesday_9"
-                android:text="Row 2 column 2"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#d3d3d3"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Wednesday_9"
-                android:text="Row 2 sdfsdfsdfsdfsdfsdfsdfsdfsdfsdsdfsdsdfsdfsdfsdcolumn 3"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#cac9c9"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/ten"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:weightSum="3">
-
-            <TextView
-                android:id="@+id/Monday_10"
-                android:text="Row 2 column 1"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#dcdcdc"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Tuesday_10"
-                android:text="Row 2 column 2"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#d3d3d3"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/Wednesday_10"
-                android:text="Row 2 sdfsdfsdfsdfsdfsdfsdfsdfsdfsdsdfsdsdfsdfsdfsdcolumn 3"
-                android:layout_width="0dp"
-                android:layout_weight="1" android:background="#cac9c9"
-                android:textColor="#000000"
-                android:padding="20dip"
-                android:gravity="center"
-                android:singleLine="true"
-                android:ellipsize="end"/>
-        </TableRow>
-
-
-
-
-
-
-
-
-    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
