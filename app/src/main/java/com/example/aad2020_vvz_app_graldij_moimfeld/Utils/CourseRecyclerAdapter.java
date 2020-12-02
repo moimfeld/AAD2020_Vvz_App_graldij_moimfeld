@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import java.util.ArrayList;
 
@@ -46,9 +48,15 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         // We set the texts and the image of our MenuItemHolder object
         holder.name.setText(courses.get(position).name);
         holder.credits.setText(courses.get(position).ECTS + " credits");
-        holder.button.setOnClickListener(new View.OnClickListener() {
+        holder.button_appointments.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
               showPopupWindow(position);
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                MainActivity.saved_courses.remove(position);
+                notifyItemRemoved(position);
             }
         });
     }
@@ -63,7 +71,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     class CourseItemHolder extends RecyclerView.ViewHolder {
         TextView name, credits;
         LinearLayout linearLayoutCourse1;
-        Button button;
+        Button button_appointments, delete;
 
         public CourseItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,7 +79,8 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             name = itemView.findViewById(R.id.recycler_row_Course_name);
             credits = itemView.findViewById(R.id.recycler_row_credits);
             linearLayoutCourse1 = itemView.findViewById(R.id.linearLayoutCourse1);
-            button = itemView.findViewById(R.id.button_appointments);
+            button_appointments = itemView.findViewById(R.id.button_appointments);
+            delete = itemView.findViewById(R.id.button_delete);
         }
 
     }
@@ -137,6 +146,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             }
         });
     }
+
 
 
 }
