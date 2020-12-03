@@ -63,22 +63,27 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             public void onClick(View v) {
-                MainActivity.saved_courses.remove(position);
-                //this line is to update the recyclerview. without it the recyclerview crashes
-                notifyItemRemoved(position);
-                int totalCreditsNumber = 0;
-                for(Course c : MainActivity.saved_courses){
-                    totalCreditsNumber += c.ECTS;
-                }
-                totalCredits.setText(Integer.toString(totalCreditsNumber));
 
-                //here i set the Action bar to the empty state, when the last lecture got deleted
-                if(MainActivity.saved_courses.size() != 0){
-                    actionBar.setText("Course Drawer");
+                //check whether the delete button would trigger a out of bound exception or not
+                if (position < MainActivity.saved_courses.size()) {
+                    MainActivity.saved_courses.remove(position);
+                    //this line is to update the recyclerview. without it the recyclerview crashes
+                    notifyItemRemoved(position);
+                    int totalCreditsNumber = 0;
+                    for(Course c : MainActivity.saved_courses){
+                        totalCreditsNumber += c.ECTS;
+                    }
+                    totalCredits.setText(Integer.toString(totalCreditsNumber));
+
+                    //here i set the Action bar to the empty state, when the last lecture got deleted
+                    if(MainActivity.saved_courses.size() != 0){
+                        actionBar.setText("Course Drawer");
+                    }
+                    else{
+                        actionBar.setText("Course Drawer is empty");
+                    }
                 }
-                else{
-                    actionBar.setText("Course Drawer is empty");
-                }
+
             }
         });
     }
