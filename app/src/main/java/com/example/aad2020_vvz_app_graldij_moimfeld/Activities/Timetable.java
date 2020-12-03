@@ -30,6 +30,9 @@ public class Timetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+
+        getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
+
         Stack<String> color_palette = new Stack<>();
         color_palette.addAll(Arrays.asList(
                 "#FF8A80", "#EA80FC", "#8C9EFF", "#80D8FF",
