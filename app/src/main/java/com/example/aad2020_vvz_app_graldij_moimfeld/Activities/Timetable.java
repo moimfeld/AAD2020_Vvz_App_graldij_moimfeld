@@ -79,7 +79,7 @@ public class Timetable extends AppCompatActivity {
                         int new_color = Color.parseColor(current_color);
                         int blendedColor = ColorUtils.blendARGB(old_color, new_color, 0.5F);
                         text.setBackgroundColor(blendedColor);
-                        text.setText(name+"+"+old_name);
+                        text.setText(old_name+"&"+name);
                          Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
                     }
 
@@ -88,7 +88,6 @@ public class Timetable extends AppCompatActivity {
             }
 
         }
-
 
 
 

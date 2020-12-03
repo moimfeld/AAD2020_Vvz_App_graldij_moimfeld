@@ -31,7 +31,7 @@ public class Appointment {
     }
 
     public int getEndTime(){
-        return this.time.get(this.time.size()-1);
+        return this.time.get(this.time.size()-1)+1;
     }
 
     public boolean isSelected(){ return this.selected;}
