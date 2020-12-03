@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Set the status bar color to the ETH color
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
+
+
         TextView actionBar = findViewById(R.id.action_bar_mainactivity);
         if(saved_courses.size() != 0){
             actionBar.setText("Course Drawer");
