@@ -16,6 +16,7 @@ import androidx.core.graphics.ColorUtils;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
+import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.DisplayLecture;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -25,8 +26,44 @@ import java.util.Stack;
 
 public class Timetable extends AppCompatActivity {
 
+    public boolean containsCell(ArrayList<DisplayLecture> used_ids, String celltofind){
+        for (DisplayLecture time_slot : used_ids){
+            if (time_slot.cell.equals(celltofind)){
+                Toast.makeText(this, "true", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        }
+        return false;
+    }
+    public int cellInArrayListIndex(ArrayList<DisplayLecture> used_ids, String celltofind){
+        for (DisplayLecture time_slot : used_ids){
+            if (time_slot.cell==celltofind){
+                return used_ids.indexOf(time_slot);
+            }
+        }
+        return 0;
+    }
+    public int[] convertArrayListToArray(ArrayList<Integer> arrayList){
+        int size=arrayList.size();
+        int[] array = new int[size];
+        for(int i=0; i<size; i++){
+            array[i] = arrayList.get(i).intValue();
+        }
+        return array;
+    }
 
-    ArrayList<String> used_ids = new ArrayList<>();
+    public String convertArrayListToString(ArrayList<String> arrayList){
+        String outputstring = new String();
+        for(String string_element : arrayList){
+            outputstring +=string_element;
+                    if(!(arrayList.indexOf(string_element) == (arrayList.size() -1))){ //check if not the last element in the Arraylist. If not: append " &"
+                        outputstring+=" &";
+                    }
+        }
+        return outputstring;
+    }
+
+    ArrayList<DisplayLecture> used_ids = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +73,9 @@ public class Timetable extends AppCompatActivity {
 
         Stack<String> color_palette = new Stack<>();
         color_palette.addAll(Arrays.asList(
-                "#FF8A80", "#EA80FC", "#8C9EFF", "#80D8FF",
+                "#B63131", "#EA80FC", "#8C9EFF", "#80D8FF",
                 "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
-                "#1E88E5", "#B63131", "#43A047",  "#FF0000"));
+                "#1E88E5", "#FF8A80", "#43A047",  "#FF0000"));
 
         for(Course course : MainActivity.saved_courses){
             String name=course.name;
@@ -61,31 +98,34 @@ public class Timetable extends AppCompatActivity {
                     String cell = day+"_"+time.toString();
 //                   cell="Mon_8";
                     int id = getResources().getIdentifier(cell, "id", getPackageName());
-                     if(!used_ids.contains(cell)){
-                            used_ids.add(cell);
+
+                     if(!containsCell(used_ids,cell)){
+                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name);
+                            used_ids.add(new_cell_slot);
+
                             TextView text = findViewById(id);
                             text.setText(name);
                             text.setBackgroundColor(Color.parseColor(current_color));
-                            Toast.makeText(this, "1"+name+cell, Toast.LENGTH_SHORT).show();
-                        //set background with random color, mixed if more lectures
-                        }
-                    else {
-                        TextView text = findViewById(id);
-                        int old_color;
-                        Drawable background = text.getBackground();
-                            old_color= ((ColorDrawable) background).getColor();
-                            String old_name=text.getText().toString();
 
-                        int new_color = Color.parseColor(current_color);
-//                        int blendedColor = ColorUtils.blendARGB(old_color, new_color, 0.5F);
-//                        text.setBackgroundColor(blendedColor);
-                         int[] colors = new int[]{old_color, new_color};
+                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
+
+                     }
+                    else {
+                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+                        used_ids.get(cellInArrayListIndex(used_ids, cell)).addColor(Color.parseColor(current_color));
+
+                        TextView text = findViewById(id);
+
+                         int[] colors = convertArrayListToArray(used_ids.get(cellInArrayListIndex(used_ids, cell)).colors_for_cell);
 //                         GradientDrawable.Orientation orientation = new GradientDrawable.Orientation();
 //                         orientation.valueOf("LEFT_RIGHT");
                          Drawable gradient= new GradientDrawable(GradientDrawable.Orientation.valueOf("LEFT_RIGHT"), colors);
                          text.setBackground(gradient);
-                        text.setText(old_name+"&"+name);
-                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+
+                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addName(name);
+
+                        text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
+//                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
                     }
 
 
