@@ -12,7 +12,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.Vvz"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".Activities.Timetable" />
+        <activity android:name=".Activities.Timetable"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".Activities.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
