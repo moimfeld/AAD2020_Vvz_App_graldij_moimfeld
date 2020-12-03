@@ -126,7 +126,6 @@
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="Monday8"
                     android:textColor="#000000" />
 
                 <TextView
@@ -135,11 +134,12 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="#dcdcdc"
+                    android:backgroundTint="#dcdcdc"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="Tuesday8"
                     android:textColor="#000000" />
+
 
                 <TextView
                     android:id="@+id/Wed_8"
@@ -150,7 +150,6 @@
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="Wednesday8"
                     android:textColor="#000000" />
 
                 <TextView
@@ -159,11 +158,10 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="#dcdcdc"
-                    android:backgroundTint="#B63131"
+                    android:backgroundTint="#dcdcdc"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="Thursday8"
                     android:textColor="#000000" />
 
                 <TextView
@@ -175,7 +173,84 @@
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="Friday8"
+                    android:textColor="#000000" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:weightSum="5.7">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.7"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:text="9.00-10.00"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Mon_9"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#DCDCDC"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Tue_9"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:backgroundTint="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:textColor="#000000" />
+
+
+                <TextView
+                    android:id="@+id/Wed_9"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Thu_9"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:backgroundTint="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:id="@+id/Fri_9"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#dcdcdc"
+                    android:ellipsize="end"
+                    android:padding="2dip"
+                    android:singleLine="false"
+
                     android:textColor="#000000" />
 
 

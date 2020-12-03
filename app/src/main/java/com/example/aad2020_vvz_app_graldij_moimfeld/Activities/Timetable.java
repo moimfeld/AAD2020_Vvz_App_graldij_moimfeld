@@ -2,21 +2,25 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.alamkanak.weekview.WeekView;
+import androidx.core.graphics.ColorUtils;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Stack;
+
 
 public class Timetable extends AppCompatActivity {
 
@@ -26,25 +30,57 @@ public class Timetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-
+        Stack<String> color_palette = new Stack<>();
+        color_palette.addAll(Arrays.asList(
+                "#FF8A80", "#EA80FC", "#8C9EFF", "#80D8FF",
+                "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
+                "#1E88E5", "#B63131", "#43A047",  "#FF0000"));
 
         for(Course course : MainActivity.saved_courses){
             String name=course.name;
+            String current_color;
+            if(!color_palette.empty()){
+                current_color = color_palette.pop();
+            }
+            else{
+                Toast.makeText(this, "Too many lectures chosen. Max: 12", Toast.LENGTH_SHORT).show();
+                current_color = "#dcdcdc";
+            }
+
             for (Appointment appointment : course.getAllAppointments()){
-//                random color
                 String day= appointment.day;
 
-                //choose only if the course_unit is selected
-                for (int time: appointment.time){
-                    String cell = day+"_"+time;
-                    if(!used_ids.contains(cell)){
-                        used_ids.add(cell);
-                        cell="Mon_8";
-                        int id = getResources().getIdentifier(cell, "id", getPackageName());
-                        TextView text = findViewById(id);
-                        text.setText(name);
-                        text.setHeight(800);
+//              TODO:
+                if(appointment.selected==false)
+                    break;
+                for (Integer time: appointment.time){
+                    //directly get the string instead of the integer?
+                    String cell = day+"_"+time.toString();
+//                   cell="Mon_8";
+                    int id = getResources().getIdentifier(cell, "id", getPackageName());
+                     if(!used_ids.contains(cell)){
+                            used_ids.add(cell);
+                            TextView text = findViewById(id);
+                            text.setText(name);
+                            text.setBackgroundColor(Color.parseColor(current_color));
+                            Toast.makeText(this, "1"+name+cell, Toast.LENGTH_SHORT).show();
                         //set background with random color, mixed if more lectures
+                        }
+                    else {
+                        TextView text = findViewById(id);
+                        int old_color;
+                        //to check if it works. On stackoverflow it is said that it works only for API 11+
+                        Drawable background = text.getBackground();
+//                        is the following if statement necessary?
+//                        if(background instanceof ColorDrawable){
+                            old_color= ((ColorDrawable) background).getColor();
+//                        }
+                            String old_name=text.getText().toString();
+                        int new_color = Color.parseColor(current_color);
+                        int blendedColor = ColorUtils.blendARGB(old_color, new_color, 0.5F);
+                        text.setBackgroundColor(blendedColor);
+                        text.setText(name+"+"+old_name);
+                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
                     }
 
 
