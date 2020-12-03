@@ -52,7 +52,7 @@ public class Timetable extends AppCompatActivity {
 
 //              TODO:
                 if(appointment.selected==false)
-                    break;
+                    continue;
                 for (Integer time: appointment.time){
                     //directly get the string instead of the integer?
                     String cell = day+"_"+time.toString();
