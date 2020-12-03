@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -53,7 +54,6 @@ public class Timetable extends AppCompatActivity {
             for (Appointment appointment : course.getAllAppointments()){
                 String day= appointment.day;
 
-//              TODO:
                 if(appointment.selected==false)
                     continue;
                 for (Integer time: appointment.time){
@@ -72,16 +72,18 @@ public class Timetable extends AppCompatActivity {
                     else {
                         TextView text = findViewById(id);
                         int old_color;
-                        //to check if it works. On stackoverflow it is said that it works only for API 11+
                         Drawable background = text.getBackground();
-//                        is the following if statement necessary?
-//                        if(background instanceof ColorDrawable){
                             old_color= ((ColorDrawable) background).getColor();
-//                        }
                             String old_name=text.getText().toString();
+
                         int new_color = Color.parseColor(current_color);
-                        int blendedColor = ColorUtils.blendARGB(old_color, new_color, 0.5F);
-                        text.setBackgroundColor(blendedColor);
+//                        int blendedColor = ColorUtils.blendARGB(old_color, new_color, 0.5F);
+//                        text.setBackgroundColor(blendedColor);
+                         int[] colors = new int[]{old_color, new_color};
+//                         GradientDrawable.Orientation orientation = new GradientDrawable.Orientation();
+//                         orientation.valueOf("LEFT_RIGHT");
+                         Drawable gradient= new GradientDrawable(GradientDrawable.Orientation.valueOf("LEFT_RIGHT"), colors);
+                         text.setBackground(gradient);
                         text.setText(old_name+"&"+name);
                          Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
                     }
