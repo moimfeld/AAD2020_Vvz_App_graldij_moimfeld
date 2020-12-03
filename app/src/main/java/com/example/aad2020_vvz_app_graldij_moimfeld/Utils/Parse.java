@@ -110,7 +110,8 @@ public class Parse {
                     hours_edit = new StringBuilder(hours);
                     hours_edit.delete(0, 3);
                     int end_time_int = Integer.parseInt(hours_edit.toString());
-                    for(int j = start_time_int;j <= end_time_int; j++){
+                    //use < instead, is this fine for you?
+                    for(int j = start_time_int;j < end_time_int; j++){
                         time.add(j);
                 }
                     periodicity = appointment_content.get(2).text();
