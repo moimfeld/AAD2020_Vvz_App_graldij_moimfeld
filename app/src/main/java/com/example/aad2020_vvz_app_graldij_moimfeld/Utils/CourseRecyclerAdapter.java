@@ -1,6 +1,7 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,13 +25,18 @@ import java.util.ArrayList;
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.CourseItemHolder> {
 
     //Attributes
-    private ArrayList<Course> courses;
-    private Context context;
+    private final ArrayList<Course> courses;
+    private final Context context;
+    //totalCredits is needed such that the amount of credits can be can be changed when a lecture gets deleted
+    private final TextView totalCredits;
+    private final TextView actionBar;
 
     //Constructor
-    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context) {
+    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar) {
         this.courses = courses;
         this.context = context;
+        this.totalCredits = totalCredits;
+        this.actionBar = actionBar;
     }
 
 
@@ -43,6 +49,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     }
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull final CourseItemHolder holder, final int position) {
         // We set the texts and the image of our MenuItemHolder object
@@ -54,10 +61,24 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             public void onClick(View v) {
                 MainActivity.saved_courses.remove(position);
                 //this line is to update the recyclerview. without it the recyclerview crashes
                 notifyItemRemoved(position);
+                int totalCreditsNumber = 0;
+                for(Course c : MainActivity.saved_courses){
+                    totalCreditsNumber += c.ECTS;
+                }
+                totalCredits.setText(Integer.toString(totalCreditsNumber));
+
+                //here i set the Action bar to the empty state, when the last lecture got deleted
+                if(MainActivity.saved_courses.size() != 0){
+                    actionBar.setText("Course Drawer");
+                }
+                else{
+                    actionBar.setText("Course Drawer is empty");
+                }
             }
         });
     }
@@ -69,7 +90,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     }
 
 
-    class CourseItemHolder extends RecyclerView.ViewHolder {
+    static class CourseItemHolder extends RecyclerView.ViewHolder {
         TextView name, credits;
         LinearLayout linearLayoutCourse1;
         Button button_appointments, delete;
@@ -89,10 +110,11 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
 
     //this function generates the pop up window, with its recyclerview in it
+    @SuppressLint("SetTextI18n")
     public void showPopupWindow(int position) {
 
         //Create a View object yourself through inflater
-        View popUpView = LayoutInflater.from(context).inflate(R.layout.popup, null);
+        @SuppressLint("InflateParams") View popUpView = LayoutInflater.from(context).inflate(R.layout.popup, null);
 
         //Specify the length and width through constants
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -125,6 +147,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
         //Handler for clicking on the inactive zone of the window
         popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 

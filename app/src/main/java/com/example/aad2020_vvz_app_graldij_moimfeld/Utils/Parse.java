@@ -97,8 +97,8 @@ public class Parse {
                     //it is 1000% important to create new arrays for each iteration through the for loop, since we'll pass the array to the Appointment object, and we need to get new arrays for each object
                     ArrayList<Integer> time = new ArrayList<>();
                     ArrayList<String> dates = new ArrayList<>();
-                    String day = null;
-                    String periodicity = null;
+                    String day;
+                    String periodicity;
                     //get the day of this appointment
                     day = appointment_content.get(0).text();
                     //get the hours of this appointment
@@ -113,7 +113,7 @@ public class Parse {
                     //use < instead, is this fine for you?
                     for(int j = start_time_int;j < end_time_int; j++){
                         time.add(j);
-                }
+                    }
                     periodicity = appointment_content.get(2).text();
                     String dates_raw = appointment_content.get(3).text();
                     dates.add(dates_raw);
