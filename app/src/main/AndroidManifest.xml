@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.Vvz"></activity>
+        <activity android:name=".Activities.Vvz"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".Activities.Timetable" />
         <activity android:name=".Activities.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

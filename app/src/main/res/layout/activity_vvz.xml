@@ -4,20 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1F407A"
     tools:context=".Activities.Vvz">
 
+    <LinearLayout
+        android:id="@+id/linear_layout_vvz"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#1F407A"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/action_bar_mainactivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#1F407A"
+            android:gravity="center"
+            android:text="Course Catalogue"
+            android:textColor="#C8C7C7"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="410dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
+        android:background="#001F407A"
+        android:padding="2dp"
+        app:itemIconTint="#FFFFFF"
+        app:itemTextColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webview"
         app:menu="@menu/bottom_nav_menu" />
 
     <WebView
@@ -26,9 +50,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></WebView>
+        app:layout_constraintTop_toBottomOf="@id/linear_layout_vvz"/>
 
     <Button
         android:id="@+id/saved_lecture"

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +36,8 @@ public class Vvz extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
 
-
+        //Set the status bar color to the ETH color
+        getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
 
 
         //Webview for VVZ
