@@ -6,22 +6,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayoutCourse1"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="118dp"
     android:background="@android:color/transparent"
+    android:backgroundTint="#1F407A"
     android:orientation="vertical"
     android:paddingLeft="25dp"
-    android:paddingTop="4dp"
-    android:paddingEnd="25dp"
-    android:paddingBottom="4dp">
+    android:paddingEnd="25dp">
 
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_margin="15dp"
+            android:outlineSpotShadowColor="#FFFFFF"
             card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="4dp">
+            card_view:cardElevation="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -29,8 +29,7 @@
                     android:background="#00FFFFFF"
                     android:orientation="horizontal">
 
-                        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="0.3"
@@ -44,12 +43,12 @@
                                     android:gravity="center"
                                     android:text="Course_name"
                                     android:textAlignment="gravity"
-                                    android:textColor="#000000"
+                                    android:textColor="#1F407A"
                                     android:textStyle="bold"
-                                    app:autoSizeMaxTextSize="18sp"
-                                    app:autoSizeMinTextSize="12sp"
-                                    app:autoSizeStepGranularity="2sp"
-                                    app:autoSizeTextType="uniform" />
+                                    card_view:autoSizeMaxTextSize="18sp"
+                                    card_view:autoSizeMinTextSize="12sp"
+                                    card_view:autoSizeStepGranularity="2sp"
+                                    card_view:autoSizeTextType="uniform" />
 
                                 <TextView
                                     android:id="@+id/recycler_row_credits"
