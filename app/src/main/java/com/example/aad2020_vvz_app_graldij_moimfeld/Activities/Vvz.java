@@ -69,12 +69,12 @@ public class Vvz extends AppCompatActivity {
                         //check if the Lecture is already in the ArrayList
                         for (int i = 0; i <= MainActivity.saved_courses.size(); i++) {
                             if (MainActivity.saved_courses.get(i).isEqual(new_parse)) {
-                                Toast.makeText(Vvz.this, "lecture has already been saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Vvz.this, "course has already been saved", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                             if (i == MainActivity.saved_courses.size() - 1) {
                                 MainActivity.saved_courses.add(new_parse);
-                                Toast.makeText(Vvz.this, "lecture saved", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Vvz.this, "course saved", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                         }
@@ -82,7 +82,7 @@ public class Vvz extends AppCompatActivity {
                     } else {
                         MainActivity.saved_courses.size();
                         MainActivity.saved_courses.add(new_parse);
-                        Toast.makeText(Vvz.this, "lecture saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Vvz.this, "course saved", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

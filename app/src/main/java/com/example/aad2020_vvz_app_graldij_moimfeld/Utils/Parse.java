@@ -242,7 +242,7 @@ public class Parse {
 
         //Toast messages to give a feedback if the lecture couldn't fully get parsed
         if (result.isEmpty()) {
-            Toast.makeText(context, "This is not a valid Lecture", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "this is not a valid course", Toast.LENGTH_SHORT).show();
         }
 
         return result;

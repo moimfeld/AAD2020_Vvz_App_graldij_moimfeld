@@ -15,7 +15,7 @@
         android:id="@+id/action_MainActivity"
         android:enabled="true"
         android:icon="@drawable/ic_mainactivity"
-        android:title="Lectures"
+        android:title="Courses"
         app:showAsAction="ifRoom" />
 
 
