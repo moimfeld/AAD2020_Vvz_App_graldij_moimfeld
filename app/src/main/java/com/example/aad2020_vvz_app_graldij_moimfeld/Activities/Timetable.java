@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -160,10 +161,21 @@ public class Timetable extends AppCompatActivity {
                 }
                 return true;
             }
+
+
         });
 
 
 
 
+    }
+
+    public void tryClick(View view) {
+        String id = view.getResources().getResourceName(view.getId());
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        //add banner with lecture informations. I think to use the used_ids, but there the references to the
+        //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
+        //have it in the used_ids? Or change approach and save all these information in the courses
+        //and appointments (i.e. also colors, cell, ...)??
     }
 }
