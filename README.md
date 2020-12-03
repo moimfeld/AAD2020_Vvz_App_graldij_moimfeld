@@ -19,7 +19,7 @@ https://medium.com/anne-kerrs-blog/using-git-and-github-for-team-collaboration-e
 
 -create local permanent storage of chosen courses
 
--gradient colors or diagonal lines if overlaps occur
+-clickable textviews with infos. See notes at the bottom of Timetable.java
 
 -finish table, set text font, colors ...
 
