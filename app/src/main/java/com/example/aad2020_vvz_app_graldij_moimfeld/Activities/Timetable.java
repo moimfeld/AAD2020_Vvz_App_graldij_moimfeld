@@ -42,7 +42,6 @@ public class Timetable extends AppCompatActivity {
     //create an ArrayList where the saved courses can be stored
     private ArrayList<Course> saved_courses = new ArrayList<>();
 
-
     public boolean containsCell(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
             if (time_slot.cell.equals(celltofind)){
@@ -267,12 +266,20 @@ public class Timetable extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+                Intent Timetable = new Intent(Timetable.this,Timetable.class);
+                Gson gson = new Gson();
+                String json = gson.toJson(saved_courses);
+                Timetable.putExtra("saved_courses", json);
+                startActivity(Timetable);
+                overridePendingTransition(0, 0);
+
                 //Close the window when clicked
                 popupWindow.dismiss();
                 return true;
             }
         });
     }
+
 
 
 }
