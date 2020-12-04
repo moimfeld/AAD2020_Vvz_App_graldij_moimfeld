@@ -9,6 +9,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,14 +18,15 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+public class AppointmentRecyclerAdapterTimetable extends RecyclerView.Adapter<AppointmentRecyclerAdapterTimetable.AppointmentItemHolder>{
 
-public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<AppointmentRecyclerApdapter.AppointmentItemHolder>{
     //Attributes
     private ArrayList<Appointment> appointments;
     private ArrayList<Course> courses;
     private SharedPreferences sharedPreferences;
+
     //Constructor
-    public AppointmentRecyclerApdapter(ArrayList<Appointment> appointments, ArrayList<Course> courses, SharedPreferences sharedPreferences) {
+    public AppointmentRecyclerAdapterTimetable(ArrayList<Appointment> appointments, ArrayList<Course> courses, SharedPreferences sharedPreferences) {
         this.appointments = appointments;
         this.courses = courses;
         this.sharedPreferences = sharedPreferences;
@@ -33,18 +35,18 @@ public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<Appointmen
 
     @NonNull
     @Override
-    public AppointmentRecyclerApdapter.AppointmentItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AppointmentRecyclerAdapterTimetable.AppointmentItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.recycler_row_appointments, parent, false);
-        return new AppointmentItemHolder(view);
+        View view = layoutInflater.inflate(R.layout.recycler_row_appointments_timetable, parent, false);
+        return new AppointmentRecyclerAdapterTimetable.AppointmentItemHolder(view);
     }
 
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull AppointmentRecyclerApdapter.AppointmentItemHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull AppointmentRecyclerAdapterTimetable.AppointmentItemHolder holder, final int position) {
         // We set the texts and the image of our MenuItemHolder object
-        holder.category.setText(appointments.get(position).category);
+        holder.category.setText(appointments.get(position).courseName + " (" + appointments.get(position).category + ")");
         holder.day.setText("Day: " + appointments.get(position).day);
         holder.time.setText("Time: " + Integer.toString(appointments.get(position).getStartTime()) + " - " + Integer.toString(appointments.get(position).getEndTime()));
         holder.place.setText("Place: " + appointments.get(position).place);
@@ -88,16 +90,16 @@ public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<Appointmen
         public AppointmentItemHolder(@NonNull View itemView) {
             super(itemView);
             // links the attributes with the recycler_row items
-            category = itemView.findViewById(R.id.recycler_row_appointment_category);
-            day = itemView.findViewById(R.id.recycler_row_appointment_day);
-            time = itemView.findViewById(R.id.recycler_row_appointment_time);
-            place = itemView.findViewById(R.id.recycler_row_appointments_place);
-            aSwitch = itemView.findViewById(R.id.switch1);
-            linearLayoutAppointment = itemView.findViewById(R.id.recycler_row_appointment_linearlayout);
-
-
+            category = itemView.findViewById(R.id.recycler_row_appointment_lecture_name_timetable);
+            day = itemView.findViewById(R.id.recycler_row_appointment_day_timetable);
+            time = itemView.findViewById(R.id.recycler_row_appointment_time_timetable);
+            place = itemView.findViewById(R.id.recycler_row_appointments_place_timetable);
+            aSwitch = itemView.findViewById(R.id.switch1_timetable);
+            linearLayoutAppointment = itemView.findViewById(R.id.recycler_row_appointment_linearlayout_timetable);
 
         }
 
     }
 }
+
+

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //SharedPreference needs to be created in order to pass it to the recycler adapters
-        SharedPreferences sharedPreferences= getSharedPreferences("shared_preferences", MODE_PRIVATE);;
+        SharedPreferences sharedPreferences= getSharedPreferences("shared_preferences", MODE_PRIVATE);
 
         //loadCourses loads whatever was saved last in the sharedPreferences with key "saved_courses
         loadCourses();

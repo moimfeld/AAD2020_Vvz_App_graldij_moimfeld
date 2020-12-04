@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
 
@@ -131,7 +130,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     public void showPopupWindow(int position) {
 
         //Create a View object yourself through inflater
-        @SuppressLint("InflateParams") View popUpView = LayoutInflater.from(context).inflate(R.layout.popup, null);
+        @SuppressLint("InflateParams") View popUpView = LayoutInflater.from(context).inflate(R.layout.popup_main_actitvity, null);
 
         //Specify the length and width through constants
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -149,16 +148,16 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
 
         //Initialize the elements of our window, install the handler
-        TextView title = popUpView.findViewById(R.id.textView);
+        TextView title = popUpView.findViewById(R.id.textViewMainActivity);
         title.setText("Select your Appointments");
 
 
-        RecyclerView appointmentRecyclerView = popUpView.findViewById(R.id.recycler_view_appointments);
+        RecyclerView appointmentRecyclerView = popUpView.findViewById(R.id.recycler_view_appointments_main_activity);
 
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        AppointmentRecyclerApdapter appointmentRecyclerApdapter = new AppointmentRecyclerApdapter(courses.get(position).getAllAppointments(), courses, sharedPreferences);
+        AppointmentRecyclerAdapterMainActivity appointmentRecyclerApdapterMainActivity = new AppointmentRecyclerAdapterMainActivity(courses.get(position).getAllAppointments(), courses, sharedPreferences);
 
-        appointmentRecyclerView.setAdapter(appointmentRecyclerApdapter);
+        appointmentRecyclerView.setAdapter(appointmentRecyclerApdapterMainActivity);
 
 
 

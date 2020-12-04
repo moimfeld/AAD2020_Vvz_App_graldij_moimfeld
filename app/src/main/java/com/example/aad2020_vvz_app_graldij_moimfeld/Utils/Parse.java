@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
 //there is still a bug, where the app crashes, when there is only an hour category and no date/time in a lecture
 public class Parse {
 
-    public ArrayList<Appointment> parseAppointments (String category, Document doc, String course_code){
+    public ArrayList<Appointment> parseAppointments (String courseName, String category, Document doc, String course_code){
 
 
         //this is a auxiliary variables
@@ -149,7 +149,7 @@ public class Parse {
                         String place;
                         for (String s : placeSet) {
                             place = s;
-                            Appointment category_appointment = new Appointment(category_fullString, day, time, periodicity, dates, place);
+                            Appointment category_appointment = new Appointment(courseName, category_fullString, day, time, periodicity, dates, place);
                             r.add(category_appointment);
                         }
                     }
@@ -229,16 +229,16 @@ public class Parse {
 
             //get the lecture appointments
             parse = new Parse();
-            lectures = parse.parseAppointments("V", doc, course_code);
+            lectures = parse.parseAppointments(name, "V", doc, course_code);
 
             //get the exercise appointments
-            lecturesAndExercises = parseAppointments("G", doc, course_code);
+            lecturesAndExercises = parseAppointments(name, "G", doc, course_code);
 
             //get the exercise appointments
-            exercises = parseAppointments("U", doc, course_code);
+            exercises = parseAppointments(name, "U", doc, course_code);
 
             //get the lab appointments
-            labs = parseAppointments("P", doc, course_code);
+            labs = parseAppointments(name,"P", doc, course_code);
 
 
             //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.

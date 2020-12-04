@@ -1,20 +1,30 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
+import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterTimetable;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.DisplayLecture;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -75,6 +85,7 @@ public class Timetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+
 
         //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
         Type type = new TypeToken<ArrayList<Course>>(){}.getType();
@@ -200,6 +211,7 @@ public class Timetable extends AppCompatActivity {
 //                Toast.makeText(this, appointment.size(), Toast.LENGTH_SHORT).show();
             }
             Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
+            showPopupWindow(infos_clicked_element.appointments_for_cell);
         }
 
 //        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
@@ -207,6 +219,59 @@ public class Timetable extends AppCompatActivity {
         //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
         //have it in the used_ids? Or change approach and save all these information in the courses
         //and appointments (i.e. also colors, cell, ...)??
+    }
+
+
+    //"this function generates the pop up window, with its recyclerview in it
+    @SuppressLint("SetTextI18n")
+    public void showPopupWindow(ArrayList<Appointment> appointments) {
+
+        //initialize the sharedPreferences to save the changes
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+
+        //Create a View object yourself through inflater
+        @SuppressLint("InflateParams") View popUpView = LayoutInflater.from(this).inflate(R.layout.popup_timetable, null);
+
+        //Specify the length and width through constants
+        int width = LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        //Make Inactive Items Outside Of PopupWindow
+        boolean focusable = true;
+
+        //Create a window with our parameters
+        final PopupWindow popupWindow = new PopupWindow(popUpView, width, height, focusable);
+        //hardcoded parameter, this is bad
+        popupWindow.setHeight(1500);
+        //Set the location of the window on the screen
+        popupWindow.showAtLocation(popUpView, Gravity.CENTER, 0, 0);
+
+
+        //Initialize the elements of our window, install the handler
+        TextView title = popUpView.findViewById(R.id.textViewTimetable);
+        title.setText("Select your Appointments");
+
+
+        RecyclerView appointmentRecyclerView = popUpView.findViewById(R.id.recycler_view_appointments_timetable);
+
+        appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        AppointmentRecyclerAdapterTimetable appointmentRecyclerAdapterTimetable = new AppointmentRecyclerAdapterTimetable(appointments, saved_courses, sharedPreferences);
+
+        appointmentRecyclerView.setAdapter(appointmentRecyclerAdapterTimetable);
+
+
+
+        //Handler for clicking on the inactive zone of the window
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                //Close the window when clicked
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
 
