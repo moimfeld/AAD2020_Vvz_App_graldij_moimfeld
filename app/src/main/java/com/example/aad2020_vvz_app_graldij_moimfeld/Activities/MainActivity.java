@@ -20,8 +20,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -78,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_Timetable:
                         //Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(MainActivity.this,Timetable.class);
-                        Timetable.putExtra("saved_courses", CoursesToSting(saved_courses));
+                        Timetable.putExtra("saved_courses", CoursesToString(saved_courses));
                         startActivity(Timetable);
 
                         //This line makes a smooth transition and is used for all transitions in all the activities
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_Vvz:
                         //Toast.makeText(MainActivity.this, "Nearby", Toast.LENGTH_SHORT).show();
                         Intent Vvz = new Intent(MainActivity.this, Vvz.class);
-                        Vvz.putExtra("saved_courses", CoursesToSting(saved_courses));
+                        Vvz.putExtra("saved_courses", CoursesToString(saved_courses));
                         startActivity(Vvz);
                         overridePendingTransition(0, 0);
                         break;
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String CoursesToSting(ArrayList<Course> saved_courses){
+    private String CoursesToString(ArrayList<Course> saved_courses){
         Gson gson = new Gson();
         return gson.toJson(saved_courses);
     }

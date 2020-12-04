@@ -120,7 +120,6 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             button_appointments = itemView.findViewById(R.id.button_appointments);
             delete = itemView.findViewById(R.id.button_delete);
         }
-
     }
 
 
