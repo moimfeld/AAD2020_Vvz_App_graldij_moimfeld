@@ -3,6 +3,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -23,6 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -31,11 +34,12 @@ public class Vvz extends AppCompatActivity {
 
     public ArrayList<Course> saved_courses;
     private WebView myWebView;
-
+    static Context context;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
+        context = this;
 
         //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
         Type type = new TypeToken<ArrayList<Course>>(){}.getType();
@@ -130,10 +134,14 @@ public class Vvz extends AppCompatActivity {
 
     }
 
-    //this class hinders the webview from jumping out of the app into a browser app
+    //this class hinders the webview from jumping out of the app into a browser app and prevents the user from getting out of the VVZ web pages
     private static class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            if(!StringUtils.contains(request.getUrl().toString(), "Vorlesungsverzeichnis")){
+                Toast.makeText(context, "you cannot leave the course catalogue", Toast.LENGTH_SHORT).show();
+                return true;
+            }
             return false;
         }
     }
