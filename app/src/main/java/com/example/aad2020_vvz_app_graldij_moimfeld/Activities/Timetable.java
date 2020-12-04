@@ -44,7 +44,7 @@ public class Timetable extends AppCompatActivity {
     }
     public int cellInArrayListIndex(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
-            if (time_slot.cell==celltofind){
+            if (time_slot.cell.equals(celltofind)){
                 return used_ids.indexOf(time_slot);
             }
         }
@@ -117,7 +117,7 @@ public class Timetable extends AppCompatActivity {
                     int id = getResources().getIdentifier(cell, "id", getPackageName());
 
                      if(!containsCell(used_ids,cell)){
-                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, course);
+                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
                             used_ids.add(new_cell_slot);
 
                             TextView text = findViewById(id);
@@ -143,7 +143,7 @@ public class Timetable extends AppCompatActivity {
                         text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
 //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
 
-                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addCourse(course);
+                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addAppointment(appointment);
                     }
 
 
@@ -196,10 +196,12 @@ public class Timetable extends AppCompatActivity {
 //            Toast.makeText(this, "contained", Toast.LENGTH_SHORT).show();
             int index_of_clicked_element = cellInArrayListIndex(used_ids, clicked_int_string);
             DisplayLecture infos_clicked_element = used_ids.get(index_of_clicked_element);
-            for (Course course : infos_clicked_element.courses_for_cell){
-                Toast.makeText(this, course.name, Toast.LENGTH_SHORT).show();
+            for (Appointment appointment : infos_clicked_element.appointments_for_cell){
+//                Toast.makeText(this, appointment.size(), Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
         }
+
 //        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
         //add banner with lecture informations. I think to use the used_ids, but there the references to the
         //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
