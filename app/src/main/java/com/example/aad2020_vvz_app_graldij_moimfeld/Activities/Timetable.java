@@ -119,15 +119,26 @@ public class Timetable extends AppCompatActivity {
             for (Appointment appointment : course.getAllAppointments()){
                 String day= appointment.day;
 
-                if(appointment.selected==false)
-                    continue;
+//                if(appointment.selected==false)
+//                    continue;
                 for (Integer time: appointment.time){
-                    //directly get the string instead of the integer?
                     String cell = day+"_"+time.toString();
-//                   cell="Mon_8";
-                    int id = getResources().getIdentifier(cell, "id", getPackageName());
 
-                     if(!containsCell(used_ids,cell)){
+                    if(appointment.selected==false){
+                        if(!containsCell(not_used_ids,cell)){
+                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
+                            not_used_ids.add(new_cell_slot);
+                        }
+                        else{
+                            not_used_ids.get(cellInArrayListIndex(not_used_ids, cell)).addColor(Color.parseColor(current_color));
+                            not_used_ids.get(cellInArrayListIndex(not_used_ids, cell)).addName(name);
+                            not_used_ids.get(cellInArrayListIndex(not_used_ids, cell)).addAppointment(appointment);
+                        }
+                    }
+                    else {
+                        int id = getResources().getIdentifier(cell, "id", getPackageName());
+
+                        if (!containsCell(used_ids, cell)) {
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
                             used_ids.add(new_cell_slot);
 
@@ -135,28 +146,27 @@ public class Timetable extends AppCompatActivity {
                             text.setText(name);
                             text.setBackgroundColor(Color.parseColor(current_color));
 
-//                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
-                     }
-                    else {
-//                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
-                        used_ids.get(cellInArrayListIndex(used_ids, cell)).addColor(Color.parseColor(current_color));
+                            //                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
+                        } else {
+                            //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+                            used_ids.get(cellInArrayListIndex(used_ids, cell)).addColor(Color.parseColor(current_color));
 
-                        TextView text = findViewById(id);
+                            TextView text = findViewById(id);
 
-                         int[] colors = convertArrayListToArray(used_ids.get(cellInArrayListIndex(used_ids, cell)).colors_for_cell);
-//                         GradientDrawable.Orientation orientation = new GradientDrawable.Orientation();
-//                         orientation.valueOf("LEFT_RIGHT");
-                         Drawable gradient= new GradientDrawable(GradientDrawable.Orientation.valueOf("LEFT_RIGHT"), colors);
-                         text.setBackground(gradient);
+                            int[] colors = convertArrayListToArray(used_ids.get(cellInArrayListIndex(used_ids, cell)).colors_for_cell);
+                            //                         GradientDrawable.Orientation orientation = new GradientDrawable.Orientation();
+                            //                         orientation.valueOf("LEFT_RIGHT");
+                            Drawable gradient = new GradientDrawable(GradientDrawable.Orientation.valueOf("LEFT_RIGHT"), colors);
+                            text.setBackground(gradient);
 
-                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addName(name);
+                            used_ids.get(cellInArrayListIndex(used_ids, cell)).addName(name);
 
-                        text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
-//                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+                            text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
+                            //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
 
-                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addAppointment(appointment);
+                            used_ids.get(cellInArrayListIndex(used_ids, cell)).addAppointment(appointment);
+                        }
                     }
-
 
                 }
             }
@@ -205,10 +215,17 @@ public class Timetable extends AppCompatActivity {
 //        Toast.makeText(this, clicked_int_string, Toast.LENGTH_SHORT).show();
         if(containsCell(used_ids , clicked_int_string)){
 //            Toast.makeText(this, "contained", Toast.LENGTH_SHORT).show();
-            int index_of_clicked_element = cellInArrayListIndex(used_ids, clicked_int_string);
-            DisplayLecture infos_clicked_element = used_ids.get(index_of_clicked_element);
+            int index_of_clicked_element_selected = cellInArrayListIndex(used_ids, clicked_int_string);
+            DisplayLecture infos_clicked_element_selected = used_ids.get(index_of_clicked_element_selected);
+
+            if(containsCell(not_used_ids , clicked_int_string)){
+                int index_of_clicked_element_NOT_selected = cellInArrayListIndex(not_used_ids, clicked_int_string);
+                DisplayLecture infos_clicked_element_NOT_selected = not_used_ids.get(index_of_clicked_element_NOT_selected);
+                infos_clicked_element_selected.appointments_for_cell.addAll(infos_clicked_element_NOT_selected.appointments_for_cell);
+            }
+
 //            Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
-            showPopupWindow(infos_clicked_element.appointments_for_cell);
+            showPopupWindow(infos_clicked_element_selected.appointments_for_cell);
         }
 
 //        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
