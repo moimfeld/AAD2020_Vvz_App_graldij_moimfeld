@@ -125,7 +125,6 @@ public class Timetable extends AppCompatActivity {
                             text.setBackgroundColor(Color.parseColor(current_color));
 
                             Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
-
                      }
                     else {
                          Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
