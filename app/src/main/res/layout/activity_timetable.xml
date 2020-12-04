@@ -30,7 +30,8 @@
             android:text="Timetable"
             android:textColor="#C8C7C7"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
     </LinearLayout>
 
 
@@ -44,73 +45,108 @@
         <TableRow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:weightSum="5.7">
+            android:weightSum="5.6">
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.7"
-                android:background="#dcdcdc"
+                android:layout_height="35dp"
+                android:layout_weight="0.6"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Time"
-                android:textColor="#000000" />
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform" />
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="#dcdcdc"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Monday"
-                android:textColor="#000000" />
+                android:text="Mon"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="#dcdcdc"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Tuesday"
-                android:textColor="#000000" />
+                android:text="Tue"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="#dcdcdc"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Wednesday"
-                android:textColor="#000000" />
+                android:text="Wed"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="#dcdcdc"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Thursday"
-                android:textColor="#000000" />
+                android:text="Thu"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"/>
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
-                android:background="#dcdcdc"
+                android:background="#A0B1D0"
                 android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
                 android:padding="2dip"
                 android:singleLine="false"
-                android:text="Friday"
-                android:textColor="#000000" />
+                android:text="Fri"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                app:autoSizeMaxTextSize="15sp"
+                app:autoSizeMinTextSize="8sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"/>
         </TableRow>
 
 
@@ -132,21 +168,21 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:weightSum="5.7">
+                android:weightSum="5.6">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="0.7"
-                    android:background="#dcdcdc"
+                    android:layout_weight="0.6"
+                    android:background="#A0B1D0"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="8.00-9.00"
+                    android:text="8.00-\n9.00"
                     android:textColor="#000000"
-                    app:autoSizeMaxTextSize="18sp"
-                    app:autoSizeMinTextSize="10sp"
-                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeMaxTextSize="15sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform" />
 
                 <TextView
@@ -154,7 +190,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:clickable="true"
                     android:ellipsize="end"
                     android:onClick="tryClick"
@@ -171,7 +207,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -183,7 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -194,8 +230,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
-                    android:backgroundTint="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -206,7 +241,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -218,25 +253,29 @@
             <TableRow
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:weightSum="5.7">
+                android:weightSum="5.6">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:layout_weight="0.7"
-                    android:background="#dcdcdc"
+                    android:layout_weight="0.6"
+                    android:background="#A0B1D0"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
-                    android:text="9.00-10.00"
-                    android:textColor="#000000" />
+                    android:text="9.00-\n10.00"
+                    android:textColor="#000000"
+                    app:autoSizeMaxTextSize="15sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"/>
 
                 <TextView
                     android:id="@+id/Mon_9"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#DCDCDC"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -247,7 +286,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -259,7 +298,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -270,8 +309,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
-                    android:backgroundTint="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:ellipsize="end"
                     android:padding="2dip"
                     android:singleLine="false"
@@ -282,7 +320,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#dcdcdc"
+                    android:background="#CDD6E6"
                     android:clickable="true"
                     android:ellipsize="end"
                     android:onClick="tryClick"
