@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_Timetable:
                         //Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(MainActivity.this,Timetable.class);
-                        Gson gson = new Gson();
-                        String json = gson.toJson(saved_courses);
-                        Timetable.putExtra("saved_courses", json);
+                        Timetable.putExtra("saved_courses", CoursesToSting(saved_courses));
                         startActivity(Timetable);
 
                         //This line makes a smooth transition and is used for all transitions in all the activities
@@ -93,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_Vvz:
                         //Toast.makeText(MainActivity.this, "Nearby", Toast.LENGTH_SHORT).show();
                         Intent Vvz = new Intent(MainActivity.this, Vvz.class);
+                        Vvz.putExtra("saved_courses", CoursesToSting(saved_courses));
                         startActivity(Vvz);
                         overridePendingTransition(0, 0);
                         break;
@@ -115,6 +114,11 @@ public class MainActivity extends AppCompatActivity {
         if(saved_courses == null){
             saved_courses = new ArrayList<>();
         }
+    }
+
+    private String CoursesToSting(ArrayList<Course> saved_courses){
+        Gson gson = new Gson();
+        return gson.toJson(saved_courses);
     }
 }
  

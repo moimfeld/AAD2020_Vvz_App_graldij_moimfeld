@@ -41,7 +41,14 @@ public class Vvz extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
-        loadCourses();
+
+        //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
+        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
+        Gson gson = new Gson();
+        saved_courses = gson.fromJson(getIntent().getStringExtra("saved_courses"), type);
+        if(saved_courses == null){
+            saved_courses = new ArrayList<>();
+        }
 
         //Set the status bar color to the ETH color
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
@@ -138,14 +145,4 @@ public class Vvz extends AppCompatActivity {
         editor.apply();
     }
 
-    private void loadCourses() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("saved_courses", null);
-        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
-        saved_courses = gson.fromJson(json, type);
-        if(saved_courses == null){
-            saved_courses = new ArrayList<>();
-        }
-    }
 }
