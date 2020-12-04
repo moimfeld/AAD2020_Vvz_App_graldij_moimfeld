@@ -5,15 +5,6 @@
 
 #TODO:
 
--block other webpages
+-block other web pages
 
 -finish table, set text font, colors ...
-
--clickable: display all possible courses at that time
-
-
-
-
-
-
-

@@ -3,9 +3,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,14 +13,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
-import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.Timetable;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
 
