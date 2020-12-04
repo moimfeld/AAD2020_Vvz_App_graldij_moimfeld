@@ -197,9 +197,10 @@
                     android:padding="2dip"
                     android:singleLine="false"
                     android:textColor="#000000"
+                    android:text="High Frequency Design TechniquesA\nAnalsysis 3A\nChemistry"
                     app:autoSizeMaxTextSize="18sp"
-                    app:autoSizeMinTextSize="10sp"
-                    app:autoSizeStepGranularity="2sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeStepGranularity="1sp"
                     app:autoSizeTextType="uniform" />
 
                 <TextView

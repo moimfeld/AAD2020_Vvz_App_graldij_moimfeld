@@ -34,6 +34,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Stack;
 
 
@@ -51,6 +54,8 @@ public class Timetable extends AppCompatActivity {
         }
         return false;
     }
+
+
     public int cellInArrayListIndex(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
             if (time_slot.cell.equals(celltofind)){
@@ -59,6 +64,7 @@ public class Timetable extends AppCompatActivity {
         }
         return 0;
     }
+
     public int[] convertArrayListToArray(ArrayList<Integer> arrayList){
         int size=arrayList.size();
         int[] array = new int[size];
@@ -68,15 +74,25 @@ public class Timetable extends AppCompatActivity {
         return array;
     }
 
-    public String convertArrayListToString(ArrayList<String> arrayList){
+    public String convertSetToString(Set<String> set){
         String outputstring = new String();
-        for(String string_element : arrayList){
-            outputstring +=string_element;
-                    if(!(arrayList.indexOf(string_element) == (arrayList.size() -1))){ //check if not the last element in the Arraylist. If not: append " &"
-                        outputstring+=" &";
+        Iterator<String> itr = set.iterator();
+        while(itr.hasNext()){
+
+            outputstring += itr.next();
+                    if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
+                        outputstring+="&\n";
                     }
         }
         return outputstring;
+    }
+
+    public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
+        Set<String> result = new HashSet<String>();
+        for(String string_element : arrayList){
+            result.add(string_element);
+        }
+        return result;
     }
 
     ArrayList<DisplayLecture> used_ids = new ArrayList<>();
@@ -161,8 +177,10 @@ public class Timetable extends AppCompatActivity {
 
                             used_ids.get(cellInArrayListIndex(used_ids, cell)).addName(name);
 
-                            text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
+                            text.setText(convertSetToString((convertArrayListToSet(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell))));
+
                             //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+
 
                             used_ids.get(cellInArrayListIndex(used_ids, cell)).addAppointment(appointment);
                         }
