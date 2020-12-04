@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        overridePendingTransition(0, 0);
 
         //SharedPreference needs to be created in order to pass it to the recycler adapters
         SharedPreferences sharedPreferences= getSharedPreferences("shared_preferences", MODE_PRIVATE);

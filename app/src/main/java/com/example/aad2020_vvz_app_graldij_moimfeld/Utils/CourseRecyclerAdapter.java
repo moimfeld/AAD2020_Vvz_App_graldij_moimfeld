@@ -3,7 +3,9 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,10 +15,14 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
+import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.Timetable;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
 
@@ -61,41 +67,38 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         holder.credits.setText(courses.get(position).ECTS + " credits");
         holder.button_appointments.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if (position < courses.size()) {
-                    showPopupWindow(position);
-                }
+                showPopupWindow(position);
             }
+
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             public void onClick(View v) {
 
-                //check whether the delete button would trigger a out of bound exception or not
-                if (position < courses.size()) {
-                    courses.remove(position);
-                    //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(courses);
-                    editor.putString("saved_courses", json);
-                    editor.apply();
-                    //this line is to update the recyclerview. without it the recyclerview crashes
-                    notifyItemRemoved(position);
-                    int totalCreditsNumber = 0;
-                    for(Course c : courses){
-                        totalCreditsNumber += c.ECTS;
-                    }
-                    totalCredits.setText(Integer.toString(totalCreditsNumber));
+                courses.remove(position);
+                //this line is to update the recyclerview. without it the recyclerview crashes
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,courses.size());
 
-                    //here i set the Action bar to the empty state, when the last lecture got deleted
-                    if(courses.size() != 0){
-                        actionBar.setText("Course Drawer");
-                    }
-                    else{
-                        actionBar.setText("Course Drawer is empty");
-                    }
+                //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(courses);
+                editor.putString("saved_courses", json);
+                editor.apply();
+
+                int totalCreditsNumber = 0;
+                for (Course c : courses) {
+                    totalCreditsNumber += c.ECTS;
                 }
+                totalCredits.setText(Integer.toString(totalCreditsNumber));
 
+                //here i set the Action bar to the empty state, when the last lecture got deleted
+                if (courses.size() != 0) {
+                    actionBar.setText("Course Drawer");
+                } else {
+                    actionBar.setText("Course Drawer is empty");
+                }
             }
         });
     }
