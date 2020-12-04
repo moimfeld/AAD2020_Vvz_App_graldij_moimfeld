@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.sql.Time;
 import java.util.ArrayList;
 
 
@@ -77,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_Timetable:
                         //Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(MainActivity.this,Timetable.class);
+                        Gson gson = new Gson();
+                        String json = gson.toJson(saved_courses);
+                        Timetable.putExtra("saved_courses", json);
                         startActivity(Timetable);
 
                         //This line makes a smooth transition and is used for all transitions in all the activities

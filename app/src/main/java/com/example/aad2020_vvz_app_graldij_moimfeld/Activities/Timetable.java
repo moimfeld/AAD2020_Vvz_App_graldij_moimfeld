@@ -1,9 +1,7 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.ColorUtils;
+
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
@@ -23,7 +21,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +29,9 @@ import java.util.Stack;
 
 public class Timetable extends AppCompatActivity {
 
+    //create an ArrayList where the saved courses can be stored
     private ArrayList<Course> saved_courses = new ArrayList<>();
+
 
     public boolean containsCell(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
@@ -77,8 +76,15 @@ public class Timetable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
 
-        //here the courses get loaded
-        loadCourses();
+        //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
+        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
+        Gson gson = new Gson();
+        saved_courses = gson.fromJson(getIntent().getStringExtra("saved_courses"), type);
+        if(saved_courses == null){
+            saved_courses = new ArrayList<>();
+        }
+
+
 
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
 
@@ -190,16 +196,4 @@ public class Timetable extends AppCompatActivity {
     }
 
 
-
-    //this method loads the saved_courses ArrayList, if there is one saved (if there is none, it creates a new ArrayList)
-    private void loadCourses() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("saved_courses", null);
-        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
-        saved_courses = gson.fromJson(json, type);
-        if(saved_courses == null){
-            saved_courses = new ArrayList<>();
-        }
-    }
 }
