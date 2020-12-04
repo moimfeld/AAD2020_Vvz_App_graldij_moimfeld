@@ -80,6 +80,7 @@ public class Timetable extends AppCompatActivity {
     }
 
     ArrayList<DisplayLecture> used_ids = new ArrayList<>();
+    ArrayList<DisplayLecture> not_used_ids = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +101,9 @@ public class Timetable extends AppCompatActivity {
 
         Stack<String> color_palette = new Stack<>();
         color_palette.addAll(Arrays.asList(
-                "#B63131", "#EA80FC", "#8C9EFF", "#80D8FF",
+                "#43A047",  "#FF0000", "#8C9EFF", "#80D8FF",
                 "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
-                "#1E88E5", "#FF8A80", "#43A047",  "#FF0000"));
+                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
 
         for(Course course : saved_courses){
             String name=course.name;
@@ -206,15 +207,12 @@ public class Timetable extends AppCompatActivity {
 //            Toast.makeText(this, "contained", Toast.LENGTH_SHORT).show();
             int index_of_clicked_element = cellInArrayListIndex(used_ids, clicked_int_string);
             DisplayLecture infos_clicked_element = used_ids.get(index_of_clicked_element);
-            for (Appointment appointment : infos_clicked_element.appointments_for_cell){
-//                Toast.makeText(this, appointment.size(), Toast.LENGTH_SHORT).show();
-            }
-            Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
             showPopupWindow(infos_clicked_element.appointments_for_cell);
         }
 
 //        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
-        //add banner with lecture informations. I think to use the used_ids, but there the references to the
+        //add banner with lecture information. I think to use the used_ids, but there the references to the
         //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
         //have it in the used_ids? Or change approach and save all these information in the courses
         //and appointments (i.e. also colors, cell, ...)??
