@@ -62,7 +62,9 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         holder.credits.setText(courses.get(position).ECTS + " credits");
         holder.button_appointments.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-              showPopupWindow(position);
+                if (position < courses.size()) {
+                    showPopupWindow(position);
+                }
             }
         });
         holder.delete.setOnClickListener(new View.OnClickListener() {
