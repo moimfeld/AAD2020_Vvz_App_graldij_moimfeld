@@ -1,6 +1,7 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +12,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 
 public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<AppointmentRecyclerApdapter.AppointmentItemHolder>{
     //Attributes
     private ArrayList<Appointment> appointments;
+    private ArrayList<Course> courses;
+    private SharedPreferences sharedPreferences;
     //Constructor
-    public AppointmentRecyclerApdapter(ArrayList<Appointment> appointments) {
+    public AppointmentRecyclerApdapter(ArrayList<Appointment> appointments, ArrayList<Course> courses, SharedPreferences sharedPreferences) {
         this.appointments = appointments;
+        this.courses = courses;
+        this.sharedPreferences = sharedPreferences;
     }
 
 
@@ -46,8 +52,21 @@ public class AppointmentRecyclerApdapter extends RecyclerView.Adapter<Appointmen
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     appointments.get(position).selected = true;
+
+                    //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(courses);
+                    editor.putString("saved_courses", json);
+                    editor.apply();
                 } else {
                     appointments.get(position).selected = false;
+                    //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(courses);
+                    editor.putString("saved_courses", json);
+                    editor.apply();
                 }
             }
         });

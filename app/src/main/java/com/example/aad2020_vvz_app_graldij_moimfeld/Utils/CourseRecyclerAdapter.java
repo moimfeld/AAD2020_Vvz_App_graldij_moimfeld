@@ -3,6 +3,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 
@@ -30,13 +33,15 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     //totalCredits is needed such that the amount of credits can be can be changed when a lecture gets deleted
     private final TextView totalCredits;
     private final TextView actionBar;
+    private final  SharedPreferences sharedPreferences;
 
     //Constructor
-    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar) {
+    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar, SharedPreferences sharedPreferences) {
         this.courses = courses;
         this.context = context;
         this.totalCredits = totalCredits;
         this.actionBar = actionBar;
+        this.sharedPreferences = sharedPreferences;
     }
 
 
@@ -65,18 +70,24 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
             public void onClick(View v) {
 
                 //check whether the delete button would trigger a out of bound exception or not
-                if (position < MainActivity.saved_courses.size()) {
-                    MainActivity.saved_courses.remove(position);
+                if (position < courses.size()) {
+                    courses.remove(position);
+                    //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String json = gson.toJson(courses);
+                    editor.putString("saved_courses", json);
+                    editor.apply();
                     //this line is to update the recyclerview. without it the recyclerview crashes
                     notifyItemRemoved(position);
                     int totalCreditsNumber = 0;
-                    for(Course c : MainActivity.saved_courses){
+                    for(Course c : courses){
                         totalCreditsNumber += c.ECTS;
                     }
                     totalCredits.setText(Integer.toString(totalCreditsNumber));
 
                     //here i set the Action bar to the empty state, when the last lecture got deleted
-                    if(MainActivity.saved_courses.size() != 0){
+                    if(courses.size() != 0){
                         actionBar.setText("Course Drawer");
                     }
                     else{
@@ -144,7 +155,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         RecyclerView appointmentRecyclerView = popUpView.findViewById(R.id.recycler_view_appointments);
 
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        AppointmentRecyclerApdapter appointmentRecyclerApdapter = new AppointmentRecyclerApdapter(courses.get(position).getAllAppointments());
+        AppointmentRecyclerApdapter appointmentRecyclerApdapter = new AppointmentRecyclerApdapter(courses.get(position).getAllAppointments(), courses, sharedPreferences);
 
         appointmentRecyclerView.setAdapter(appointmentRecyclerApdapter);
 

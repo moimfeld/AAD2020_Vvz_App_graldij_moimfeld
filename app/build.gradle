@@ -43,5 +43,8 @@ dependencies {
     //Jsoup:
     implementation 'org.jsoup:jsoup:1.13.1'
 
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation'com.google.code.gson:gson:2.8.5'
+
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
 }

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,11 +19,14 @@ import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Parse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Vvz extends AppCompatActivity {
-
     //this class hinders the webview from jumping out of the app into a browser app
     private static class MyWebViewClient extends WebViewClient {
         @Override
@@ -31,10 +35,13 @@ public class Vvz extends AppCompatActivity {
         }
     }
 
+    public ArrayList<Course> saved_courses;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
+        loadCourses();
 
         //Set the status bar color to the ETH color
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
@@ -67,24 +74,26 @@ public class Vvz extends AppCompatActivity {
                 //check whether the Lecture fully parsed
                 if(!new_parse.isEmpty()) {
                     //check if the saved_lecture ArrayList is empty
-                    if (MainActivity.saved_courses.size() > 0) {
+                    if (saved_courses.size() > 0) {
                         //check if the Lecture is already in the ArrayList
-                        for (int i = 0; i <= MainActivity.saved_courses.size(); i++) {
-                            if (MainActivity.saved_courses.get(i).isEqual(new_parse)) {
+                        for (int i = 0; i <= saved_courses.size(); i++) {
+                            if (saved_courses.get(i).isEqual(new_parse)) {
                                 Toast.makeText(Vvz.this, "course has already been saved", Toast.LENGTH_SHORT).show();
                                 break;
                             }
-                            if (i == MainActivity.saved_courses.size() - 1) {
-                                MainActivity.saved_courses.add(new_parse);
+                            if (i == saved_courses.size() - 1) {
+                                saved_courses.add(new_parse);
                                 Toast.makeText(Vvz.this, "course saved", Toast.LENGTH_SHORT).show();
+                                saveCourses();
                                 break;
                             }
                         }
                     //handling the empty saved_lecture ArrayList
                     } else {
-                        MainActivity.saved_courses.size();
-                        MainActivity.saved_courses.add(new_parse);
+                        saved_courses.size();
+                        saved_courses.add(new_parse);
                         Toast.makeText(Vvz.this, "course saved", Toast.LENGTH_SHORT).show();
+                        saveCourses();
                     }
                 }
             }
@@ -117,5 +126,26 @@ public class Vvz extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void saveCourses() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(saved_courses);
+        editor.putString("saved_courses", json);
+        editor.apply();
+    }
+
+    private void loadCourses() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("saved_courses", null);
+        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
+        saved_courses = gson.fromJson(json, type);
+        if(saved_courses == null){
+            saved_courses = new ArrayList<>();
+        }
     }
 }

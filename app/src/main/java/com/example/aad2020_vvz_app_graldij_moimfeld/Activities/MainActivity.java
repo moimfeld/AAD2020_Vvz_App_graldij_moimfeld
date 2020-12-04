@@ -1,37 +1,44 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.CourseRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     //lecture array to save the lectures temporarily, there needs to be another saving method involving firebase or some local storing method
-    public static ArrayList<Course> saved_courses = new ArrayList<>();
-
+    public ArrayList<Course> saved_courses;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //SharedPreference needs to be created in order to pass it to the recycler adapters
+        SharedPreferences sharedPreferences= getSharedPreferences("shared_preferences", MODE_PRIVATE);;
+
+        //loadCourses loads whatever was saved last in the sharedPreferences with key "saved_courses
+        loadCourses();
 
         //Set the status bar color to the ETH color
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewCourses);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits, actionBar);
+        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits, actionBar, sharedPreferences);
         recyclerView.setAdapter(CourseRecyclerAdapter);
 
 
@@ -89,6 +96,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+    }
+
+
+    //this method loads the saved_courses ArrayList, if there is one saved (if there is none, it creates a new ArrayList)
+    private void loadCourses() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("saved_courses", null);
+        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
+        saved_courses = gson.fromJson(json, type);
+        if(saved_courses == null){
+            saved_courses = new ArrayList<>();
+        }
     }
 }
  
