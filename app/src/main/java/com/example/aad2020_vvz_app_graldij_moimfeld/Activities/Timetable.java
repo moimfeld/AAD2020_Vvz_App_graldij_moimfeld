@@ -36,7 +36,7 @@ public class Timetable extends AppCompatActivity {
     public boolean containsCell(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
             if (time_slot.cell.equals(celltofind)){
-                Toast.makeText(this, "true", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "true", Toast.LENGTH_SHORT).show();
                 return true;
             }
         }
@@ -117,17 +117,17 @@ public class Timetable extends AppCompatActivity {
                     int id = getResources().getIdentifier(cell, "id", getPackageName());
 
                      if(!containsCell(used_ids,cell)){
-                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name);
+                            DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, course);
                             used_ids.add(new_cell_slot);
 
                             TextView text = findViewById(id);
                             text.setText(name);
                             text.setBackgroundColor(Color.parseColor(current_color));
 
-                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
                      }
                     else {
-                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+//                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addColor(Color.parseColor(current_color));
 
                         TextView text = findViewById(id);
@@ -142,6 +142,8 @@ public class Timetable extends AppCompatActivity {
 
                         text.setText(convertArrayListToString(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell));
 //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+
+                         used_ids.get(cellInArrayListIndex(used_ids, cell)).addCourse(course);
                     }
 
 
@@ -186,8 +188,19 @@ public class Timetable extends AppCompatActivity {
     }
 
     public void tryClick(View view) {
-        String id = view.getResources().getResourceName(view.getId());
-        Toast.makeText(this, id, Toast.LENGTH_SHORT).show();
+        TextView clicked_textview = (TextView) view;
+        int clicked_id_int = clicked_textview.getId();
+        String clicked_int_string = getResources().getResourceEntryName(clicked_id_int);
+//        Toast.makeText(this, clicked_int_string, Toast.LENGTH_SHORT).show();
+        if(containsCell(used_ids , clicked_int_string)){
+//            Toast.makeText(this, "contained", Toast.LENGTH_SHORT).show();
+            int index_of_clicked_element = cellInArrayListIndex(used_ids, clicked_int_string);
+            DisplayLecture infos_clicked_element = used_ids.get(index_of_clicked_element);
+            for (Course course : infos_clicked_element.courses_for_cell){
+                Toast.makeText(this, course.name, Toast.LENGTH_SHORT).show();
+            }
+        }
+//        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
         //add banner with lecture informations. I think to use the used_ids, but there the references to the
         //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
         //have it in the used_ids? Or change approach and save all these information in the courses
