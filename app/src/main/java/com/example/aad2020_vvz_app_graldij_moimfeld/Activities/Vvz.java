@@ -27,15 +27,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Vvz extends AppCompatActivity {
-    //this class hinders the webview from jumping out of the app into a browser app
-    private static class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            return false;
-        }
-    }
 
     public ArrayList<Course> saved_courses;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -135,6 +129,13 @@ public class Vvz extends AppCompatActivity {
 
     }
 
+    //this class hinders the webview from jumping out of the app into a browser app
+    private static class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return false;
+        }
+    }
 
     private void saveCourses() {
         SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
