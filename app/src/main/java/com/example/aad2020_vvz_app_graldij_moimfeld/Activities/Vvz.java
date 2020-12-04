@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -25,11 +26,12 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Stack;
 
 public class Vvz extends AppCompatActivity {
 
     public ArrayList<Course> saved_courses;
-
+    private WebView myWebView;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class Vvz extends AppCompatActivity {
 
 
         //Webview for VVZ
-        final WebView myWebView = findViewById(R.id.webview);
+        myWebView  = findViewById(R.id.webview);
         myWebView.setWebViewClient(new MyWebViewClient());
 
         //the following lines are needed to initially zoom out the Webview such that it is accessible
@@ -135,6 +137,22 @@ public class Vvz extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return false;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (myWebView.canGoBack()) {
+                        myWebView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void saveCourses() {

@@ -20,11 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -124,6 +120,3 @@ public class MainActivity extends AppCompatActivity {
         return gson.toJson(saved_courses);
     }
 }
- 
-
-
