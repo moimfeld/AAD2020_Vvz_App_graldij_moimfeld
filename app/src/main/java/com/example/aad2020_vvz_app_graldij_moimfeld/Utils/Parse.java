@@ -10,9 +10,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
@@ -69,6 +73,7 @@ public class Parse {
             Element category_code_element = td_category_code_elements.get(0);
             index = td_element_list.indexOf(category_code_element);
             link_td_element = td_element_list.get(index + 3);
+            //there are is no day/time information on the website
             if(link_td_element.getElementsByClass("td-small").size() != 0) {
                 link_element = link_td_element.getElementsByClass("td-small").first();
                 link_element = link_element.select("a").first();
@@ -102,6 +107,7 @@ public class Parse {
                         String periodicity;
                         //get the day of this appointment
                         day = appointment_content.get(0).text();
+
                         //get the hours of this appointment
                         String hours = appointment_content.get(1).text();
                         //transform the hours string into the wanted format
@@ -117,7 +123,23 @@ public class Parse {
                         }
                         periodicity = appointment_content.get(2).text();
                         String dates_raw = appointment_content.get(3).text();
-                        dates.add(dates_raw);
+                        String[] datesArray = StringUtils.split(dates_raw, ";");
+                        for(String s : datesArray){
+                            dates.add(s);
+                        }
+                        //this exception is needed in case there are lectures which have no specific day
+                        if(day.equals("")){
+//                            Elements semester_elements = doc.select("td:contains(semester)");
+//                            String yearForWeekday = semester_elements.get(1).text();
+//                            yearForWeekday = RegExUtils.removeAll(yearForWeekday, "(.*?) Semester ");
+//                            String[] DayMonthArray = StringUtils.split(dates.get(0), ".");
+//                            String dayForWeekday = DayMonthArray[0];
+//                            String monthForWeekday = DayMonthArray[1];
+//                            LocalDate date = LocalDate.of(Integer.parseInt(yearForWeekday), Integer.parseInt(monthForWeekday), Integer.parseInt(dayForWeekday));
+//                            DayOfWeek dayOfWeek = date.getDayOfWeek();
+//                            day = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
+                            day = "not during the semester";
+                        }
 
                         //since the places of the appointments aren't clearly separated via HTML code I just parse though the HTML section by myself
                         //first I get the HTML block and remove all "&nbsp;"
