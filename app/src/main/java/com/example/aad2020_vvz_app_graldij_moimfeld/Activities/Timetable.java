@@ -135,8 +135,9 @@ public class Timetable extends AppCompatActivity {
             for (Appointment appointment : course.getAllAppointments()){
                 String day= appointment.day;
 
-//                if(appointment.selected==false)
-//                    continue;
+                if(day.equals("not during the semester")) {
+                    continue;
+                }
                 for (Integer time: appointment.time){
                     String cell = day+"_"+time.toString();
 
