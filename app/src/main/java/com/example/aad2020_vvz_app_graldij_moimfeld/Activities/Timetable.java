@@ -192,7 +192,7 @@ public class Timetable extends AppCompatActivity {
         }
 
 
-
+        //Bottom navigation bar which can be used to switch from activity to activity. Here the data to be sent to other activities gets built and put into the intent
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_Timetable);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -200,16 +200,15 @@ public class Timetable extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_Timetable:
-                        //Toast.makeText(Timetable.this, "Recents", Toast.LENGTH_SHORT).show();
                         break;
+
                     case R.id.action_MainActivity:
-                        //Toast.makeText(Timetable.this, "Favorites", Toast.LENGTH_SHORT).show();
                         Intent MainActivity = new Intent(Timetable.this, MainActivity.class);
                         startActivity(MainActivity);
                         overridePendingTransition(0, 0);
                         break;
+
                     case R.id.action_Vvz:
-                        //Toast.makeText(Timetable.this, "Nearby", Toast.LENGTH_SHORT).show();
                         Intent Vvz = new Intent(Timetable.this, Vvz.class);
                         Gson gson = new Gson();
                         Vvz.putExtra("saved_courses", gson.toJson(saved_courses));

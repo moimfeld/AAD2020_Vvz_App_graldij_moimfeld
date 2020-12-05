@@ -86,6 +86,7 @@ public class Parse {
                     e.printStackTrace();
                 }
                 //here we get all tr elements (since in the tr elements there are all the infos for the appointments
+                assert docCategory != null;
                 Elements appointment_elements = docCategory.select("tr");
                 //this for loop iterates over all elements of appointment_elements and forms a appointment object for each element
                 r = new ArrayList<>(appointment_elements.size() - 1);
@@ -100,7 +101,6 @@ public class Parse {
                         //create the variables for the Appointment object
                         //it is 1000% important to create new arrays for each iteration through the for loop, since we'll pass the array to the Appointment object, and we need to get new arrays for each object
                         ArrayList<Integer> time = new ArrayList<>();
-                        ArrayList<String> dates = new ArrayList<>();
                         String day;
                         String periodicity;
                         //get the day of this appointment
@@ -122,9 +122,7 @@ public class Parse {
                         periodicity = appointment_content.get(2).text();
                         String dates_raw = appointment_content.get(3).text();
                         String[] datesArray = StringUtils.split(dates_raw, ";");
-                        for(String s : datesArray){
-                            dates.add(s);
-                        }
+                        ArrayList<String> dates = new ArrayList<>(Arrays.asList(datesArray));
                         //this exception is needed in case there are lectures which have no specific day
                         if(day.equals("")){
 //                            Elements semester_elements = doc.select("td:contains(semester)");

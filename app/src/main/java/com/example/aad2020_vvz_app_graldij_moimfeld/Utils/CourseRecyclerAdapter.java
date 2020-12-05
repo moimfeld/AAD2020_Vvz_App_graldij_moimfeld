@@ -134,11 +134,9 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
-        //Make Inactive Items Outside Of PopupWindow
-        boolean focusable = true;
 
         //Create a window with our parameters
-        final PopupWindow popupWindow = new PopupWindow(popUpView, width, height, focusable);
+        final PopupWindow popupWindow = new PopupWindow(popUpView, width, height, true);
         //hardcoded parameter, this is bad
         popupWindow.setHeight(1500);
         //Set the location of the window on the screen

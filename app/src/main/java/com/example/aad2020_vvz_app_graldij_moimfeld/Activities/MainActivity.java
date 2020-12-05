@@ -1,5 +1,6 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<Course> saved_courses;
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        //Bottom navigation bar which can be used to switch from activity to activity. Here the data to be sent to other activities gets built and put into the intent
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_MainActivity);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,20 +78,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_Timetable:
-                        //Toast.makeText(MainActivity.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(MainActivity.this,Timetable.class);
                         Timetable.putExtra("saved_courses", CoursesToString(saved_courses));
                         startActivity(Timetable);
-
                         //This line makes a smooth transition and is used for all transitions in all the activities
                         overridePendingTransition(0, 0);
+                        break;
 
-                        break;
                     case R.id.action_MainActivity:
-                        //Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
                         break;
+
                     case R.id.action_Vvz:
-                        //Toast.makeText(MainActivity.this, "Nearby", Toast.LENGTH_SHORT).show();
                         Intent Vvz = new Intent(MainActivity.this, Vvz.class);
                         Vvz.putExtra("saved_courses", CoursesToString(saved_courses));
                         startActivity(Vvz);

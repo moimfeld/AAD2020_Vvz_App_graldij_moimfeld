@@ -3,6 +3,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,16 +33,20 @@ import java.util.Objects;
 
 public class Vvz extends AppCompatActivity {
 
+    //Variables needed throughout the whole activity
     public ArrayList<Course> saved_courses;
     private WebView myWebView;
+    @SuppressLint("StaticFieldLeak")
     static Context context;
+
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vvz);
         context = this;
 
-        //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
+        //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent.putExtra
         Type type = new TypeToken<ArrayList<Course>>(){}.getType();
         Gson gson = new Gson();
         saved_courses = gson.fromJson(getIntent().getStringExtra("saved_courses"), type);
@@ -64,7 +69,6 @@ public class Vvz extends AppCompatActivity {
         //enable zoom in webview
         myWebView.getSettings().setBuiltInZoomControls(true);
         myWebView.getSettings().setDisplayZoomControls(false);
-
 
         myWebView.loadUrl("http://www.vorlesungsverzeichnis.ethz.ch/Vorlesungsverzeichnis/sucheLehrangebotPre.view?lang=en");
 
@@ -105,7 +109,7 @@ public class Vvz extends AppCompatActivity {
             }
         });
 
-        //Bottom navigation bar
+        //Bottom navigation bar which can be used to switch from activity to activity. Here the data to be sent to other activities gets built and put into the intent
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.action_Vvz);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -113,21 +117,20 @@ public class Vvz extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_Timetable:
-                        //Toast.makeText(Vvz.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(Vvz.this, Timetable.class);
                         Gson gson = new Gson();
                         Timetable.putExtra("saved_courses", gson.toJson(saved_courses));
                         startActivity(Timetable);
                         overridePendingTransition(0, 0);
-                        break;
+
+
                     case R.id.action_MainActivity:
-                        //Toast.makeText(Vvz.this, "Favorites", Toast.LENGTH_SHORT).show();
                         Intent MainActivity = new Intent(Vvz.this, MainActivity.class);
                         startActivity(MainActivity);
                         overridePendingTransition(0, 0);
                         break;
+
                     case R.id.action_Vvz:
-                        //Toast.makeText(Vvz.this, "Nearby", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
@@ -151,14 +154,13 @@ public class Vvz extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (myWebView.canGoBack()) {
-                        myWebView.goBack();
-                    } else {
-                        finish();
-                    }
-                    return true;
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (myWebView.canGoBack()) {
+                    myWebView.goBack();
+                } else {
+                    finish();
+                }
+                return true;
             }
         }
         return super.onKeyDown(keyCode, event);

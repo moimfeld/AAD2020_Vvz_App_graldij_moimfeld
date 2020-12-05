@@ -24,10 +24,6 @@ public class Appointment {
         this.selected = true;
     }
 
-    public boolean isEmpty(){
-        return this.day == null && this.time.isEmpty() && this.dates.isEmpty();
-    }
-
     public int getStartTime(){
         return this.time.get(0);
     }
@@ -35,7 +31,5 @@ public class Appointment {
     public int getEndTime(){
         return this.time.get(this.time.size()-1)+1;
     }
-
-    public boolean isSelected(){ return this.selected;}
 
 }

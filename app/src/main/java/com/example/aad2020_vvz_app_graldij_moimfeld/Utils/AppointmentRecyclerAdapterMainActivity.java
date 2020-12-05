@@ -46,7 +46,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
         // We set the texts and the image of our MenuItemHolder object
         holder.category.setText(appointments.get(position).category);
         holder.day.setText("Day: " + appointments.get(position).day);
-        holder.time.setText("Time: " + Integer.toString(appointments.get(position).getStartTime()) + " - " + Integer.toString(appointments.get(position).getEndTime()));
+        holder.time.setText("Time: " + appointments.get(position).getStartTime() + " - " + appointments.get(position).getEndTime());
         holder.place.setText("Place: " + appointments.get(position).place);
         holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -82,6 +82,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
 
     static class AppointmentItemHolder extends RecyclerView.ViewHolder {
         TextView category, day, time, place;
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
         Switch aSwitch;
         LinearLayout linearLayoutAppointment;
 
