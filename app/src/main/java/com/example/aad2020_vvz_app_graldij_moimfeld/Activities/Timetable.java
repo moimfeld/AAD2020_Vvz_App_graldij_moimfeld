@@ -116,13 +116,23 @@ public class Timetable extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
 
         Stack<String> color_palette = new Stack<>();
+//        color_palette.addAll(Arrays.asList(
+//                "#43A047",  "#FF0000", "#8C9EFF", "#80D8FF",
+//                "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
+//                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
+
         color_palette.addAll(Arrays.asList(
-                "#43A047",  "#FF0000", "#8C9EFF", "#80D8FF",
-                "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
-                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
+                "#72791C", //ETH 4 green
+                "#956013", //ETH 9 brown
+                "#007A96", //ETH 8 green-blue
+                "#A8322D", //ETH 7 red
+                "#6F6F6F", //ETH 6 grey
+                "#91056A", //ETH 5 pink
+                "#1269B0", //ETH 3 blue
+                "#485A2C"  //ETH 2 green
+        ));
 
         for(Course course : saved_courses){
-            String name=course.name;
             String current_color;
             if(!color_palette.empty()){
                 current_color = color_palette.pop();
@@ -133,6 +143,34 @@ public class Timetable extends AppCompatActivity {
             }
 
             for (Appointment appointment : course.getAllAppointments()){
+                String name;
+
+                switch(appointment.category){
+                    case "Lecture":
+                        name="V - "+appointment.courseName;
+                        break;
+
+                    case "Lecture with Exercise":
+                        name="G - "+appointment.courseName;
+                        break;
+
+                    case "Exercise":
+                        name="U - "+appointment.courseName;
+                        break;
+
+                    case "Lab":
+                        name="P - "+appointment.courseName;
+                        break;
+
+                    default:
+                        name=appointment.courseName;
+                        break;
+                }
+
+
+
+
+
                 String day= appointment.day;
 
                 if(day.equals("not during the semester")) {
