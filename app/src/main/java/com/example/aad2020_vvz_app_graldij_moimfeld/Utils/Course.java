@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Course {
 
     public String name;
+    public String semester;
+    public int year;
 
     //the new attributes of the class course aren't yet implemented in its methods and constructors!!!!
     public ArrayList<Appointment> lectures; //course_code + V
@@ -19,6 +21,8 @@ public class Course {
     //default constructor needs to be updated for the new strucutre
     public Course(){
         this.name = null;
+        this.semester = null;
+        this.year = -1;
         this.lectures = new ArrayList<>();
         this.lecturesAndExercises = new ArrayList<>();
         this.exercises = new ArrayList<>();
@@ -28,6 +32,8 @@ public class Course {
     }
 
     public Course(String name,
+                  String semester,
+                  int year,
                   ArrayList<Appointment> lectures,
                   ArrayList<Appointment> lecturesAndExercises,
                   ArrayList<Appointment> exercises,
@@ -36,6 +42,8 @@ public class Course {
                   int ECTS){
 
         this.name = name;
+        this.semester = semester;
+        this.year = year;
         this.lectures = lectures;
         this.lecturesAndExercises = lecturesAndExercises;
         this.exercises = exercises;
@@ -51,7 +59,6 @@ public class Course {
 
     //isEmpty() returns true if the lecture is empty.
     public boolean isEmpty(){
-
         return (this.name == null
                 || (this.lectures.isEmpty() && this.lecturesAndExercises.isEmpty() && this.exercises.isEmpty() && this.labs.isEmpty())
                 || this.course_code == null

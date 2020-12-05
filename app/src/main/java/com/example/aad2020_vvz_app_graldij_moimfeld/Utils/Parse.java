@@ -22,7 +22,127 @@ import java.util.concurrent.ExecutionException;
 //there is still a bug, where the app crashes, when there is only an hour category and no date/time in a lecture
 public class Parse {
 
-    public ArrayList<Appointment> parseAppointments (String courseName, String category, Document doc, String course_code){
+
+//full parse method which returns one Course. This function makes excessive use of the helper method below
+
+    public Course parse (String url, Context context){
+
+        //this is a auxiliary variables
+        int index;
+        Parse parse;
+
+        //create all needed variables to create a lecture object
+        String name=null;
+        String semester = null;
+        int year = -1;
+        ArrayList<Appointment> lectures;
+        ArrayList<Appointment> lecturesAndExercises;
+        ArrayList<Appointment> exercises;
+        ArrayList<Appointment> labs;
+        String course_code=null;
+        int ECTS=-1;
+
+        //create empty course object
+        Course result;
+        result= new Course();
+
+
+
+        //Url check/manipulation
+        //if there is a valid url it gets formated to the correct format
+        //if there is an invalid url, the parse function returns an toast message "invalid url" and returns an "empty" lecture
+        //to get the right regex pattern I used https://regex101.com/
+        if(url.contains("ansicht") && url.contains("lang=")){
+            url = RegExUtils.replaceAll(url, "lang=+(de|en)", "lang=en");
+            url = RegExUtils.replaceAll(url, "ansicht=(.*?)&", "ansicht=ALLE&");
+            //Toast.makeText(context, "url changed", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Toast.makeText(context, "invalid url", Toast.LENGTH_SHORT).show();
+            return result;
+        }
+
+
+
+
+        //create new AsyncTask to fetch the HTML document
+        AsyncTask<String, Void, Document> task = new NewThread().execute(url);
+
+
+        //to avoid NullPointerExceptions I surrounded every parse with a if statement
+        try {
+            Document doc = task.get();
+            //get the name (this might also not be robust enough, since the lecture code could be longer than from index 0 to 13)
+            //The class StringBuilder allows to manipulate strings more easily
+            if (doc.getElementById("contentTop") != null) {
+                Element name_element = doc.getElementById("contentTop");
+                StringBuilder parsed_name = new StringBuilder(name_element.text());
+                parsed_name.delete(0, 13);//delete code
+                name = parsed_name.toString();
+                //Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
+            }
+            //get the course_code (this line could not be robust enough, since we don't know if the lecture code has variable length or not
+            if (doc.getElementById("contentTop") != null) {
+                Element lecture_code_element = doc.getElementById("contentTop");
+                StringBuilder parsed_lecture_code = new StringBuilder(lecture_code_element.text());
+                parsed_lecture_code.delete(12, parsed_lecture_code.length());
+                course_code = parsed_lecture_code.toString();
+                //Toast.makeText(context, course_code, Toast.LENGTH_SHORT).show();
+            }
+
+
+            if (doc.select("td:contains(semester)") != null) {
+                Elements semester_elements = doc.select("td:contains(semester)");
+                semester = semester_elements.get(1).text();
+                String yearString = RegExUtils.removeAll(semester, "(.*?) Semester ");
+                year = Integer.parseInt(yearString);
+            }
+
+            //get the lecture appointments
+            parse = new Parse();
+            lectures = parse.parseAppointments(name, "V", doc, course_code, year);
+
+            //get the exercise appointments
+            lecturesAndExercises = parseAppointments(name, "G", doc, course_code, year);
+
+            //get the exercise appointments
+            exercises = parseAppointments(name, "U", doc, course_code, year);
+
+            //get the lab appointments
+            labs = parseAppointments(name,"P", doc, course_code, year);
+
+
+            //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
+            if (doc.select("td") != null) {
+                Elements ECTS_element_list = doc.select("td:contains(ECTS credits)"); //.select("td:contains(credits)" looks for any td elements in the document that contains the string "credits"
+                Element ECTS_element_entry=ECTS_element_list.get(0); //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
+                //overwrite
+                ECTS_element_list = doc.select("td:contains(credit)"); //select all elements containing "credits
+                index = ECTS_element_list.indexOf(ECTS_element_entry);//find index of the element with "ECTS credits"
+                Element ECTS_element = ECTS_element_list.get(index+1); //use as credit the immediately following "credit" entry
+                String ECTS_only_number = RegExUtils.removeAll(ECTS_element.text(), "( credits| credit)");
+                ECTS = Integer.parseInt(ECTS_only_number);
+                //Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
+            }
+            //create a Lecture object with the just parsed content
+            result= new Course(name, semester, year, lectures, lecturesAndExercises, exercises, labs, course_code, ECTS);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        //Toast messages to give a feedback if the lecture couldn't fully get parsed
+        if (result.isEmpty()) {
+            Toast.makeText(context, "this is not a valid course", Toast.LENGTH_SHORT).show();
+        }
+
+        return result;
+    }
+
+
+
+//Helper method which can parse arrayLists of appointments for each category of a course
+    public ArrayList<Appointment> parseAppointments (String courseName, String category, Document doc, String course_code, int year){
 
 
         //this is a auxiliary variables
@@ -115,7 +235,7 @@ public class Parse {
                         hours_edit = new StringBuilder(hours);
                         hours_edit.delete(0, 3);
                         int end_time_int = Integer.parseInt(hours_edit.toString());
-                        //use < instead, is this fine for you?
+                        //use < instead (the array does not contain the end time)
                         for (int j = start_time_int; j < end_time_int; j++) {
                             time.add(j);
                         }
@@ -123,17 +243,9 @@ public class Parse {
                         String dates_raw = appointment_content.get(3).text();
                         String[] datesArray = StringUtils.split(dates_raw, ";");
                         ArrayList<String> dates = new ArrayList<>(Arrays.asList(datesArray));
+
                         //this exception is needed in case there are lectures which have no specific day
                         if(day.equals("")){
-//                            Elements semester_elements = doc.select("td:contains(semester)");
-//                            String yearForWeekday = semester_elements.get(1).text();
-//                            yearForWeekday = RegExUtils.removeAll(yearForWeekday, "(.*?) Semester ");
-//                            String[] DayMonthArray = StringUtils.split(dates.get(0), ".");
-//                            String dayForWeekday = DayMonthArray[0];
-//                            String monthForWeekday = DayMonthArray[1];
-//                            LocalDate date = LocalDate.of(Integer.parseInt(yearForWeekday), Integer.parseInt(monthForWeekday), Integer.parseInt(dayForWeekday));
-//                            DayOfWeek dayOfWeek = date.getDayOfWeek();
-//                            day = dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ENGLISH);
                             day = "not during the semester";
                         }
 
@@ -147,7 +259,7 @@ public class Parse {
                         String place;
                         for (String s : placeSet) {
                             place = s;
-                            Appointment category_appointment = new Appointment(courseName, category_fullString, day, time, periodicity, dates, place);
+                            Appointment category_appointment = new Appointment(courseName, category_fullString, day, year, time, periodicity, dates, place);
                             r.add(category_appointment);
                         }
                     }
@@ -156,113 +268,5 @@ public class Parse {
             return r;
         }
         return r;
-    }
-
-
-
-
-
-    public Course parse (String url, Context context){
-
-        //this is a auxiliary variables
-        int index;
-        Parse parse;
-
-        //create all needed variables to create a lecture object
-        String name=null;
-        ArrayList<Appointment> lectures;
-        ArrayList<Appointment> lecturesAndExercises;
-        ArrayList<Appointment> exercises;
-        ArrayList<Appointment> labs;
-        String course_code=null;
-        int ECTS=-1;
-
-        //create empty course object
-        Course result;
-        result= new Course();
-
-
-
-        //Url check/manipulation
-        //if there is a valid url it gets formated to the correct format
-        //if there is an invalid url, the parse function returns an toast message "invalid url" and returns an "empty" lecture
-        //to get the right regex pattern I used https://regex101.com/
-        if(url.contains("ansicht") && url.contains("lang=")){
-            url = RegExUtils.replaceAll(url, "lang=+(de|en)", "lang=en");
-            url = RegExUtils.replaceAll(url, "ansicht=(.*?)&", "ansicht=ALLE&");
-            //Toast.makeText(context, "url changed", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Toast.makeText(context, "invalid url", Toast.LENGTH_SHORT).show();
-            return result;
-        }
-
-
-
-
-        //create new AsyncTask to fetch the HTML document
-        AsyncTask<String, Void, Document> task = new NewThread().execute(url);
-
-
-        //to avoid NullPointerExceptions I surrounded every parse with a if statement
-        try {
-            Document doc = task.get();
-            //get the name (this might also not be robust enough, since the lecture code could be longer than from index 0 to 13)
-            //The class StringBuilder allows to manipulate strings more easily
-            if (doc.getElementById("contentTop") != null) {
-                Element name_element = doc.getElementById("contentTop");
-                StringBuilder parsed_name = new StringBuilder(name_element.text());
-                parsed_name.delete(0, 13);//delete code
-                name = parsed_name.toString();
-                //Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
-            }
-            //get the course_code (this line could not be robust enough, since we don't know if the lecture code has variable length or not
-            if (doc.getElementById("contentTop") != null) {
-                Element lecture_code_element = doc.getElementById("contentTop");
-                StringBuilder parsed_lecture_code = new StringBuilder(lecture_code_element.text());
-                parsed_lecture_code.delete(12, parsed_lecture_code.length());
-                course_code = parsed_lecture_code.toString();
-                //Toast.makeText(context, course_code, Toast.LENGTH_SHORT).show();
-            }
-
-            //get the lecture appointments
-            parse = new Parse();
-            lectures = parse.parseAppointments(name, "V", doc, course_code);
-
-            //get the exercise appointments
-            lecturesAndExercises = parseAppointments(name, "G", doc, course_code);
-
-            //get the exercise appointments
-            exercises = parseAppointments(name, "U", doc, course_code);
-
-            //get the lab appointments
-            labs = parseAppointments(name,"P", doc, course_code);
-
-
-            //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
-            if (doc.select("td") != null) {
-                Elements ECTS_element_list = doc.select("td:contains(ECTS credits)"); //.select("td:contains(credits)" looks for any td elements in the document that contains the string "credits"
-                Element ECTS_element_entry=ECTS_element_list.get(0); //lectures with more than one "ECTS credits" do exist, but we will not handle them. Only first entry handled.
-                //overwrite
-                ECTS_element_list = doc.select("td:contains(credit)"); //select all elements containing "credits
-                index = ECTS_element_list.indexOf(ECTS_element_entry);//find index of the element with "ECTS credits"
-                Element ECTS_element = ECTS_element_list.get(index+1); //use as credit the immediately following "credit" entry
-                String ECTS_only_number = RegExUtils.removeAll(ECTS_element.text(), "( credits| credit)");
-                ECTS = Integer.parseInt(ECTS_only_number);
-                //Toast.makeText(context, ECTS_only_number, Toast.LENGTH_SHORT).show();
-            }
-            //create a Lecture object with the just parsed content
-            result= new Course(name, lectures, lecturesAndExercises, exercises, labs, course_code, ECTS);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        //Toast messages to give a feedback if the lecture couldn't fully get parsed
-        if (result.isEmpty()) {
-            Toast.makeText(context, "this is not a valid course", Toast.LENGTH_SHORT).show();
-        }
-
-        return result;
     }
 }
