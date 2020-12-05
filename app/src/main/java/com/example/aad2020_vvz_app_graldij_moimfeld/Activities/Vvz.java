@@ -122,7 +122,7 @@ public class Vvz extends AppCompatActivity {
                         Timetable.putExtra("saved_courses", gson.toJson(saved_courses));
                         startActivity(Timetable);
                         overridePendingTransition(0, 0);
-
+                        break;
 
                     case R.id.action_MainActivity:
                         Intent MainActivity = new Intent(Vvz.this, MainActivity.class);
