@@ -70,24 +70,20 @@ public class Timetable extends AppCompatActivity {
         int size=arrayList.size();
         int[] array = new int[size];
         for(int i=0; i<size; i++){
-            array[i] = arrayList.get(i).intValue();
+            array[i] = arrayList.get(i);
         }
         return array;
     }
     //helper function to convert ArrayList to a Set (in order to exploit sets' features). Used here to
     // avoid same exercises displayed twice, together with the function convertSetToString
     public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
-        Set<String> result = new HashSet<String>();
-        for(String string_element : arrayList){
-            result.add(string_element);
-        }
-        return result;
+        return new HashSet<>(arrayList);
     }
 
     //helper function converting a set of strings to a string, appending all elements separated with " &\n".
     //See also function convertArrayListToSet
     public String convertSetToString(Set<String> set){
-        String outputstring = new String();
+        String outputstring = "";
         Iterator<String> itr = set.iterator();
         while(itr.hasNext()){
 
@@ -198,7 +194,7 @@ public class Timetable extends AppCompatActivity {
                     //create cell id linked to the .xml file
                     String cell = day+"_"+time.toString();
                     //if lecture not selected
-                    if(appointment.selected==false){
+                    if(!appointment.selected){
                         //check if cell_id already saved in the ArrayList of the not-chosen. Accordingly save or add the information
                         if(!containsCell(not_used_ids,cell)){
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
@@ -316,7 +312,7 @@ public class Timetable extends AppCompatActivity {
                 infos_clicked_element_selected.appointments_for_cell.addAll(infos_clicked_element_NOT_selected.appointments_for_cell);
             }
             //show a popup window with all the courses taking place at the clicked time&day (both selected
-            //and non-selected courses)
+            //and non-selected courses).
             showPopupWindow(infos_clicked_element_selected.appointments_for_cell);
         }
     }
