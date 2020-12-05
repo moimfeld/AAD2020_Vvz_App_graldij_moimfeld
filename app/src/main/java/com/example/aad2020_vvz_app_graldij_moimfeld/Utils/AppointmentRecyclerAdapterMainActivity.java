@@ -97,7 +97,6 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
             linearLayoutAppointment = itemView.findViewById(R.id.recycler_row_appointment_linearlayout_main_activity);
 
 
-
         }
 
     }
