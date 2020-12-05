@@ -115,6 +115,8 @@ public class Vvz extends AppCompatActivity {
                     case R.id.action_Timetable:
                         //Toast.makeText(Vvz.this, "Recents", Toast.LENGTH_SHORT).show();
                         Intent Timetable = new Intent(Vvz.this, Timetable.class);
+                        Gson gson = new Gson();
+                        Timetable.putExtra("saved_courses", gson.toJson(saved_courses));
                         startActivity(Timetable);
                         overridePendingTransition(0, 0);
                         break;

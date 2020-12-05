@@ -211,6 +211,8 @@ public class Timetable extends AppCompatActivity {
                     case R.id.action_Vvz:
                         //Toast.makeText(Timetable.this, "Nearby", Toast.LENGTH_SHORT).show();
                         Intent Vvz = new Intent(Timetable.this, Vvz.class);
+                        Gson gson = new Gson();
+                        Vvz.putExtra("saved_courses", gson.toJson(saved_courses));
                         startActivity(Vvz);
                         overridePendingTransition(0, 0);
                         break;
