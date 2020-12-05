@@ -89,7 +89,7 @@ public class Timetable extends AppCompatActivity {
 
             outputstring += itr.next();
                     if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
-                        outputstring+=" &\n";
+                        outputstring+=" & ";
                     }
         }
         return outputstring;
