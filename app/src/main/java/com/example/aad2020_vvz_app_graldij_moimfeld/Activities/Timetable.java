@@ -42,9 +42,8 @@ import java.util.Stack;
 
 public class Timetable extends AppCompatActivity {
 
-    //create an ArrayList where the saved courses can be stored
-    private ArrayList<Course> saved_courses = new ArrayList<>();
 
+    //helper function returning true if the celltofind is already stored in the ArrayList
     public boolean containsCell(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
             if (time_slot.cell.equals(celltofind)){
@@ -55,7 +54,8 @@ public class Timetable extends AppCompatActivity {
         return false;
     }
 
-
+    //helper function returning the index of the ArrayList where the celltofind string is stored. If
+    //no cell is present returns 0. Should always be used only if the above function containsCell returned true.
     public int cellInArrayListIndex(ArrayList<DisplayLecture> used_ids, String celltofind){
         for (DisplayLecture time_slot : used_ids){
             if (time_slot.cell.equals(celltofind)){
@@ -65,6 +65,7 @@ public class Timetable extends AppCompatActivity {
         return 0;
     }
 
+    //helper function converting ArrayList of Integers to an array of int. Resulting array of int is returned
     public int[] convertArrayListToArray(ArrayList<Integer> arrayList){
         int size=arrayList.size();
         int[] array = new int[size];
@@ -73,7 +74,18 @@ public class Timetable extends AppCompatActivity {
         }
         return array;
     }
+    //helper function to convert ArrayList to a Set (in order to exploit sets' features). Used here to
+    // avoid same exercises displayed twice, together with the function convertSetToString
+    public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
+        Set<String> result = new HashSet<String>();
+        for(String string_element : arrayList){
+            result.add(string_element);
+        }
+        return result;
+    }
 
+    //helper function converting a set of strings to a string, appending all elements separated with " &\n".
+    //See also function convertArrayListToSet
     public String convertSetToString(Set<String> set){
         String outputstring = new String();
         Iterator<String> itr = set.iterator();
@@ -87,16 +99,16 @@ public class Timetable extends AppCompatActivity {
         return outputstring;
     }
 
-    public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
-        Set<String> result = new HashSet<String>();
-        for(String string_element : arrayList){
-            result.add(string_element);
-        }
-        return result;
-    }
 
+    //create an ArrayList where the saved courses can be stored
+    private ArrayList<Course> saved_courses = new ArrayList<>();
+
+    //ArrayList with objects DisplayLecture that are being selected
     ArrayList<DisplayLecture> used_ids = new ArrayList<>();
+
+    //ArrayList with objects DisplayLecture that are being selected
     ArrayList<DisplayLecture> not_used_ids = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,12 +127,8 @@ public class Timetable extends AppCompatActivity {
 
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
 
+        //Stack of Strings where the 14 colors for the timetable are stored.
         Stack<String> color_palette = new Stack<>();
-//        color_palette.addAll(Arrays.asList(
-//                "#43A047",  "#FF0000", "#8C9EFF", "#80D8FF",
-//                "#A7FFEB", "#CCFF90", "#FFFF8D", "#FFD180",
-//                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
-
         color_palette.addAll(Arrays.asList(
                 "#6f9fd8", //"little boy blue" (last color displayed)
                 "#343148", //eclipse
@@ -137,8 +145,10 @@ public class Timetable extends AppCompatActivity {
                 "#1269B0", //ETH 3 blue
                 "#485A2C"  //ETH 2 green (first color displayed)
         ));
-
+        //iterate over courses
         for(Course course : saved_courses){
+
+            //pop a color from the stack and assign it to a course unit (only if stack is not empty)
             String current_color;
             if(!color_palette.empty()){
                 current_color = color_palette.pop();
@@ -148,9 +158,11 @@ public class Timetable extends AppCompatActivity {
                 current_color = "#000000";
             }
 
+            //iterate over appointments
             for (Appointment appointment : course.getAllAppointments()){
+                //stored the name of the course unit
                 String name;
-
+                //store the course unit with the letter representing the category of the course
                 switch(appointment.category){
                     case "Lecture":
                         name="V - "+appointment.courseName;
@@ -173,16 +185,21 @@ public class Timetable extends AppCompatActivity {
                         break;
                 }
 
-
+                //stored the days of the appointments
                 String day= appointment.day;
 
+                //if course is not during the semester, should not be displayed in the timetable
                 if(day.equals("not during the semester")) {
                     continue;
                 }
-                for (Integer time: appointment.time){
-                    String cell = day+"_"+time.toString();
 
+                //iterate over times of the appointmen
+                for (Integer time: appointment.time){
+                    //create cell id linked to the .xml file
+                    String cell = day+"_"+time.toString();
+                    //if lecture not selected
                     if(appointment.selected==false){
+                        //check if cell_id already saved in the ArrayList of the not-chosen. Accordingly save or add the information
                         if(!containsCell(not_used_ids,cell)){
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
                             not_used_ids.add(new_cell_slot);
@@ -193,37 +210,41 @@ public class Timetable extends AppCompatActivity {
                             not_used_ids.get(cellInArrayListIndex(not_used_ids, cell)).addAppointment(appointment);
                         }
                     }
+                    //if lecture is selected
                     else {
+                        //convert from cell string to id int.
                         int id = getResources().getIdentifier(cell, "id", getPackageName());
-
+                        //if new cell
                         if (!containsCell(used_ids, cell)) {
+                            //create new DisplayLecture and add it to the used_ids
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
                             used_ids.add(new_cell_slot);
-
+                            //find right cell with id, and display name with background color
                             TextView text = findViewById(id);
                             text.setText(name);
                             text.setBackgroundColor(Color.parseColor(current_color));
-
-                            //                            Toast.makeText(this, "1"+name+cell+"--"+new_cell_slot.cell, Toast.LENGTH_SHORT).show();
-                        } else {
-                            //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
+                        }
+                        //if cell already occupied
+                        else {
+                            //save the current color in the right position
                             used_ids.get(cellInArrayListIndex(used_ids, cell)).addColor(Color.parseColor(current_color));
 
                             TextView text = findViewById(id);
-
+                            //create the int array with the colors present in that cell. Will be used for the gradient
                             int[] colors = convertArrayListToArray(used_ids.get(cellInArrayListIndex(used_ids, cell)).colors_for_cell);
-                            //                         GradientDrawable.Orientation orientation = new GradientDrawable.Orientation();
-                            //                         orientation.valueOf("LEFT_RIGHT");
+                            //with the int array of the colors, create the drawable with faded color (gradient), with fading from left to right
                             Drawable gradient = new GradientDrawable(GradientDrawable.Orientation.valueOf("LEFT_RIGHT"), colors);
+                            //set the drawable as a background
                             text.setBackground(gradient);
-
+                            //add name to to the used_ids ArrayList for that specific cell of the table
                             used_ids.get(cellInArrayListIndex(used_ids, cell)).addName(name);
-
+                            //set the text of the cell, using the names saved present in that cell.
+                            //In order to avoid having twice the same name, use the helper functions
+                            //to convert ArrayList to Set (eliminating the duplicates), and then convert
+                            //the Set to the String in order to set it as a text
                             text.setText(convertSetToString((convertArrayListToSet(used_ids.get(cellInArrayListIndex(used_ids, cell)).names_for_cell))));
-
-                            //                         Toast.makeText(this, "2"+name+cell, Toast.LENGTH_SHORT).show();
-
-
+                            //in case of multiple appointments at the same cell, save also the appointment in the
+                            //used_ids, in order to use it later for the click&popup
                             used_ids.get(cellInArrayListIndex(used_ids, cell)).addAppointment(appointment);
                         }
                     }
@@ -268,32 +289,36 @@ public class Timetable extends AppCompatActivity {
 
 
     }
-
+    //function called if table cell is clicked
     public void tryClick(View view) {
+        //cast view to textview
         TextView clicked_textview = (TextView) view;
+        //get int id of clicked textview
         int clicked_id_int = clicked_textview.getId();
+        //convert int id to string id
         String clicked_int_string = getResources().getResourceEntryName(clicked_id_int);
-//        Toast.makeText(this, clicked_int_string, Toast.LENGTH_SHORT).show();
+        //check if clicked cell has already a displayed lecture
         if(containsCell(used_ids , clicked_int_string)){
-//            Toast.makeText(this, "contained", Toast.LENGTH_SHORT).show();
+            //get index of the clicked cell in the used_ids
             int index_of_clicked_element_selected = cellInArrayListIndex(used_ids, clicked_int_string);
+            //get the element of the clicked cell in the used_ids, i.e. all lectures selected that take place
+            //during that cell
             DisplayLecture infos_clicked_element_selected = used_ids.get(index_of_clicked_element_selected);
-
+            //check if some non-selected lectures also would take place in that cell
             if(containsCell(not_used_ids , clicked_int_string)){
+                //if yes, find index of that cell in the not_used_ids
                 int index_of_clicked_element_NOT_selected = cellInArrayListIndex(not_used_ids, clicked_int_string);
+                //get the element of the clicked cell in the not_used_ids, i.e. all lectures NOT selected
+                //that would take place during that cell
                 DisplayLecture infos_clicked_element_NOT_selected = not_used_ids.get(index_of_clicked_element_NOT_selected);
+                //append the appointments of the not-selected courses taking place at that time to the
+                //selected appointments also taking place at that time
                 infos_clicked_element_selected.appointments_for_cell.addAll(infos_clicked_element_NOT_selected.appointments_for_cell);
             }
-
-//            Toast.makeText(this, Integer.toString(infos_clicked_element.appointments_for_cell.size()), Toast.LENGTH_SHORT).show();
+            //show a popup window with all the courses taking place at the clicked time&day (both selected
+            //and non-selected courses)
             showPopupWindow(infos_clicked_element_selected.appointments_for_cell);
         }
-
-//        Toast.makeText(this, "NOT contained", Toast.LENGTH_SHORT).show();
-        //add banner with lecture information. I think to use the used_ids, but there the references to the
-        //lectures are missing. Maybe better to add those references to the DisplayLecture class in order to
-        //have it in the used_ids? Or change approach and save all these information in the courses
-        //and appointments (i.e. also colors, cell, ...)??
     }
 
 
