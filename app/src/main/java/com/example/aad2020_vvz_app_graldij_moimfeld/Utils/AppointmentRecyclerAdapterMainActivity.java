@@ -2,9 +2,11 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -12,8 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -22,11 +27,15 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
     //Attributes
     private ArrayList<Appointment> appointments;
     private ArrayList<Course> courses;
+    private Button button;
+    private TextView collision;
     private SharedPreferences sharedPreferences;
     //Constructor
-    public AppointmentRecyclerAdapterMainActivity(ArrayList<Appointment> appointments, ArrayList<Course> courses, SharedPreferences sharedPreferences) {
+    public AppointmentRecyclerAdapterMainActivity(ArrayList<Appointment> appointments, ArrayList<Course> courses, Button button, TextView collision, SharedPreferences sharedPreferences) {
         this.appointments = appointments;
         this.courses = courses;
+        this.button = button;
+        this.collision = collision;
         this.sharedPreferences = sharedPreferences;
     }
 
@@ -59,6 +68,20 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                     String json = gson.toJson(courses);
                     editor.putString("saved_courses", json);
                     editor.apply();
+                    MainActivity.collisions = MainActivity.getCollisions(courses);
+                    if(MainActivity.collisions.size() == 0){
+                        button.setVisibility(View.GONE);
+                        button.setWidth(0);
+                        collision.setText("no collisions found");
+                        collision.setWidth(100);
+                        collision.setTextColor(Color.parseColor("#4CAF50"));
+                    }
+
+                    else {
+                        collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
+                        collision.setTextColor(Color.parseColor("#FF0000"));
+                        button.setTextColor(Color.parseColor("#FF0000"));
+                    }
                 } else {
                     appointments.get(position).selected = false;
                     //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
@@ -67,6 +90,20 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                     String json = gson.toJson(courses);
                     editor.putString("saved_courses", json);
                     editor.apply();
+                    MainActivity.collisions = MainActivity.getCollisions(courses);
+                    if(MainActivity.collisions.size() == 0){
+                        button.setVisibility(View.GONE);
+                        button.setWidth(0);
+                        collision.setText("no collisions found");
+                        collision.setWidth(100);
+                        collision.setTextColor(Color.parseColor("#4CAF50"));
+                    }
+
+                    else {
+                        collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
+                        collision.setTextColor(Color.parseColor("#FF0000"));
+                        button.setTextColor(Color.parseColor("#FF0000"));
+                    }
                 }
             }
         });

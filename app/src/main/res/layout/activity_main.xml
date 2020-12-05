@@ -74,20 +74,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:layout_weight="0.5"
-                android:background="#FFFFFF"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/main_activity_total_credits"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
+                    android:gravity="center"
                     android:background="#FFFFFF"
                     android:paddingEnd="20dp"
                     android:text="Total credits:"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -99,19 +100,36 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/main_activity_total_credits"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/collisions_main_activity"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:gravity="end"
-                    android:paddingStart="40dp"
+                    android:gravity="center"
                     android:text="TextView"
-                    android:textSize="16sp" />
+                    android:textSize="12sp"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_collisions"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#00FFFFFF"
+                    android:elevation="0dp"
+                    android:text="check collisions"
+                    android:textSize="10sp"/>
             </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCourses"

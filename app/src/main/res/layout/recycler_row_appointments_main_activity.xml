@@ -1,81 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_layout_main_activity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginTop="6dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="6dp"
-    app:cardBackgroundColor="#D2E4EA"
-    app:cardCornerRadius="4dp"
-    app:cardElevation="2dp">
+    app:cardBackgroundColor="#566278"
+    app:layout_anchorGravity="bottom">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_main_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        app:cardBackgroundColor="#D2E4EA"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/recycler_row_appointment_category_main_activity"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="3dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="1dp"
-                android:text="TextView"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_weight="0.8"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/recycler_row_appointment_day_main_activity"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/recycler_row_appointment_category_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="1dp"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/recycler_row_appointment_day_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/recycler_row_appointment_time_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:text="TextView" />
+
+                <TextView
+                    android:id="@+id/recycler_row_appointments_place_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="3dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="2dp"
+                    android:text="TextView" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/recycler_row_appointment_linearlayout_main_activity"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingStart="3dp"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="TextView" />
+                android:layout_gravity="center"
+                android:layout_weight="0.2"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/recycler_row_appointment_time_main_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="3dp"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/recycler_row_appointments_place_main_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="3dp"
-                android:paddingTop="1dp"
-                android:paddingBottom="2dp"
-                android:text="TextView" />
-
+                <Switch
+                    android:id="@+id/switch1_main_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/recycler_row_appointment_linearlayout_main_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="0.2"
-            android:orientation="vertical">
+    </androidx.cardview.widget.CardView>
 
-            <Switch
-                android:id="@+id/switch1_main_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

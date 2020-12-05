@@ -4,6 +4,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
 
@@ -33,13 +35,17 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     //totalCredits is needed such that the amount of credits can be can be changed when a lecture gets deleted
     private final TextView totalCredits;
     private final TextView actionBar;
+    private final TextView collision;
+    private final Button button;
     private final  SharedPreferences sharedPreferences;
 
     //Constructor
-    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar, SharedPreferences sharedPreferences) {
+    public CourseRecyclerAdapter(ArrayList<Course> courses, Context context, TextView totalCredits, TextView actionBar, TextView collision, Button button, SharedPreferences sharedPreferences) {
         this.courses = courses;
         this.context = context;
         this.totalCredits = totalCredits;
+        this.collision = collision;
+        this.button = button;
         this.actionBar = actionBar;
         this.sharedPreferences = sharedPreferences;
     }
@@ -86,13 +92,27 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                 for (Course c : courses) {
                     totalCreditsNumber += c.ECTS;
                 }
-                totalCredits.setText(Integer.toString(totalCreditsNumber));
+                totalCredits.setText("Total Credits: " + Integer.toString(totalCreditsNumber));
 
                 //here i set the Action bar to the empty state, when the last lecture got deleted
                 if (courses.size() != 0) {
                     actionBar.setText("Course Drawer");
                 } else {
                     actionBar.setText("Course Drawer is empty");
+                }
+                MainActivity.collisions = MainActivity.getCollisions(courses);
+                if(MainActivity.collisions.size() == 0){
+                    button.setVisibility(View.GONE);
+                    button.setWidth(0);
+                    collision.setText("no collisions found");
+                    collision.setWidth(100);
+                    collision.setTextColor(Color.parseColor("#4CAF50"));
+                }
+
+                else {
+                    collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
+                    collision.setTextColor(Color.parseColor("#FF0000"));
+                    button.setTextColor(Color.parseColor("#FF0000"));
                 }
             }
         });
@@ -151,7 +171,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         RecyclerView appointmentRecyclerView = popUpView.findViewById(R.id.recycler_view_appointments_main_activity);
 
         appointmentRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        AppointmentRecyclerAdapterMainActivity appointmentRecyclerApdapterMainActivity = new AppointmentRecyclerAdapterMainActivity(courses.get(position).getAllAppointments(), courses, sharedPreferences);
+        AppointmentRecyclerAdapterMainActivity appointmentRecyclerApdapterMainActivity = new AppointmentRecyclerAdapterMainActivity(courses.get(position).getAllAppointments(), courses, button, collision, sharedPreferences);
 
         appointmentRecyclerView.setAdapter(appointmentRecyclerApdapterMainActivity);
 
