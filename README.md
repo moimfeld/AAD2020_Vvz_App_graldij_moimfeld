@@ -5,6 +5,4 @@
 
 #TODO:
 
--block other web pages
-
--finish table, set text font, colors ...
+-finish collisions
