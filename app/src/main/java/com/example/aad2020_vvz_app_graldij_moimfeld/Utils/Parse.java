@@ -164,7 +164,7 @@ public class Parse {
                 break;
 
             case "G":
-                category_fullString = "Lecture of Exercise";
+                category_fullString = "Lecture with Exercise";
                 break;
 
             case "U":
