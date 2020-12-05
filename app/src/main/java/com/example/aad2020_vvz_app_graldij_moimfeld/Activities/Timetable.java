@@ -81,7 +81,7 @@ public class Timetable extends AppCompatActivity {
 
             outputstring += itr.next();
                     if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
-                        outputstring+="&\n";
+                        outputstring+=" &\n";
                     }
         }
         return outputstring;
@@ -122,11 +122,17 @@ public class Timetable extends AppCompatActivity {
 //                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
 
         color_palette.addAll(Arrays.asList(
+                "#6f9fd8", //"little boy blue"
+                "#343148", //eclipse
+                "#f5489e", //pink
+                "#EFC050", //mimosa
+                "#385C9B", //ETH 1 blue
                 "#72791C", //ETH 4 green
+                "#FF6F61", //coral
                 "#956013", //ETH 9 brown
-                "#007A96", //ETH 8 green-blue
-                "#A8322D", //ETH 7 red
                 "#6F6F6F", //ETH 6 grey
+                "#007A96", //ETH 8 green-blue
+                "#d9193c", //ETH 7 red - modified
                 "#91056A", //ETH 5 pink
                 "#1269B0", //ETH 3 blue
                 "#485A2C"  //ETH 2 green
@@ -138,7 +144,7 @@ public class Timetable extends AppCompatActivity {
                 current_color = color_palette.pop();
             }
             else{
-                Toast.makeText(this, "Too many lectures chosen. Max: 12", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Too many lectures chosen. Max: 14", Toast.LENGTH_SHORT).show();
                 current_color = "#dcdcdc";
             }
 
@@ -166,9 +172,6 @@ public class Timetable extends AppCompatActivity {
                         name=appointment.courseName;
                         break;
                 }
-
-
-
 
 
                 String day= appointment.day;
