@@ -122,7 +122,7 @@ public class Timetable extends AppCompatActivity {
 //                "#1E88E5", "#FF8A80", "#B63131", "#EA80FC"));
 
         color_palette.addAll(Arrays.asList(
-                "#6f9fd8", //"little boy blue"
+                "#6f9fd8", //"little boy blue" (last color displayed)
                 "#343148", //eclipse
                 "#f5489e", //pink
                 "#EFC050", //mimosa
@@ -135,7 +135,7 @@ public class Timetable extends AppCompatActivity {
                 "#d9193c", //ETH 7 red - modified
                 "#91056A", //ETH 5 pink
                 "#1269B0", //ETH 3 blue
-                "#485A2C"  //ETH 2 green
+                "#485A2C"  //ETH 2 green (first color displayed)
         ));
 
         for(Course course : saved_courses){
@@ -145,7 +145,7 @@ public class Timetable extends AppCompatActivity {
             }
             else{
                 Toast.makeText(this, "Too many lectures chosen. Max: 14", Toast.LENGTH_SHORT).show();
-                current_color = "#dcdcdc";
+                current_color = "#000000";
             }
 
             for (Appointment appointment : course.getAllAppointments()){
