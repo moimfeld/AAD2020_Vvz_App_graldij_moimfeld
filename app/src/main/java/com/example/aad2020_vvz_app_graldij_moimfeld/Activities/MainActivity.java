@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             button_collisions.setVisibility(View.VISIBLE);
             collisionTextView.setText(Integer.toString(collisions.size()) + " collisions found");
             collisionTextView.setTextColor(Color.parseColor("#FF0000"));
-            button_collisions.setTextColor(Color.parseColor("#FF0000"));
+            button_collisions.setTextColor(Color.parseColor("#1F407A"));
             button_collisions.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     loadCourses();
