@@ -2,10 +2,33 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1F407A"
     tools:context=".Activities.Vvz">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="30dp"
+        app:cardBackgroundColor="#1F407A"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="@id/webview"
+        card_view:cardCornerRadius="100dp"
+        card_view:cardElevation="8dp">
+
+        <Button
+            android:id="@+id/saved_lecture"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save Lecture"
+            android:textColor="#FFFFFF"
+            android:visibility="visible"
+            tools:visibility="visible" />
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linear_layout_vvz"
@@ -52,18 +75,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_layout_vvz"/>
-
-    <Button
-        android:id="@+id/saved_lecture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="save Lecture"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
