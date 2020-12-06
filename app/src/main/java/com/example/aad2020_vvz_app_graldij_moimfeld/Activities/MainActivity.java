@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -180,7 +184,9 @@ public class MainActivity extends AppCompatActivity {
     //helper method which searches for collisions
     public static ArrayList<Collision> getCollisions(ArrayList<Course> courses){
         //auxiliary variable
-        ArrayList<Collision> helper= new ArrayList<>();
+        ArrayList<Collision> helperArray = new ArrayList<>();
+        ArrayList<Collision> helperArrayFilter = new ArrayList<>();
+        HashSet<ArrayList<Appointment>> helperArrayFilterSet = new HashSet<>();
 
         //return variable
         ArrayList<Collision> collisions = new ArrayList<>();
@@ -197,12 +203,12 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 8; i <= 20; i++){
                     ArrayList<Appointment> collidingAppointments = new ArrayList<>();
                     Collision collision = new Collision(day, i, collidingAppointments);
-                    helper.add(collision);
+                    helperArray.add(collision);
                 }
             }
 
             for(Course course : courses){
-                for(Collision collision : helper){
+                for(Collision collision : helperArray){
                     //Set<String> names = new HashSet<>();
                     for(Appointment appointment : course.getAllAppointments()){
                         for(int time : appointment.time){
@@ -215,10 +221,19 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            for(Collision c : helper){
+            for(Collision c : helperArray){
                 if(c.collidingAppointments.size() > 1){
+                    helperArrayFilter.add(c);
+                }
+            }
+
+            int sizeOld = 0;
+            for(Collision c : helperArrayFilter){
+                helperArrayFilterSet.add(c.collidingAppointments);
+                if(helperArrayFilterSet.size() == sizeOld + 1){
                     collisions.add(c);
                 }
+                sizeOld = helperArrayFilterSet.size();
             }
         }
 
