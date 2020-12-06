@@ -54,7 +54,6 @@ public class AppointmentRecyclerAdapterTimetable extends RecyclerView.Adapter<Ap
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     appointments.get(position).selected = true;
-
                     //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     Gson gson = new Gson();

@@ -22,7 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.CourseItemHolder> {
 
     //Attributes
-    private final ArrayList<Course> courses;
+    private ArrayList<Course> courses;
     private final Context context;
     //totalCredits is needed such that the amount of credits can be can be changed when a lecture gets deleted
     private final TextView totalCredits;
@@ -110,6 +112,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
                 }
 
                 else {
+                    button.setVisibility(View.VISIBLE);
                     collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
                     collision.setTextColor(Color.parseColor("#FF0000"));
                     button.setTextColor(Color.parseColor("#FF0000"));
@@ -146,6 +149,14 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     //this function generates the pop up window, with its recyclerview in it
     @SuppressLint("SetTextI18n")
     public void showPopupWindow(int position) {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("saved_courses", null);
+        Type type = new TypeToken<ArrayList<Course>>(){}.getType();
+        courses = new ArrayList<>();
+        courses = gson.fromJson(json, type);
+        if(courses == null){
+            courses = new ArrayList<>();
+        }
 
         //Create a View object yourself through inflater
         @SuppressLint("InflateParams") View popUpView = LayoutInflater.from(context).inflate(R.layout.popup_main_actitvity, null);

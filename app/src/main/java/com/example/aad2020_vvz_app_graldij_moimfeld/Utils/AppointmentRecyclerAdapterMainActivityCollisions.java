@@ -21,7 +21,6 @@ import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.google.gson.Gson;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -57,6 +56,10 @@ import java.util.ArrayList;
         public void onBindViewHolder(@NonNull com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterMainActivityCollisions.AppointmentItemHolder holder, final int position) {
             // We set the texts and the image of our MenuItemHolder object
             if (appointments.get(position).identifier.equals("trueAppointment")) {
+                holder.day.setVisibility(View.VISIBLE);
+                holder.time.setVisibility(View.VISIBLE);
+                holder.place.setVisibility(View.VISIBLE);
+                holder.aSwitch.setVisibility(View.VISIBLE);
                 holder.category.setText(appointments.get(position).courseName + " (" + appointments.get(position).category + ")");
                 holder.day.setText("Day: " + appointments.get(position).day);
                 holder.time.setText("Time: " + appointments.get(position).getStartTime() + " - " + appointments.get(position).getEndTime());
@@ -73,21 +76,6 @@ import java.util.ArrayList;
                             editor.putString("saved_courses", json);
                             editor.apply();
 
-                            MainActivity.collisions = MainActivity.getCollisions(courses);
-                            if(MainActivity.collisions.size() == 0){
-                                button.setVisibility(View.GONE);
-                                button.setWidth(0);
-                                collision.setText("no collisions found");
-                                collision.setWidth(100);
-                                collision.setTextColor(Color.parseColor("#4CAF50"));
-                            }
-
-                            else {
-                                collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
-                                collision.setTextColor(Color.parseColor("#FF0000"));
-                                button.setTextColor(Color.parseColor("#FF0000"));
-                            }
-
                         } else {
                             appointments.get(position).selected = false;
                             //here the courses array gets saved, to the sharedPreference with the key "saved_courses"
@@ -97,20 +85,21 @@ import java.util.ArrayList;
                             editor.putString("saved_courses", json);
                             editor.apply();
 
-                            MainActivity.collisions = MainActivity.getCollisions(courses);
-                            if(MainActivity.collisions.size() == 0){
-                                button.setVisibility(View.GONE);
-                                button.setWidth(0);
-                                collision.setText("no collisions found");
-                                collision.setWidth(100);
-                                collision.setTextColor(Color.parseColor("#4CAF50"));
-                            }
+                        }
+                        MainActivity.collisions = MainActivity.getCollisions(courses);
+                        if(MainActivity.collisions.size() == 0){
+                            button.setVisibility(View.GONE);
+                            button.setWidth(0);
+                            collision.setText("no collisions found");
+                            collision.setWidth(100);
+                            collision.setTextColor(Color.parseColor("#4CAF50"));
+                        }
 
-                            else {
-                                collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
-                                collision.setTextColor(Color.parseColor("#FF0000"));
-                                button.setTextColor(Color.parseColor("#FF0000"));
-                            }
+                        else {
+                            button.setVisibility(View.VISIBLE);
+                            collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
+                            collision.setTextColor(Color.parseColor("#FF0000"));
+                            button.setTextColor(Color.parseColor("#FF0000"));
                         }
                     }
                 });

@@ -70,6 +70,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                     editor.apply();
                     MainActivity.collisions = MainActivity.getCollisions(courses);
                     if(MainActivity.collisions.size() == 0){
+                        button.getVisibility();
                         button.setVisibility(View.GONE);
                         button.setWidth(0);
                         collision.setText("no collisions found");
@@ -78,6 +79,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                     }
 
                     else {
+                        button.setVisibility(View.VISIBLE);
                         collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
                         collision.setTextColor(Color.parseColor("#FF0000"));
                         button.setTextColor(Color.parseColor("#FF0000"));
@@ -100,6 +102,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                     }
 
                     else {
+                        button.setVisibility(View.VISIBLE);
                         collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
                         collision.setTextColor(Color.parseColor("#FF0000"));
                         button.setTextColor(Color.parseColor("#FF0000"));

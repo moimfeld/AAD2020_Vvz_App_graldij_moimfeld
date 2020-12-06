@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aad2020_vvz_app_graldij_moimfeld.R;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Appointment;
-import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterMainActivity;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterMainActivityCollisions;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Collision;
 import com.example.aad2020_vvz_app_graldij_moimfeld.Utils.Course;
@@ -34,8 +32,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        overridePendingTransition(0, 0);
 
+        //if the MainActivity gets loaded there won't be any transition animation
+        overridePendingTransition(0, 0);
 
         //SharedPreference needs to be created in order to pass it to the recycler adapters
         sharedPreferences= getSharedPreferences("shared_preferences", MODE_PRIVATE);
@@ -67,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.parseColor("#1F407A"));
 
 
+        //
         TextView actionBar = findViewById(R.id.action_bar_mainactivity);
         if(saved_courses.size() != 0){
             actionBar.setText("Course Drawer");
@@ -74,21 +72,33 @@ public class MainActivity extends AppCompatActivity {
         else{
             actionBar.setText("Course Drawer is empty");
         }
+
+        //the totalCredits textView has to get instantiated before the recyclerview since the recyclerview needs the totalCredits textView as an argument to update
+        //the textView when something gets deleted or changed in the recyclerview
         TextView totalCredits = findViewById(R.id.main_activity_total_credits);
+        button_collisions = findViewById(R.id.button_collisions);
+        collisionTextView = findViewById(R.id.collisions_main_activity);
+
+        //here the recyclerview of the MainActivity for the courses get instantiated
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewCourses);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits, actionBar, collisionTextView, button_collisions, sharedPreferences);
+        recyclerView.setAdapter(CourseRecyclerAdapter);
+
+
+
+        //Set the overview at the bottom of the page (by calculating the total amount of credits and looking for collisions in the saved_courses ArrayList)
         int totalCreditsNumber = 0;
         for(Course c : saved_courses){
             totalCreditsNumber += c.ECTS;
         }
-
-
-        //Overview at the bottom
         totalCredits.setText("Total Credits: " + Integer.toString(totalCreditsNumber));
-        RecyclerView recyclerView = findViewById(R.id.recyclerViewCourses);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        //when there are no collisions the "check collision" button gets invisible and the collision text get green
+        //when there are collisions the "check collision" button gets visible and the collision text gets red also,
+        //the onclick listener of the button gets set to load the popup on click.
         collisions = getCollisions(saved_courses);
-        button_collisions = findViewById(R.id.button_collisions);
-        collisionTextView = findViewById(R.id.collisions_main_activity);
         if(collisions.size() == 0){
             button_collisions.setVisibility(View.GONE);
             button_collisions.setWidth(0);
@@ -97,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             collisionTextView.setTextColor(Color.parseColor("#4CAF50"));
         }
         else {
+            button_collisions.setVisibility(View.VISIBLE);
             collisionTextView.setText(Integer.toString(collisions.size()) + " collisions found");
             collisionTextView.setTextColor(Color.parseColor("#FF0000"));
             button_collisions.setTextColor(Color.parseColor("#FF0000"));
@@ -110,9 +121,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
-        CourseRecyclerAdapter CourseRecyclerAdapter = new CourseRecyclerAdapter(saved_courses, this, totalCredits, actionBar, collisionTextView, button_collisions, sharedPreferences);
-        recyclerView.setAdapter(CourseRecyclerAdapter);
 
 
 
@@ -162,16 +170,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //helper method which creates a string out of an ArrayList using Gson
     private String CoursesToString(ArrayList<Course> saved_courses){
         Gson gson = new Gson();
         return gson.toJson(saved_courses);
     }
 
 
-
+    //helper method which searches for collisions
     public static ArrayList<Collision> getCollisions(ArrayList<Course> courses){
+        //auxiliary variable
         ArrayList<Collision> helper= new ArrayList<>();
+
+        //return variable
         ArrayList<Collision> collisions = new ArrayList<>();
+
+        //build the helper ArrayList, with an element for each day and time (from Mon to Fri and from 8 to 20 o'clock)
         if (courses.size() != 0) {
             ArrayList<String> days = new ArrayList<>();
             days.add("Mon");
@@ -179,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
             days.add("Wed");
             days.add("Thu");
             days.add("Fri");
-            days.add("Mon");
             for(String day : days){
                 for(int i = 8; i <= 20; i++){
                     ArrayList<Appointment> collidingAppointments = new ArrayList<>();
@@ -203,11 +216,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             for(Collision c : helper){
-                Set<String> names = new HashSet<>();
-                for(Appointment a : c.collidingAppointments){
-                    names.add(a.courseName);
-                }
-                if(names.size() > 1){
+                if(c.collidingAppointments.size() > 1){
                     collisions.add(c);
                 }
             }
@@ -265,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                loadCourses();
                 //Close the window when clicked
                 popupWindow.dismiss();
                 return true;
