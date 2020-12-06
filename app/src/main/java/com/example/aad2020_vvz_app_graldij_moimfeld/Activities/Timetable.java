@@ -1,6 +1,7 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -70,27 +71,31 @@ public class Timetable extends AppCompatActivity {
         int size=arrayList.size();
         int[] array = new int[size];
         for(int i=0; i<size; i++){
-            array[i] = arrayList.get(i);
+            array[i] = arrayList.get(i).intValue();
         }
         return array;
     }
     //helper function to convert ArrayList to a Set (in order to exploit sets' features). Used here to
     // avoid same exercises displayed twice, together with the function convertSetToString
     public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
-        return new HashSet<>(arrayList);
+        Set<String> result = new HashSet<String>();
+        for(String string_element : arrayList){
+            result.add(string_element);
+        }
+        return result;
     }
 
     //helper function converting a set of strings to a string, appending all elements separated with " &\n".
     //See also function convertArrayListToSet
     public String convertSetToString(Set<String> set){
-        String outputstring = "";
+        String outputstring = new String();
         Iterator<String> itr = set.iterator();
         while(itr.hasNext()){
 
             outputstring += itr.next();
-                    if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
-                        outputstring+=" & ";
-                    }
+            if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
+                outputstring+=" &\n";
+            }
         }
         return outputstring;
     }
@@ -109,6 +114,11 @@ public class Timetable extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
+
+        used_ids.clear();
+        not_used_ids.clear();
+
+//        Toast.makeText(this, Integer.toString(used_ids.size()) + " " +Integer.toString(not_used_ids.size()), Toast.LENGTH_SHORT).show();
 
 
         //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
@@ -194,7 +204,7 @@ public class Timetable extends AppCompatActivity {
                     //create cell id linked to the .xml file
                     String cell = day+"_"+time.toString();
                     //if lecture not selected
-                    if(!appointment.selected){
+                    if(appointment.selected==false){
                         //check if cell_id already saved in the ArrayList of the not-chosen. Accordingly save or add the information
                         if(!containsCell(not_used_ids,cell)){
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
@@ -312,15 +322,15 @@ public class Timetable extends AppCompatActivity {
                 infos_clicked_element_selected.appointments_for_cell.addAll(infos_clicked_element_NOT_selected.appointments_for_cell);
             }
             //show a popup window with all the courses taking place at the clicked time&day (both selected
-            //and non-selected courses).
-            showPopupWindow(infos_clicked_element_selected.appointments_for_cell);
+            //and non-selected courses)
+            showPopupWindow(infos_clicked_element_selected.appointments_for_cell, this);
         }
     }
 
 
     //"this function generates the pop up window, with its recyclerview in it
     @SuppressLint("SetTextI18n")
-    public void showPopupWindow(ArrayList<Appointment> appointments) {
+    public void showPopupWindow(ArrayList<Appointment> appointments, final Context context) {
 
         //initialize the sharedPreferences to save the changes
         SharedPreferences sharedPreferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
@@ -357,18 +367,23 @@ public class Timetable extends AppCompatActivity {
 
 
 
-        //Handler for clicking on the inactive zone of the window
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
+            public void onDismiss() {
+//                Toast.makeText(context, "this code got executed", Toast.LENGTH_SHORT).show();
                 Intent Timetable = new Intent(Timetable.this,Timetable.class);
                 Gson gson = new Gson();
                 String json = gson.toJson(saved_courses);
                 Timetable.putExtra("saved_courses", json);
                 startActivity(Timetable);
                 overridePendingTransition(0, 0);
+            }
+        });
+
+        //Handler for clicking on the inactive zone of the window
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
                 //Close the window when clicked
                 popupWindow.dismiss();
