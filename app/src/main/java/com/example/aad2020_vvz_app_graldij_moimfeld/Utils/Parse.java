@@ -50,7 +50,7 @@ public class Parse {
 
         //Url check/manipulation
         //if there is a valid url it gets formated to the correct format
-        //if there is an invalid url, the parse function returns an toast message "invalid url" and returns an "empty" lecture
+        //if there is an invalid url, the parse function returns an toast message "That's not a Lecture" and returns an "empty" lecture
         //to get the right regex pattern I used https://regex101.com/
         if(url.contains("ansicht") && url.contains("lang=")){
             url = RegExUtils.replaceAll(url, "lang=+(de|en)", "lang=en");
@@ -58,7 +58,7 @@ public class Parse {
             //Toast.makeText(context, "url changed", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(context, "invalid url", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "That's not a Lecture", Toast.LENGTH_SHORT).show();
             return result;
         }
 

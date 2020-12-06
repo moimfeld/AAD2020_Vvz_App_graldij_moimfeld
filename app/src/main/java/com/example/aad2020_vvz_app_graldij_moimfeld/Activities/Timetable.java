@@ -71,30 +71,26 @@ public class Timetable extends AppCompatActivity {
         int size=arrayList.size();
         int[] array = new int[size];
         for(int i=0; i<size; i++){
-            array[i] = arrayList.get(i).intValue();
+            array[i] = arrayList.get(i);
         }
         return array;
     }
     //helper function to convert ArrayList to a Set (in order to exploit sets' features). Used here to
     // avoid same exercises displayed twice, together with the function convertSetToString
     public Set<String> convertArrayListToSet(ArrayList<String> arrayList){
-        Set<String> result = new HashSet<String>();
-        for(String string_element : arrayList){
-            result.add(string_element);
-        }
-        return result;
+        return new HashSet<>(arrayList);
     }
 
     //helper function converting a set of strings to a string, appending all elements separated with " &\n".
     //See also function convertArrayListToSet
     public String convertSetToString(Set<String> set){
-        String outputstring = new String();
+        String outputstring = "";
         Iterator<String> itr = set.iterator();
         while(itr.hasNext()){
 
             outputstring += itr.next();
             if(itr.hasNext()){ //check if not the last element in the Arraylist. If not: append " &"
-                outputstring+=" &\n";
+                outputstring+=" & ";
             }
         }
         return outputstring;
@@ -105,10 +101,11 @@ public class Timetable extends AppCompatActivity {
     private ArrayList<Course> saved_courses = new ArrayList<>();
 
     //ArrayList with objects DisplayLecture that are being selected
-    ArrayList<DisplayLecture> used_ids = new ArrayList<>();
+    public ArrayList<DisplayLecture> used_ids = new ArrayList<>();
 
     //ArrayList with objects DisplayLecture that are being selected
-    ArrayList<DisplayLecture> not_used_ids = new ArrayList<>();
+    public ArrayList<DisplayLecture> not_used_ids = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +115,7 @@ public class Timetable extends AppCompatActivity {
         used_ids.clear();
         not_used_ids.clear();
 
-//        Toast.makeText(this, Integer.toString(used_ids.size()) + " " +Integer.toString(not_used_ids.size()), Toast.LENGTH_SHORT).show();
+
 
 
         //here the saved_courses ArrayList gets rebuilt from the MainActivity Intent
@@ -204,7 +201,7 @@ public class Timetable extends AppCompatActivity {
                     //create cell id linked to the .xml file
                     String cell = day+"_"+time.toString();
                     //if lecture not selected
-                    if(appointment.selected==false){
+                    if(!appointment.selected){
                         //check if cell_id already saved in the ArrayList of the not-chosen. Accordingly save or add the information
                         if(!containsCell(not_used_ids,cell)){
                             DisplayLecture new_cell_slot = new DisplayLecture(cell, Color.parseColor(current_color), name, appointment);
