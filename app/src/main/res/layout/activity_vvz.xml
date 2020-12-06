@@ -11,8 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="#1F407A"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintStart_toStartOf="@id/webview"
@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="save Lecture"
+            android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:visibility="visible"
             tools:visibility="visible" />
