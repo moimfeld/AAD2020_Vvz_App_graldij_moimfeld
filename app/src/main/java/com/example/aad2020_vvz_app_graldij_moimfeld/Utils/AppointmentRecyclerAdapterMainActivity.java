@@ -107,7 +107,6 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
                         button.setVisibility(View.VISIBLE);
                         collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
                         collision.setTextColor(Color.parseColor("#FF0000"));
-                        button.setTextColor(Color.parseColor("#FF0000"));
                     }
                 }
             }
