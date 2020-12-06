@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Appointment> getCollisionAppointments(ArrayList<Collision> collisions){
         ArrayList<Appointment> result = new ArrayList<>();
         for(int i = 0; i < collisions.size(); i++){
-            Appointment recyclerTrick = new Appointment("recyclerTrick", collisions.get(i).day, collisions.get(i).time );
+            Appointment recyclerTrick = new Appointment("recyclerTrick", collisions.get(i).daylong, collisions.get(i).time );
             result.add(recyclerTrick);
             result.addAll(collisions.get(i).collidingAppointments);
         }
@@ -266,6 +266,19 @@ public class MainActivity extends AppCompatActivity {
         AppointmentRecyclerAdapterMainActivityCollisions appointmentRecyclerAdapterMainActivityCollisions = new AppointmentRecyclerAdapterMainActivityCollisions(appointments, saved_courses, button_collisions, collisionTextView, sharedPreferences);
 
         appointmentRecyclerView.setAdapter(appointmentRecyclerAdapterMainActivityCollisions);
+
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+//                Toast.makeText(context, "this code got executed", Toast.LENGTH_SHORT).show();
+                Intent Timetable = new Intent(MainActivity.this,MainActivity.class);
+                Gson gson = new Gson();
+                String json = gson.toJson(saved_courses);
+                Timetable.putExtra("saved_courses", json);
+                startActivity(Timetable);
+                overridePendingTransition(0, 0);
+            }
+        });
 
 
 

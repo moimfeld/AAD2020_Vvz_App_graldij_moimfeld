@@ -37,7 +37,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:background="#001F407A"
+        android:background="#1F407A"
         android:padding="2dp"
         app:itemIconTint="#FFFFFF"
         app:itemTextColor="#FFFFFF"
@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#00FFFFFF"
                     android:elevation="0dp"
-                    android:text="check collisions"
+                    android:text="show collisions"
                     android:textSize="10sp"/>
             </LinearLayout>
 

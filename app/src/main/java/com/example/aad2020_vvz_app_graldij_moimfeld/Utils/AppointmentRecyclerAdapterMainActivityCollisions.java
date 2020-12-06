@@ -56,13 +56,15 @@ import java.util.ArrayList;
         public void onBindViewHolder(@NonNull com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterMainActivityCollisions.AppointmentItemHolder holder, final int position) {
             // We set the texts and the image of our MenuItemHolder object
             if (appointments.get(position).identifier.equals("trueAppointment")) {
-                holder.day.setVisibility(View.VISIBLE);
-                holder.time.setVisibility(View.VISIBLE);
+                holder.cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                if(position != 0) {
+                    holder.constraintLayout.setMinHeight(0);
+                }
+                holder.day.setVisibility(View.GONE);
+                holder.time.setVisibility(View.GONE);
                 holder.place.setVisibility(View.VISIBLE);
                 holder.aSwitch.setVisibility(View.VISIBLE);
                 holder.category.setText(appointments.get(position).courseName + " (" + appointments.get(position).category + ")");
-                holder.day.setText("Day: " + appointments.get(position).day);
-                holder.time.setText("Time: " + appointments.get(position).getStartTime() + " - " + appointments.get(position).getEndTime());
                 holder.place.setText("Place: " + appointments.get(position).place);
                 holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -108,7 +110,8 @@ import java.util.ArrayList;
 
             }
             else{
-                holder.category.setText(appointments.get(position).day + " " + appointments.get(position).time.get(0) + " o'clock");
+                holder.cardView.setCardBackgroundColor(Color.parseColor("#A0B1D0"));
+                holder.category.setText(appointments.get(position).day + " " + appointments.get(position).time.get(0) + ".00");
                 holder.day.setVisibility(View.GONE);
                 holder.time.setVisibility(View.GONE);
                 holder.place.setVisibility(View.GONE);

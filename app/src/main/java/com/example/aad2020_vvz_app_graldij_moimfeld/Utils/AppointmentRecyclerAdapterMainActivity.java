@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.aad2020_vvz_app_graldij_moimfeld.Activities.MainActivity;
@@ -53,6 +54,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull AppointmentRecyclerAdapterMainActivity.AppointmentItemHolder holder, final int position) {
         // We set the texts and the image of our MenuItemHolder object
+        holder.cardView.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
         holder.category.setText(appointments.get(position).category);
         holder.day.setText("Day: " + appointments.get(position).day);
         holder.time.setText("Time: " + appointments.get(position).getStartTime() + " - " + appointments.get(position).getEndTime());
@@ -125,6 +127,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
         @SuppressLint("UseSwitchCompatOrMaterialCode")
         Switch aSwitch;
         LinearLayout linearLayoutAppointment;
+        CardView cardView;
 
         public AppointmentItemHolder(@NonNull View itemView) {
             super(itemView);
@@ -134,6 +137,7 @@ public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter
             time = itemView.findViewById(R.id.recycler_row_appointment_time_main_activity);
             place = itemView.findViewById(R.id.recycler_row_appointments_place_main_activity);
             aSwitch = itemView.findViewById(R.id.switch1_main_activity);
+            cardView = itemView.findViewById(R.id.card_view_main_activity);
             linearLayoutAppointment = itemView.findViewById(R.id.recycler_row_appointment_linearlayout_main_activity);
 
 

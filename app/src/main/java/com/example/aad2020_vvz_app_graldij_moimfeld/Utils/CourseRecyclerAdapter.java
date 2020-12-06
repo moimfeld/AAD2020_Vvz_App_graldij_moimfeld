@@ -3,6 +3,7 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -186,6 +187,17 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
         appointmentRecyclerView.setAdapter(appointmentRecyclerApdapterMainActivity);
 
+        //in order for the "show collisions" button to work one the MainActivity gets restarted as soon as the popup gets dismissed.
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                Intent Timetable = new Intent(context,MainActivity.class);
+                Gson gson = new Gson();
+                String json = gson.toJson(courses);
+                Timetable.putExtra("saved_courses", json);
+                context.startActivity(Timetable);
+            }
+        });
 
 
         //Handler for clicking on the inactive zone of the window
