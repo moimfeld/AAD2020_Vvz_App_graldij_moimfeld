@@ -46,5 +46,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation'com.google.code.gson:gson:2.8.5'
 
+    //This implementation overwrites the transitions and stops the bottom navigation bar flickering
+    implementation 'androidx.transition:transition:1.4.0-rc01'
+
     implementation 'com.github.alamkanak:android-week-view:1.2.6'
 }
