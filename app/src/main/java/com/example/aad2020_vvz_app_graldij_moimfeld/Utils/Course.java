@@ -60,7 +60,6 @@ public class Course {
     //isEmpty() returns true if the lecture is empty.
     public boolean isEmpty(){
         return (this.name == null
-                || (this.lectures.isEmpty() && this.lecturesAndExercises.isEmpty() && this.exercises.isEmpty() && this.labs.isEmpty())
                 || this.course_code == null
                 || this.ECTS == -1);
     }
