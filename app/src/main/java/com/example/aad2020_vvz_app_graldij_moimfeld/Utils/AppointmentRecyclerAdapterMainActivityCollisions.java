@@ -99,7 +99,7 @@ import java.util.ArrayList;
 
                         else {
                             button.setVisibility(View.VISIBLE);
-                            collision.setText(Integer.toString(MainActivity.collisions.size()) + " collisions found");
+                            collision.setText(MainActivity.collisions.size() + " collisions found");
                             collision.setTextColor(Color.parseColor("#FF0000"));
                         }
                     }
@@ -117,6 +117,9 @@ import java.util.ArrayList;
                 holder.aSwitch.setVisibility(View.GONE);
                 if(position != 0) {
                     holder.constraintLayout.setMinHeight(200);
+                }
+                else{
+                    holder.constraintLayout.setMinHeight(0);
                 }
             }
         }
