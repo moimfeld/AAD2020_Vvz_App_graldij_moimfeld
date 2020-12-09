@@ -18,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:outlineSpotShadowColor="#FFFFFF"
+            android:outlineSpotShadowColor="#000000"
             card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="10dp"
-            card_view:cardElevation="8dp">
+            card_view:cardElevation="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
