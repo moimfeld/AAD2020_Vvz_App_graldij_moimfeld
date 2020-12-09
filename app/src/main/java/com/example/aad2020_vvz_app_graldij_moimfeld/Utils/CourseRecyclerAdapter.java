@@ -69,12 +69,18 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         // We set the texts and the image of our MenuItemHolder object
         holder.name.setText(courses.get(position).name);
         holder.credits.setText(courses.get(position).ECTS + " credits");
-        holder.button_appointments.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showPopupWindow(position);
-            }
+        if (courses.get(position).getAllAppointments().size() != 0) {
+            holder.button_appointments.setVisibility(View.VISIBLE);
+            holder.button_appointments.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    showPopupWindow(position);
+                }
 
-        });
+            });
+        }
+        else{
+            holder.button_appointments.setVisibility(View.GONE);
+        }
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             public void onClick(View v) {
