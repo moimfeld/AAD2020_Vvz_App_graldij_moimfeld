@@ -106,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
         if(collisions.size() == 0){
             button_collisions.setVisibility(View.GONE);
             button_collisions.setWidth(0);
-            collisionTextView.setText("no collisions found");
+            collisionTextView.setText("no conflicts found");
             collisionTextView.setWidth(100);
             collisionTextView.setTextColor(Color.parseColor("#4CAF50"));
         }
         else {
             button_collisions.setVisibility(View.VISIBLE);
-            collisionTextView.setText(Integer.toString(collisions.size()) + " collisions found");
+            collisionTextView.setText(Integer.toString(collisions.size()) + " conflicts found");
             collisionTextView.setTextColor(Color.parseColor("#FF0000"));
             button_collisions.setTextColor(Color.parseColor("#1F407A"));
             button_collisions.setOnClickListener(new View.OnClickListener() {
