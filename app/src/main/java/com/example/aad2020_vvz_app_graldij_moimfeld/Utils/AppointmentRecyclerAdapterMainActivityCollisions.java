@@ -92,14 +92,14 @@ import java.util.ArrayList;
                         if(MainActivity.collisions.size() == 0){
                             button.setVisibility(View.GONE);
                             button.setWidth(0);
-                            collision.setText("no collisions found");
+                            collision.setText("no conflicts found");
                             collision.setWidth(100);
                             collision.setTextColor(Color.parseColor("#4CAF50"));
                         }
 
                         else {
                             button.setVisibility(View.VISIBLE);
-                            collision.setText(MainActivity.collisions.size() + " collisions found");
+                            collision.setText(MainActivity.collisions.size() + " conflicts found");
                             collision.setTextColor(Color.parseColor("#FF0000"));
                         }
                     }
