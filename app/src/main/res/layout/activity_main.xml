@@ -123,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#00FFFFFF"
                     android:elevation="0dp"
-                    android:text="show collisions"
+                    android:text="show conflicts"
                     android:textSize="10sp"/>
             </LinearLayout>
 
