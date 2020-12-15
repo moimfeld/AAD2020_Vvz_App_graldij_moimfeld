@@ -23,7 +23,9 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-
+/**
+ * used to inflate the RecyclerView in the PopUpWindow when pressing the "select appointment" button in the Main Activity;
+ */
 public class AppointmentRecyclerAdapterMainActivity extends RecyclerView.Adapter<AppointmentRecyclerAdapterMainActivity.AppointmentItemHolder>{
     //Attributes
     private ArrayList<Appointment> appointments;

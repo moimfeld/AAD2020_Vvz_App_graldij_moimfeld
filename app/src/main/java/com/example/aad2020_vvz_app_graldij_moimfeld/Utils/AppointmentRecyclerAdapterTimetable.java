@@ -20,6 +20,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+/**
+ * used to inflate the RecyclerView in the PopUpWindow when pressing an occupied cell in the Timetable;
+ */
 public class AppointmentRecyclerAdapterTimetable extends RecyclerView.Adapter<AppointmentRecyclerAdapterTimetable.AppointmentItemHolder>{
 
     //Attributes

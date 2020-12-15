@@ -24,7 +24,9 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-
+/**
+ * used to inflate the RecyclerView in the PopUpWindow when pressing the "show conflicts" button in the Main Activity;
+ */
     public class AppointmentRecyclerAdapterMainActivityCollisions extends RecyclerView.Adapter<com.example.aad2020_vvz_app_graldij_moimfeld.Utils.AppointmentRecyclerAdapterMainActivityCollisions.AppointmentItemHolder>{
         //Attributes
         private ArrayList<Appointment> appointments;

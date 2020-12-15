@@ -31,6 +31,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The Course Catalogue Activity is a WebView of the ETH course catalogue (www.vvz.ethz.ch).
+ * We used this approach, since we do not have direct access to the course information.
+ * We are aware that the the current solution is not optimal in terms of user-experience and design,
+ * and having granted the access to the official course data of ETH, we would definitely opt for
+ * another modern in-app custom design aligning it with the rest of the app (see Outlook-section).
+ * When the user navigates to a course, it can be saved using a button.
+ * The button will trigger a parse function (implemented with the JSoup open-source library).
+ * This function goes through the HTML code of the current page recognizing and saving the course information.
+ * After a parsing attempt, the user gets a feedback (with Toast Messages) indicating success or
+ * fail of the parse function.
+ */
 public class Vvz extends AppCompatActivity {
 
     //Variables needed throughout the whole activity

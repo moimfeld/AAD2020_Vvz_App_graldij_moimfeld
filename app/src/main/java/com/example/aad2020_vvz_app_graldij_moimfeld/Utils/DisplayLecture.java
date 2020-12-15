@@ -1,7 +1,9 @@
 package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import java.util.ArrayList;
-
+/**
+ * used to save the information for each cell needed to display appointments in the Timetable;
+ * **/
 public class DisplayLecture {
     public String cell = new String();
     public ArrayList<Integer> colors_for_cell;

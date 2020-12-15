@@ -2,6 +2,9 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * used to save all the information about an appointment (e.g. name, category, ...);
+ */
 public class Appointment {
 
     public String courseName;

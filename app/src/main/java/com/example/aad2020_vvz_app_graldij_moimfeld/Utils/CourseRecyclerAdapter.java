@@ -29,7 +29,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 
-
+/**
+ * used to inflate the RecyclerView in the MainActivity displaying all saved courses;
+ */
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.CourseItemHolder> {
 
     //Attributes

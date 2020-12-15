@@ -40,7 +40,17 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Stack;
 
-
+/**
+ * In this Activity the courses are displayed in a weekly timetable.
+ * The difficulty of the implementation has been underestimated during the initial stages of our
+ * project since we were convinced to easily find a library offering the functionality we were looking for.
+ * To our surprise, there was no such library and therefore we implemented our own timetable from scratch.
+ * We used a TableLayout with the cells of the table being TextViews. If an appointment is selected
+ * in the Course Drawer, the corresponding time slot in the timetable is colored and the name of the
+ * lecture is displayed.  In order to visualize conflicts, we used a gradient with the colors of the
+ * overlapping courses. Also, the filled cells of the timetable are clickable.
+ * When pressed a PopUpWindow displays all appointments at that time.
+ */
 public class Timetable extends AppCompatActivity {
 
 

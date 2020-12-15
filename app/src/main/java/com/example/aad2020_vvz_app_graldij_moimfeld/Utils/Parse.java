@@ -19,7 +19,9 @@ import java.util.concurrent.ExecutionException;
 //documentation: https://commons.apache.org/proper/commons-lang/javadocs/api-3.9/org/apache/commons/lang3/RegExUtils.html
 
 
-//there is still a bug, where the app crashes, when there is only an hour category and no date/time in a lecture
+/**
+ used to extract all information for a course object out of the HTML code.
+ **/
 public class Parse {
 
 

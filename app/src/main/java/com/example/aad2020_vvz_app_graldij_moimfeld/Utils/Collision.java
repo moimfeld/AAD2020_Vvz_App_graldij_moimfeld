@@ -2,6 +2,9 @@ package com.example.aad2020_vvz_app_graldij_moimfeld.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * used to save an ArrayList of conflicting appointments together with time and day;
+ */
 public class Collision {
 
     public String day;

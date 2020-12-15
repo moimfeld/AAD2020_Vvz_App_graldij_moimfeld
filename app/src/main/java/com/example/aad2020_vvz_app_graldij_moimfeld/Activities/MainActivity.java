@@ -34,7 +34,16 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-
+/**
+ *  In the main activity all the selected courses are displayed using a RecyclerView.
+ *  For each course, there is the option to either select appointments (lectures, exercises, ...) or to delete the entire course.
+ *  When pressing the "select appointments" button all appointments of this specific course are shown in a RecyclerView inside a PopUpWindow.
+ *  In the PopUp one has the possibility to select or deselect the appointments using the corresponding switch in the RecyclerRow.
+ * 	Moreover, at the bottom of the Course Drawer there is a CardView displaying the sum of the credits.
+ * 	Besides that, a function continuously checks for schedule conflicts.
+ * 	In case there are some, the user gets the possibility to have a look at the conflicts and directly resolve them.
+ *  This is enabled by another PopUpWindow where all the overlaps are displayed.
+ */
 public class MainActivity extends AppCompatActivity {
 
     //lecture array to save the lectures temporarily, there needs to be another saving method involving firebase or some local storing method
